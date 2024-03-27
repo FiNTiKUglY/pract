@@ -1,4 +1,3 @@
-import java.security.Timestamp;
 import java.util.UUID;
 
 public class User {
@@ -6,6 +5,10 @@ public class User {
     public String name;
     public String surname;
     public UUID roleId;
+
+    public User() {
+
+    }
 
     public User(UUID id, String name, String surname, 
                 UUID roleId) {

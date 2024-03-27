@@ -4,6 +4,10 @@ public class Role {
     public UUID id;
     public String name;
 
+    public Role() {
+        
+    }
+
     public Role(UUID id, String name) {
         this.id = id;
         this.name = name;

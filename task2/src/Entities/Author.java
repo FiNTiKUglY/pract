@@ -7,6 +7,10 @@ public class Author {
     public String surname;
     public String biography;
 
+    public Author() {
+        
+    }
+
     public Author(UUID id, String name, String surname, 
                 String biography) {
         this.id = id;
