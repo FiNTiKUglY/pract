@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Date;
 import Entities.*;
 
 public class Db {
@@ -22,7 +23,8 @@ public class Db {
                 users.add(new User(UUID.fromString(rs.getString("id")),
                                     rs.getString("name"),
                                     rs.getString("surname"),
-                                    UUID.fromString(rs.getString("role_id"))));
+                                    UUID.fromString(rs.getString("role_id")),
+                                    rs.getDate("birth_date")));
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
@@ -40,7 +42,8 @@ public class Db {
                 user = new User(UUID.fromString(rs.getString("id")),
                                     rs.getString("name"),
                                     rs.getString("surname"),
-                                    UUID.fromString(rs.getString("role_id")));
+                                    UUID.fromString(rs.getString("role_id")),
+                                    rs.getDate("birth_date"));
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
@@ -48,9 +51,9 @@ public class Db {
         return user;
     }
 
-    public void addUser(UUID id, String name, String surname, UUID roleId) throws SQLException {
+    public void addUser(UUID id, String name, String surname, UUID roleId, Date birthDate) throws SQLException {
         String query = String.format("INSERT INTO users " +
-                        "VALUES ('%s', '%s', '%s', '%s')", id.toString(), name, surname, roleId.toString());
+                        "VALUES ('%s', '%s', '%s', '%s', '%s')", id.toString(), name, surname, roleId.toString(), birthDate.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -68,10 +71,10 @@ public class Db {
         }
     }
 
-    public void updateUser(UUID id, String name, String surname, UUID roleId) throws SQLException {
+    public void updateUser(UUID id, String name, String surname, UUID roleId, Date birthDate) throws SQLException {
         String query = String.format("UPDATE users " +
-                        "SET name = '%s', surname = '%s', role_id = '%s' " +
-                        "WHERE id = '%s'", name, surname, roleId.toString(), id.toString());
+                        "SET name = '%s', surname = '%s', role_id = '%s', birth_date = '%s' " +
+                        "WHERE id = '%s'", name, surname, roleId.toString(), birthDate.toString(), id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -96,6 +99,22 @@ public class Db {
         return roles;
     }
 
+    public Role selectRoleById(UUID id) throws SQLException {
+        String query = String.format("SELECT * FROM roles " +
+                        "WHERE id = '%s'", id.toString());
+        Role role = new Role();
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                role = new Role(UUID.fromString(rs.getString("id")),
+                                rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return role;
+    }
+
     public void addRole(UUID id, String name) throws SQLException {
         String query = String.format("INSERT INTO roles " +
                         "VALUES ('%s', '%s')", id.toString(), name);
@@ -109,6 +128,17 @@ public class Db {
     public void removeRole(UUID id) throws SQLException {
         String query = String.format("DELETE FROM roles " +
                         "WHERE id = '%s'", id.toString());
+        try (Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public void updateRole(UUID id, String name) throws SQLException {
+        String query = String.format("UPDATE roles " +
+                        "SET name = '%s' " +
+                        "WHERE id = '%s'", name, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -135,6 +165,24 @@ public class Db {
         return authors;
     }
 
+    public Author selectAthorById(UUID id) throws SQLException {
+        String query = String.format("SELECT * FROM authors " +
+                        "WHERE id = '%s'", id.toString());
+        Author author = new Author();
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                author = new Author(UUID.fromString(rs.getString("id")),
+                                        rs.getString("name"),
+                                        rs.getString("surname"),
+                                        rs.getString("biography"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return author;
+    }
+
     public void addAuthor(UUID id, String name, String surname, String biography) throws SQLException {
         String query = String.format("INSERT INTO authors " +
                         "VALUES ('%s', '%s', '%s', '%s')", id.toString(), name, surname, biography);
@@ -148,6 +196,17 @@ public class Db {
     public void removeAuthor(UUID id) throws SQLException {
         String query = String.format("DELETE FROM authors " +
                         "WHERE id = '%s'", id.toString());
+        try (Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public void updateAuthor(UUID id, String name, String surname, String biography) throws SQLException {
+        String query = String.format("UPDATE roles " +
+                        "SET name = '%s', surname = '%s', biography = '%s' " +
+                        "WHERE id = '%s'", name, surname, biography, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
