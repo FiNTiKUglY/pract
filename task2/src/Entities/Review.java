@@ -1,11 +1,13 @@
+package entities;
+
 import java.util.UUID;
 
 public class Review {
-    public UUID id;
-    public int mark;
-    public String text;
-    public UUID userId;
-    public UUID bookId;
+    private UUID id;
+    private int mark;
+    private String text;
+    private UUID userId;
+    private UUID bookId;
 
     public Review() {
 
@@ -18,5 +20,10 @@ public class Review {
         this.text = text;
         this.userId = userId;
         this.bookId = bookId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%n mark: %d%nuser id: %s%nbook id: %s%nid: %s", text, mark, userId.toString(), bookId.toString(), id.toString());
     }
 }

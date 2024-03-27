@@ -1,9 +1,11 @@
+package entities;
+
 import java.util.UUID;
 
 public class Genre {
-    public UUID id;
-    public String name;
-    public String description;
+    private UUID id;
+    private String name;
+    private String description;
 
     public Genre() {
         
@@ -13,5 +15,10 @@ public class Genre {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s%nid: %s", name, description, id.toString());
     }
 }

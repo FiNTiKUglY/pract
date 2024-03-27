@@ -1,14 +1,15 @@
-import java.security.Timestamp;
+package entities;
+
 import java.util.UUID;
 
 public class Author {
-    public UUID id;
-    public String name;
-    public String surname;
-    public String biography;
+    private UUID id;
+    private String name;
+    private String surname;
+    private String biography;
 
     public Author() {
-        
+
     }
 
     public Author(UUID id, String name, String surname, 
@@ -17,5 +18,10 @@ public class Author {
         this.name = name;
         this.surname = surname;
         this.biography = biography;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s%n%s%nid: %s", surname, name, biography, id.toString());
     }
 }

@@ -1,11 +1,13 @@
+package entities;
+
 import java.util.UUID;
 
 public class Book {
-    public UUID id;
-    public String title;
-    public UUID authorId;
-    public String shortDescription;
-    public Double cost;
+    private UUID id;
+    private String title;
+    private UUID authorId;
+    private String shortDescription;
+    private Double cost;
 
     public Book() {
 
@@ -18,5 +20,10 @@ public class Book {
         this.authorId = authorId;
         this.shortDescription = shortDescription;
         this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s%ncost: %f%nauthor id: %s%nid: %s", title, shortDescription, cost, authorId, id.toString());
     }
 }

@@ -1,12 +1,14 @@
+package entities;
+
 import java.util.UUID;
 import java.util.Date;
 
 public class User {
-    public UUID id;
-    public String name;
-    public String surname;
-    public UUID roleId;
-    public Date birthDate;
+    private UUID id;
+    private String name;
+    private String surname;
+    private UUID roleId;
+    private Date birthDate;
 
     public User() {
 
@@ -19,5 +21,10 @@ public class User {
         this.surname = surname;
         this.roleId = roleId;
         this.birthDate = birthDate;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s, %s : %s", surname, name, birthDate, id.toString());
     }
 }

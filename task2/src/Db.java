@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import entities.*;
+
 import java.util.Date;
-import Entities.*;
 
 public class Db {
     private Connection connection;
@@ -255,7 +257,7 @@ public class Db {
 
     public void addBook(UUID id, String title, UUID authorId, String shortDescription, Double cost) throws SQLException {
         String query = String.format("INSERT INTO books " +
-                        "VALUES ('%s', '%s', '%s', '%s', %f)", id.toString(), name, authorId.toString(), shortDescription, cost);
+                        "VALUES ('%s', '%s', '%s', '%s', %f)", id.toString(), title, authorId.toString(), shortDescription, cost);
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

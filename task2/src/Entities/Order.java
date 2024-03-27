@@ -1,11 +1,13 @@
+package entities;
+
 import java.util.UUID;
 
 public class Order {
-    public UUID id;
-    public UUID bookId;
-    public UUID userId;
-    public String adress;
-    public boolean status;
+    private UUID id;
+    private UUID bookId;
+    private UUID userId;
+    private String adress;
+    private boolean status;
 
     public Order() {
 
@@ -18,5 +20,10 @@ public class Order {
         this.userId = userId;
         this.adress = adress;
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%n status: %b%nuser id: %s%nbook id: %s%nid: %s", adress, status, userId.toString(), bookId.toString(), id.toString());
     }
 }
