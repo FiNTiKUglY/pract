@@ -9,8 +9,8 @@ public class DbConfig {
     private static final Properties properties = new Properties();
     private static final Logger logger = Logger.getLogger(DbConfig.class.getName());
 
-    public DbConfig() {
-        
+    private DbConfig() {
+        throw new IllegalStateException("Utility class");
     }
 
     static {
