@@ -3,20 +3,26 @@ package config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class DbConfig {
     private static final Properties properties = new Properties();
+    private static final Logger logger = Logger.getLogger(DbConfig.class.getName());
+
+    public DbConfig() {
+        
+    }
 
     static {
         try (InputStream input = DbConfig.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (input == null) {
-                System.out.println("Sorry, unable to find db.properties");
+                logger.info("Sorry, unable to find db.properties");
                 System.exit(1);
             }
 
             properties.load(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning(e.toString());
         }
     }
 
