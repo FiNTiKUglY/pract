@@ -3,6 +3,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.UUID;
 
+import repositories.*;
+
 public class App {
     public static Connection connect() throws SQLException {
 
@@ -21,9 +23,9 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         Connection connection = connect();
-        Db database = new Db(connection);
-        database.removeRole(UUID.fromString("6fe895ca-abc8-473e-908c-bf673a76c190"));
-        var list = database.getRoles();
+        var roleRepo = new RoleRepository(connection);
+        roleRepo.removeRole(UUID.fromString("6fe895ca-abc8-473e-908c-bf673a76c190"));
+        var list = roleRepo.getRoles();
         for (var ent : list) {
             System.out.println(ent.toString());
         }
