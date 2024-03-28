@@ -44,10 +44,4 @@ public class UserController {
     public void deleteUser(@PathVariable UUID id) {
         userService.deleteUserById(id);
     }
-    
-    
-    @GetMapping("/")
-    public String test() {
-        return "test";
-    }
 }
