@@ -34,8 +34,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void updateUserById(User user) {
-        var newUser = getUserById(user.getId());
+    public void updateUser(UUID id, User user) {
+        user.setId(id);
         userRepository.save(user);
     }
 }

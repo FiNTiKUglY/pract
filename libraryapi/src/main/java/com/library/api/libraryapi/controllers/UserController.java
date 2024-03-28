@@ -35,9 +35,9 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @PostMapping("/api/users/update")
-    public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    @PostMapping("/api/users/update/{id}")
+    public User updateUser(@PathVariable UUID id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping("/api/users/delete/{id}")
