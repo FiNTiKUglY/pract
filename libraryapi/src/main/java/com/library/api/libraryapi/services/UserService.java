@@ -4,7 +4,6 @@ import com.library.api.libraryapi.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.library.api.libraryapi.repositories.UserRepository;
@@ -34,8 +33,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void updateUser(UUID id, User user) {
+    public User updateUser(UUID id, User user) {
         user.setId(id);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 }
