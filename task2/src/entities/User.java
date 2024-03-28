@@ -25,6 +25,6 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("%s %s, %s : %s", surname, name, birthDate, id.toString());
+        return String.format("%s %s, %s%nrole id: %s%nid: %s", surname, name, birthDate, roleId.toString(), id.toString());
     }
 }
