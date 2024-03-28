@@ -47,7 +47,7 @@ public class UserController {
     
     
     @GetMapping("/")
-    public String Test() {
+    public String test() {
         return "test";
     }
 }
