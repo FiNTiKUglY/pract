@@ -14,7 +14,7 @@ public class ReviewService {
     @Autowired ReviewRepository reviewRepository;
 
     public ReviewService() {
-
+        //Constructor for service
     }
 
     public List<Review> getReviews() {

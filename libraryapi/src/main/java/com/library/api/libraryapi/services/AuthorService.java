@@ -14,7 +14,7 @@ public class AuthorService {
     @Autowired AuthorRepository authorRepository;
 
     public AuthorService() {
-
+        //Constructor for service
     }
 
     public List<Author> getAuthors() {

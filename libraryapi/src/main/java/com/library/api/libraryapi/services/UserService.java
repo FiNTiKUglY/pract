@@ -14,7 +14,7 @@ public class UserService {
     @Autowired UserRepository userRepository;
 
     public UserService() {
-
+        //Constructor for service
     }
 
     public List<User> getUsers() {

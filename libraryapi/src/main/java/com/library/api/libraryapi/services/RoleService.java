@@ -14,7 +14,7 @@ public class RoleService {
     @Autowired RoleRepository roleRepository;
 
     public RoleService() {
-
+        //Constructor for service
     }
 
     public List<Role> getRoles() {

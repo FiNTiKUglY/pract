@@ -14,7 +14,7 @@ public class OrderService {
     @Autowired OrderRepository orderRepository;
 
     public OrderService() {
-
+        //Constructor for service
     }
 
     public List<Order> getOrders() {
