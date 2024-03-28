@@ -23,6 +23,9 @@ public class Book {
     @Column(name = "short_description")
     private String shortDescription;
 
+    @Column(name = "cost")
+    private Double cost;
+
     public UUID getId() {
         return id;
     }
@@ -63,6 +66,4 @@ public class Book {
         this.cost = cost;
     }
 
-    @Column(name = "cost")
-    private Double cost;
 }

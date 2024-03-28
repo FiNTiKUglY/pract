@@ -20,6 +20,9 @@ public class Author {
     @Column(name = "surname")
     private String surname;
 
+    @Column(name = "biography")
+    private String biography;
+
     public UUID getId() {
         return id;
     }
@@ -51,8 +54,5 @@ public class Author {
     public void setBiography(String biography) {
         this.biography = biography;
     }
-
-    @Column(name = "biography")
-    private String biography;
 
 }
