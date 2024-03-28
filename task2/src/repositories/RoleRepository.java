@@ -5,17 +5,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
+
 import entities.Role;
 
 public class RoleRepository {
     private Connection connection;
+    Logger logger = Logger.getLogger(getClass().getName());
 
     public RoleRepository(Connection connection) {
         this.connection = connection;
     }
 
-    public ArrayList<Role> getRoles() throws SQLException {
+    public List<Role> getRoles() throws SQLException {
         ArrayList<Role> roles = new ArrayList<>();
         String query = "select * from roles";
         try (Statement stmt = connection.createStatement()) {
@@ -25,7 +29,7 @@ public class RoleRepository {
                                     rs.getString("name")));
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
         return roles;
     }
@@ -41,7 +45,7 @@ public class RoleRepository {
                                 rs.getString("name"));
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
         return role;
     }
@@ -52,7 +56,7 @@ public class RoleRepository {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
     }
 
@@ -62,7 +66,7 @@ public class RoleRepository {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
     }
 
@@ -73,7 +77,7 @@ public class RoleRepository {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
     }
 }

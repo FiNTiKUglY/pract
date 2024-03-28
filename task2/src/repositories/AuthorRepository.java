@@ -5,17 +5,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
+
 import entities.Author;
 
 public class AuthorRepository {
     private Connection connection;
+    Logger logger = Logger.getLogger(getClass().getName());
 
     public AuthorRepository(Connection connection) {
         this.connection = connection;
     }
 
-    public ArrayList<Author> getAuthors() throws SQLException {
+    public List<Author> getAuthors() throws SQLException {
         ArrayList<Author> authors = new ArrayList<>();
         String query = "select * from authors";
         try (Statement stmt = connection.createStatement()) {
@@ -27,7 +31,7 @@ public class AuthorRepository {
                                     rs.getString("biography")));
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
         return authors;
     }
@@ -45,7 +49,7 @@ public class AuthorRepository {
                                         rs.getString("biography"));
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
         return author;
     }
@@ -56,7 +60,7 @@ public class AuthorRepository {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
     }
 
@@ -66,7 +70,7 @@ public class AuthorRepository {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
     }
 
@@ -77,7 +81,7 @@ public class AuthorRepository {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            logger.info(e.toString());
         }
     }
 }
