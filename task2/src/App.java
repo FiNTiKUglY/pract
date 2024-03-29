@@ -1,7 +1,10 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -57,12 +60,68 @@ public class App {
                         var value = UUID.fromString(in.next());
                         field.set(entity, value);
                     }
+                    else if (field.getType() == Date.class) {
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+                        var strValue = in.next();
+                        var value = formatter.parse(strValue);
+                        field.set(entity, value);
+                    }
                     else {
                         var value = in.next();
                         field.set(entity, value);
                     }
                 }
                 repository.add(entity);
+                break;
+            case 2:
+                repository.getAll();
+                logger.info("%nType id for update");
+                var id = UUID.fromString(in.next());
+                entity = repository.getById(id);
+                fields = entity.getClass().getDeclaredFields();
+                for (var field : fields) {
+                    if (field.getName().equals("id")) {
+                        continue;
+                    }
+                    field.setAccessible(true);
+                    logger.info("Type " + field.getName());
+                    if (field.getType() == boolean.class)  {
+                        var value = in.nextBoolean();
+                        field.set(entity, value);
+                    }
+                    else if (field.getType() == int.class) {
+                        var value = in.nextInt();
+                        field.set(entity, value);
+                    } 
+                    else if (field.getType() == double.class) {
+                        var value = in.nextDouble();
+                        field.set(entity, value);
+                    }
+                    else if (field.getType() == UUID.class) {
+                        var value = UUID.fromString(in.next());
+                        field.set(entity, value);
+                    }
+                    else if (field.getType() == Date.class) {
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+                        var strValue = in.next();
+                        var value = formatter.parse(strValue);
+                        field.set(entity, value);
+                    }
+                    else {
+                        var value = in.next();
+                        field.set(entity, value);
+                    }
+                }
+                repository.update(entity);
+                break;
+            case 3:
+                repository.getAll();
+                logger.info("%nType id for remove");
+                var value = UUID.fromString(in.next());
+                repository.remove(value);
+                break;
+            case 4:
+                repository.getAll();
                 break;
             default:
                 return;
@@ -84,9 +143,39 @@ public class App {
             int chosenNumber = in.nextInt();
             switch (chosenNumber) {
                 case 1:
-                    AuthorRepository userRepo = new AuthorRepository(connection);
-                    Author user = new Author();
+                    UserRepository userRepo = new UserRepository(connection);
+                    User user = new User();
                     drawMenu(userRepo, user);
+                    break;
+                case 2:
+                    RoleRepository roleRepo = new RoleRepository(connection);
+                    Role role = new Role();
+                    drawMenu(roleRepo, role);
+                    break;
+                case 3:
+                    AuthorRepository authorRepo = new AuthorRepository(connection);
+                    Author author = new Author();
+                    drawMenu(authorRepo, author);
+                    break;
+                case 4:
+                    BookRepository bookRepo = new BookRepository(connection);
+                    Book book = new Book();
+                    drawMenu(bookRepo, book);
+                    break;
+                case 5:
+                    GenreRepository genreRepo = new GenreRepository(connection);
+                    Genre genre = new Genre();
+                    drawMenu(genreRepo, genre);
+                    break;
+                case 6:
+                    OrderRepository orderRepo = new OrderRepository(connection);
+                    Order order = new Order();
+                    drawMenu(orderRepo, order);
+                    break;
+                case 7:
+                    ReviewRepository reviewRepo = new ReviewRepository(connection);
+                    Review review = new Review();
+                    drawMenu(reviewRepo, review);
                     break;
                 default:
                     return;
