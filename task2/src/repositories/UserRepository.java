@@ -29,6 +29,8 @@ public class UserRepository {
                 users.add(new User(UUID.fromString(rs.getString("id")),
                                     rs.getString("name"),
                                     rs.getString("surname"),
+                                    rs.getString("email"),
+                                    rs.getString("password_hash"),
                                     UUID.fromString(rs.getString("role_id")),
                                     rs.getDate("birth_date")));
             }
@@ -48,6 +50,8 @@ public class UserRepository {
                 user = new User(UUID.fromString(rs.getString("id")),
                                     rs.getString("name"),
                                     rs.getString("surname"),
+                                    rs.getString("email"),
+                                    rs.getString("password_hash"),
                                     UUID.fromString(rs.getString("role_id")),
                                     rs.getDate("birth_date"));
             }
@@ -57,9 +61,10 @@ public class UserRepository {
         return user;
     }
 
-    public void addUser(UUID id, String name, String surname, UUID roleId, Date birthDate) throws SQLException {
+    public void addUser(UUID id, String name, String surname, UUID roleId, Date birthDate, String email, String passwordHash) throws SQLException {
         String query = String.format("INSERT INTO users " +
-                        "VALUES ('%s', '%s', '%s', '%s', '%s')", id.toString(), name, surname, roleId.toString(), birthDate.toString());
+                        "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
+                        id.toString(), name, surname, email, passwordHash, roleId.toString(), birthDate.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -77,10 +82,12 @@ public class UserRepository {
         }
     }
 
-    public void updateUser(UUID id, String name, String surname, UUID roleId, Date birthDate) throws SQLException {
+    public void updateUser(UUID id, String name, String surname, UUID roleId, Date birthDate, String email, String passwordHash) throws SQLException {
         String query = String.format("UPDATE users " +
                         "SET name = '%s', surname = '%s', role_id = '%s', birth_date = '%s' " +
-                        "WHERE id = '%s'", name, surname, roleId.toString(), birthDate.toString(), id.toString());
+                        "email = '%s', password_hash = '%s' " +
+                        "WHERE id = '%s'", 
+                        name, surname, roleId.toString(), birthDate.toString(), email, passwordHash, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

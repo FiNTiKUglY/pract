@@ -30,7 +30,9 @@ public class BookRepository {
                                     rs.getString("title"),
                                     UUID.fromString(rs.getString("author_id")),
                                     rs.getString("description"),
-                                    rs.getDouble("cost")));
+                                    rs.getDouble("cost"),
+                                    rs.getString("image_link"),
+                                    rs.getString("download_link")));
             }
         } catch (SQLException e) {
             logger.info(e.toString());
@@ -49,7 +51,9 @@ public class BookRepository {
                                     rs.getString("title"),
                                     UUID.fromString(rs.getString("author_id")),
                                     rs.getString("description"),
-                                    rs.getDouble("cost"));
+                                    rs.getDouble("cost"),
+                                    rs.getString("image_link"),
+                                    rs.getString("download_link"));
             }
         } catch (SQLException e) {
             logger.info(e.toString());
@@ -57,9 +61,10 @@ public class BookRepository {
         return book;
     }
 
-    public void addBook(UUID id, String title, UUID authorId, String shortDescription, Double cost) throws SQLException {
+    public void addBook(UUID id, String title, UUID authorId, String shortDescription, Double cost, String imageLink, String downloadLink) throws SQLException {
         String query = String.format("INSERT INTO books " +
-                        "VALUES ('%s', '%s', '%s', '%s', %f)", id.toString(), title, authorId.toString(), shortDescription, cost);
+                        "VALUES ('%s', '%s', '%s', '%s', %f, '%s', '%s')", 
+                        id.toString(), title, authorId.toString(), shortDescription, cost, imageLink, downloadLink);
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -77,10 +82,12 @@ public class BookRepository {
         }
     }
 
-    public void updateBook(UUID id, String title, UUID authorId, String shortDescription, Double cost) throws SQLException {
+    public void updateBook(UUID id, String title, UUID authorId, String shortDescription, Double cost, String imageLink, String downloadLink) throws SQLException {
         String query = String.format("UPDATE books " +
                         "SET title = '%s', author_id = '%s', short_description = '%s', cost = %f " +
-                        "WHERE id = '%s'", title, authorId.toString(), shortDescription, cost, id.toString());
+                        "image_link = '%s', download_link = '%s' " +
+                        "WHERE id = '%s'", 
+                        title, authorId.toString(), shortDescription, cost, imageLink, downloadLink, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

@@ -28,7 +28,8 @@ public class AuthorRepository {
                 authors.add(new Author(UUID.fromString(rs.getString("id")),
                                     rs.getString("name"),
                                     rs.getString("surname"),
-                                    rs.getString("biography")));
+                                    rs.getString("biography"),
+                                    rs.getString("image_link")));
             }
         } catch (SQLException e) {
             logger.info(e.toString());
@@ -46,7 +47,8 @@ public class AuthorRepository {
                 author = new Author(UUID.fromString(rs.getString("id")),
                                         rs.getString("name"),
                                         rs.getString("surname"),
-                                        rs.getString("biography"));
+                                        rs.getString("biography"),
+                                        rs.getString("image_link"));
             }
         } catch (SQLException e) {
             logger.info(e.toString());
@@ -54,9 +56,9 @@ public class AuthorRepository {
         return author;
     }
 
-    public void addAuthor(UUID id, String name, String surname, String biography) throws SQLException {
+    public void addAuthor(UUID id, String name, String surname, String biography, String imageLink) throws SQLException {
         String query = String.format("INSERT INTO authors " +
-                        "VALUES ('%s', '%s', '%s', '%s')", id.toString(), name, surname, biography);
+                        "VALUES ('%s', '%s', '%s', '%s', '%s')", id.toString(), name, surname, biography, imageLink);
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -74,10 +76,10 @@ public class AuthorRepository {
         }
     }
 
-    public void updateAuthor(UUID id, String name, String surname, String biography) throws SQLException {
+    public void updateAuthor(UUID id, String name, String surname, String biography, String imageLink) throws SQLException {
         String query = String.format("UPDATE roles " +
-                        "SET name = '%s', surname = '%s', biography = '%s' " +
-                        "WHERE id = '%s'", name, surname, biography, id.toString());
+                        "SET name = '%s', surname = '%s', biography = '%s', image_link = '%s' " +
+                        "WHERE id = '%s'", name, surname, biography, imageLink, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
