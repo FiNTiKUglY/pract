@@ -48,9 +48,7 @@ CREATE TABLE orders (
     adress VARCHAR(255) NOT NULL,
     status BOOLEAN NOT NULL,
     user_id uuid NOT NULL,
-    book_id uuid NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (book_id) REFERENCES books (id)
 );
 
 CREATE TABLE genres (
@@ -64,4 +62,11 @@ CREATE TABLE books_genres (
     genre_id uuid NOT NULL,
     FOREIGN KEY (book_id) REFERENCES books (id),
     FOREIGN KEY (genre_id) REFERENCES genres (id)
+);
+
+CREATE TABLE books_orders (
+    book_id uuid NOT NULL,
+    order_id uuid NOT NULL,
+    FOREIGN KEY (book_id) REFERENCES books (id),
+    FOREIGN KEY (order_id) REFERENCES orders (id)
 );
