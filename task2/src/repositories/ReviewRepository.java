@@ -38,8 +38,7 @@ public class ReviewRepository {
     }
 
     public Review selectReviewById(UUID id) throws SQLException {
-        String query = String.format("SELECT * FROM reviews " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("select * from reviews WHERE id = '%s'", id.toString());
         Review review = new Review();
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -67,8 +66,7 @@ public class ReviewRepository {
     }
 
     public void removeReview(UUID id) throws SQLException {
-        String query = String.format("DELETE FROM reviews " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("DELETE FROM reviews WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -78,8 +76,8 @@ public class ReviewRepository {
 
     public void updateReview(UUID id, int mark, String text, UUID userId, UUID bookId) throws SQLException {
         String query = String.format("UPDATE reviews " +
-                        "SET mark = %d, text = '%s', user_id = '%s', book_id = '%s' " +
-                        "WHERE id = '%s'", mark, text, userId.toString(), bookId.toString(), id.toString());
+                        "SET mark = %d, text = '%s', user_id = '%s', book_id = '%s' WHERE id = '%s'", 
+                        mark, text, userId.toString(), bookId.toString(), id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

@@ -38,8 +38,7 @@ public class OrderRepository {
     }
 
     public Order selectOrderById(UUID id) throws SQLException {
-        String query = String.format("SELECT * FROM orders " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("select * from orders WHERE id = '%s'", id.toString());
         Order order = new Order();
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -67,8 +66,7 @@ public class OrderRepository {
     }
 
     public void removeOrder(UUID id) throws SQLException {
-        String query = String.format("DELETE FROM orders " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("DELETE FROM orders WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -78,8 +76,8 @@ public class OrderRepository {
 
     public void updateOrder(UUID id, UUID bookId, UUID userId, String adress, boolean status) throws SQLException {
         String query = String.format("UPDATE orders " +
-                        "SET bookId = '%s', userId = '%s', adress = '%s', status = %b " +
-                        "WHERE id = '%s'", bookId.toString(), userId.toString(), adress, status, id.toString());
+                        "SET bookId = '%s', userId = '%s', adress = '%s', status = %b WHERE id = '%s'", 
+                        bookId.toString(), userId.toString(), adress, status, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

@@ -41,8 +41,7 @@ public class UserRepository {
     }
 
     public User selectUserById(UUID id) throws SQLException {
-        String query = String.format("SELECT * FROM users " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("select * from users WHERE id = '%s'", id.toString());
         User user = new User();
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -73,8 +72,7 @@ public class UserRepository {
     }
 
     public void removeUser(UUID id) throws SQLException {
-        String query = String.format("DELETE FROM users " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("DELETE FROM users WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -85,8 +83,7 @@ public class UserRepository {
     public void updateUser(UUID id, String name, String surname, UUID roleId, Date birthDate, String email, String passwordHash) throws SQLException {
         String query = String.format("UPDATE users " +
                         "SET name = '%s', surname = '%s', role_id = '%s', birth_date = '%s' " +
-                        "email = '%s', password_hash = '%s' " +
-                        "WHERE id = '%s'", 
+                        "email = '%s', password_hash = '%s' WHERE id = '%s'", 
                         name, surname, roleId.toString(), birthDate.toString(), email, passwordHash, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);

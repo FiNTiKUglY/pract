@@ -29,10 +29,6 @@ public class App {
         Connection connection = connect();
         var roleRepo = new RoleRepository(connection);
         roleRepo.removeRole(UUID.fromString("6fe895ca-abc8-473e-908c-bf673a76c190"));
-        var list = roleRepo.getRoles();
-        for (var entity : list) {
-            logger.info(entity.toString());
-        }
     }
 }
 

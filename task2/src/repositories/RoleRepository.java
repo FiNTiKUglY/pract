@@ -35,8 +35,7 @@ public class RoleRepository {
     }
 
     public Role selectRoleById(UUID id) throws SQLException {
-        String query = String.format("SELECT * FROM roles " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("select * from roles WHERE id = '%s'", id.toString());
         Role role = new Role();
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -61,8 +60,7 @@ public class RoleRepository {
     }
 
     public void removeRole(UUID id) throws SQLException {
-        String query = String.format("DELETE FROM roles " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("DELETE FROM roles WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -72,8 +70,8 @@ public class RoleRepository {
 
     public void updateRole(UUID id, String name) throws SQLException {
         String query = String.format("UPDATE roles " +
-                        "SET name = '%s' " +
-                        "WHERE id = '%s'", name, id.toString());
+                        "SET name = '%s' WHERE id = '%s'", 
+                        name, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

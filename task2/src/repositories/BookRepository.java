@@ -41,8 +41,7 @@ public class BookRepository {
     }
 
     public Book selectBookById(UUID id) throws SQLException {
-        String query = String.format("SELECT * FROM books " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("select * from books WHERE id = '%s'", id.toString());
         Book book = new Book();
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -73,8 +72,7 @@ public class BookRepository {
     }
 
     public void removeBook(UUID id) throws SQLException {
-        String query = String.format("DELETE FROM books " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("DELETE FROM books WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -85,8 +83,7 @@ public class BookRepository {
     public void updateBook(UUID id, String title, UUID authorId, String shortDescription, Double cost, String imageLink, String downloadLink) throws SQLException {
         String query = String.format("UPDATE books " +
                         "SET title = '%s', author_id = '%s', short_description = '%s', cost = %f " +
-                        "image_link = '%s', download_link = '%s' " +
-                        "WHERE id = '%s'", 
+                        "image_link = '%s', download_link = '%s' WHERE id = '%s'", 
                         title, authorId.toString(), shortDescription, cost, imageLink, downloadLink, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);

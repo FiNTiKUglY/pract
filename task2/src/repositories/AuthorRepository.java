@@ -38,8 +38,7 @@ public class AuthorRepository {
     }
 
     public Author selectAthorById(UUID id) throws SQLException {
-        String query = String.format("SELECT * FROM authors " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("select * from authors WHERE id = '%s'", id.toString());
         Author author = new Author();
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -67,8 +66,7 @@ public class AuthorRepository {
     }
 
     public void removeAuthor(UUID id) throws SQLException {
-        String query = String.format("DELETE FROM authors " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("DELETE FROM authors WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -78,8 +76,8 @@ public class AuthorRepository {
 
     public void updateAuthor(UUID id, String name, String surname, String biography, String imageLink) throws SQLException {
         String query = String.format("UPDATE roles " +
-                        "SET name = '%s', surname = '%s', biography = '%s', image_link = '%s' " +
-                        "WHERE id = '%s'", name, surname, biography, imageLink, id.toString());
+                        "SET name = '%s', surname = '%s', biography = '%s', image_link = '%s' WHERE id = '%s'", 
+                        name, surname, biography, imageLink, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

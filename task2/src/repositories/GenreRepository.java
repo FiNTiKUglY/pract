@@ -37,8 +37,7 @@ public class GenreRepository {
     }
 
     public Genre selectGenreById(UUID id) throws SQLException {
-        String query = String.format("SELECT * FROM genres " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("select * from genres WHERE id = '%s'", id.toString());
         Genre genre = new Genre();
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -64,8 +63,7 @@ public class GenreRepository {
     }
 
     public void removeGenre(UUID id) throws SQLException {
-        String query = String.format("DELETE FROM genres " +
-                        "WHERE id = '%s'", id.toString());
+        String query = String.format("DELETE FROM genres WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -75,8 +73,7 @@ public class GenreRepository {
 
     public void updateGenre(UUID id, String name, String description) throws SQLException {
         String query = String.format("UPDATE genres " +
-                        "SET name = '%s', description = '%s' " +
-                        "WHERE id = '%s'", name, description, id.toString());
+                        "SET name = '%s', description = '%s' WHERE id = '%s'", name, description, id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
