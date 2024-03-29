@@ -21,6 +21,10 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public List<Book> getAuthorBooks(UUID authorId) {
+        return bookRepository.findByAuthorId(authorId);
+    }
+
     public Book addBook(Book book) {
         return bookRepository.save(book);
     }

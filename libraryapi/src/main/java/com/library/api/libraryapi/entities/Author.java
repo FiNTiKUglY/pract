@@ -1,9 +1,12 @@
 package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +28,9 @@ public class Author {
 
     @Column(name = "image_link")
     private String imageLink;
+
+    @OneToMany(mappedBy="author")
+    private Set<Book> books;
 
     public UUID getId() {
         return id;

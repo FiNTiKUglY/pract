@@ -1,9 +1,13 @@
 package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
+import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +23,12 @@ public class Genre {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToMany()
+    @JoinTable(name="books_genres",
+            joinColumns=@JoinColumn(name="genre_id",referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id"))
+    private List<Book> books;
 
     public UUID getId() {
         return id;

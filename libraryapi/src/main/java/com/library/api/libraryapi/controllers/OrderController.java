@@ -3,7 +3,6 @@ package com.library.api.libraryapi.controllers;
 import java.util.List;
 import java.util.UUID;
 import com.library.api.libraryapi.services.OrderService;
-import com.library.api.libraryapi.services.UserService;
 import com.library.api.libraryapi.entities.Order;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;

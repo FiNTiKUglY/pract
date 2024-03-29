@@ -1,9 +1,13 @@
 package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
+import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,8 +21,9 @@ public class Book {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "author_id")
-    private UUID authorId;
+    @ManyToOne
+    @JoinColumn(name="author_id", nullable=false)
+    private Author author;
 
     @Column(name = "short_description")
     private String shortDescription;
@@ -31,6 +36,9 @@ public class Book {
 
     @Column(name = "download_link")
     private String downloadLink;
+
+    @ManyToMany(mappedBy="books")
+    private List<Genre> genres;
 
     public UUID getId() {
         return id;

@@ -25,6 +25,11 @@ public class ReviewController {
         return reviewService.getReviews();
     }
 
+    @GetMapping("/api/books/{id}/reviews")
+    public List<Review> getBookReviews(UUID bookId) {
+        return reviewService.getBookReviews(bookId);
+    }
+
     @GetMapping("/api/reviews/{id}")
     public Review getReviewById(@PathVariable UUID id) {
         return reviewService.getReviewById(id);
