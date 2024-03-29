@@ -10,7 +10,7 @@ CREATE TABLE users (
     email VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role_id uuid NOT NULL,
-    bith_date TIMESTAMP NOT NULL,
+    birth_date DATE NOT NULL,
     FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
