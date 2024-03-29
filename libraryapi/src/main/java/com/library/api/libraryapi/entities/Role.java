@@ -1,9 +1,11 @@
 package com.library.api.libraryapi.entities;
 
+import java.util.Set;
 import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +18,9 @@ public class Role {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy="role")
+    private Set<User> users;
 
     public UUID getId() {
         return id;

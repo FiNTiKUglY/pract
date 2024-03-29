@@ -2,11 +2,15 @@ package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
 import java.util.List;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
@@ -21,8 +25,8 @@ public class Book {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name="author_id", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="author_id")
     private Author author;
 
     @Column(name = "short_description")
@@ -40,6 +44,12 @@ public class Book {
     @ManyToMany(mappedBy="books")
     private List<Genre> genres;
 
+    @OneToMany(mappedBy="book")
+    private Set<Review> reviews;
+
+    @ManyToMany(mappedBy="books")
+    private List<Order> orders;
+
     public UUID getId() {
         return id;
     }
@@ -54,14 +64,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public UUID getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(UUID authorId) {
-        this.authorId = authorId;
     }
 
     public String getShortDescription() {

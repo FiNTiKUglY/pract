@@ -2,9 +2,18 @@ package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
 import java.util.Date;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -28,11 +37,18 @@ public class User {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Column(name = "role_id")
-    private UUID roleId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="role_id")
+    private Role role;
 
     @Column(name = "birth_date")
     private Date birthDate;
+
+    @OneToMany(mappedBy="user")
+    private Set<Order> orders;
+
+    @OneToMany(mappedBy="user")
+    private Set<Review> reviews;
 
     public String getEmail() {
         return email;
@@ -72,14 +88,6 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public UUID getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(UUID roleId) {
-        this.roleId = roleId;
     }
 
     public Date getBirthDate() {
