@@ -71,4 +71,12 @@ public class Author {
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 }
