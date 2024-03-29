@@ -12,9 +12,7 @@ public class User {
     private UUID roleId;
     private Date birthDate;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(UUID id, String name, String surname, 
                 String email, String passwordHash,

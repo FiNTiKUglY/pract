@@ -27,7 +27,6 @@ public class DbConfig {
     }
 
     public static String getDbUrl() {
-
         return properties.getProperty("db.url");
     }
 

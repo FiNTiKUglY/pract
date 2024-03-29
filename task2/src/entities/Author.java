@@ -9,9 +9,7 @@ public class Author {
     private String biography;
     private String imageLink;
 
-    public Author() {
-
-    }
+    public Author() {}
 
     public Author(UUID id, String name, String surname, 
                 String biography, String imageLink) {

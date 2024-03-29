@@ -6,9 +6,7 @@ public class Role {
     private UUID id;
     private String name;
 
-    public Role() {
-
-    }
+    public Role() {}
 
     public Role(UUID id, String name) {
         this.id = id;

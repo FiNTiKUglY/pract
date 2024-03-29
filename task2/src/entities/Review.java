@@ -9,9 +9,7 @@ public class Review {
     private UUID userId;
     private UUID bookId;
 
-    public Review() {
-
-    }
+    public Review() {}
 
     public Review(UUID id, int mark, String text, 
                     UUID userId, UUID bookId) {

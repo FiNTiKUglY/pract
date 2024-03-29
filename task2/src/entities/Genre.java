@@ -7,9 +7,7 @@ public class Genre {
     private String name;
     private String description;
 
-    public Genre() {
-        
-    }
+    public Genre() {}
 
     public Genre(UUID id, String name, String description) {
         this.id = id;

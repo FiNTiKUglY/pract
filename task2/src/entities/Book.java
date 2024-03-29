@@ -11,9 +11,7 @@ public class Book {
     private String imageLink;
     private String downloadLink;
 
-    public Book() {
-
-    }
+    public Book() {}
 
     public Book(UUID id, String title, UUID authorId, 
                     String shortDescription, Double cost,

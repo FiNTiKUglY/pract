@@ -9,9 +9,7 @@ public class Order {
     private String adress;
     private boolean status;
 
-    public Order() {
-
-    }
+    public Order() {}
 
     public Order(UUID id, UUID bookId, UUID userId, 
                     String adress, boolean status) {
