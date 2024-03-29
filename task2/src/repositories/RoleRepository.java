@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import entities.IEntity;
 import entities.Role;
 
-public class RoleRepository {
+public class RoleRepository implements BaseRepository {
     private Connection connection;
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -19,8 +20,8 @@ public class RoleRepository {
         this.connection = connection;
     }
 
-    public List<Role> getRoles() throws SQLException {
-        ArrayList<Role> roles = new ArrayList<>();
+    public List<IEntity> getAll() throws SQLException {
+        ArrayList<IEntity> roles = new ArrayList<>();
         String query = "select * from roles";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -34,7 +35,7 @@ public class RoleRepository {
         return roles;
     }
 
-    public Role selectRoleById(UUID id) throws SQLException {
+    public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from roles WHERE id = '%s'", id.toString());
         Role role = new Role();
         try (Statement stmt = connection.createStatement()) {
@@ -49,9 +50,10 @@ public class RoleRepository {
         return role;
     }
 
-    public void addRole(UUID id, String name) throws SQLException {
+    public void add(IEntity entity) throws SQLException {
+        var role = (Role)entity;
         String query = String.format("INSERT INTO roles " +
-                        "VALUES ('%s', '%s')", id.toString(), name);
+                        "VALUES ('%s', '%s')", role.getId().toString(), role.getName());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -59,7 +61,7 @@ public class RoleRepository {
         }
     }
 
-    public void removeRole(UUID id) throws SQLException {
+    public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM roles WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
@@ -68,10 +70,11 @@ public class RoleRepository {
         }
     }
 
-    public void updateRole(UUID id, String name) throws SQLException {
+    public void update(IEntity entity) throws SQLException {
+        var role = (Role)entity;
         String query = String.format("UPDATE roles " +
                         "SET name = '%s' WHERE id = '%s'", 
-                        name, id.toString());
+                        role.getName(), role.getId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

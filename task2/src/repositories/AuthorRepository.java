@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import entities.Author;
+import entities.*;
 
-public class AuthorRepository {
+public class AuthorRepository implements BaseRepository {
     private Connection connection;
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -19,8 +19,8 @@ public class AuthorRepository {
         this.connection = connection;
     }
 
-    public List<Author> getAuthors() throws SQLException {
-        ArrayList<Author> authors = new ArrayList<>();
+    public List<IEntity> getAll() throws SQLException {
+        ArrayList<IEntity> authors = new ArrayList<>();
         String query = "select * from authors";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -37,7 +37,7 @@ public class AuthorRepository {
         return authors;
     }
 
-    public Author selectAthorById(UUID id) throws SQLException {
+    public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from authors WHERE id = '%s'", id.toString());
         Author author = new Author();
         try (Statement stmt = connection.createStatement()) {
@@ -55,9 +55,11 @@ public class AuthorRepository {
         return author;
     }
 
-    public void addAuthor(UUID id, String name, String surname, String biography, String imageLink) throws SQLException {
+    public void add(IEntity entity) throws SQLException {
+        var author = (Author)entity;
         String query = String.format("INSERT INTO authors " +
-                        "VALUES ('%s', '%s', '%s', '%s', '%s')", id.toString(), name, surname, biography, imageLink);
+                        "VALUES ('%s', '%s', '%s', '%s', '%s')", 
+                        author.getId().toString(), author.getName(), author.getSurname(), author.getBiography(), author.getImageLink());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -65,7 +67,7 @@ public class AuthorRepository {
         }
     }
 
-    public void removeAuthor(UUID id) throws SQLException {
+    public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM authors WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
@@ -74,10 +76,11 @@ public class AuthorRepository {
         }
     }
 
-    public void updateAuthor(UUID id, String name, String surname, String biography, String imageLink) throws SQLException {
+    public void update(IEntity entity) throws SQLException {
+        var author = (Author)entity;
         String query = String.format("UPDATE roles " +
                         "SET name = '%s', surname = '%s', biography = '%s', image_link = '%s' WHERE id = '%s'", 
-                        name, surname, biography, imageLink, id.toString());
+                        author.getName(), author.getSurname(), author.getBiography(), author.getImageLink(), author.getId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

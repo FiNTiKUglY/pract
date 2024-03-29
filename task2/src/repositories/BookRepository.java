@@ -10,8 +10,9 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import entities.Book;
+import entities.IEntity;
 
-public class BookRepository {
+public class BookRepository implements BaseRepository {
     private Connection connection;
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -20,8 +21,8 @@ public class BookRepository {
         this.connection = connection;
     }
 
-    public List<Book> getBooks() throws SQLException {
-        ArrayList<Book> books = new ArrayList<>();
+    public List<IEntity> getAll() throws SQLException {
+        ArrayList<IEntity> books = new ArrayList<>();
         String query = "select * from books";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -40,7 +41,7 @@ public class BookRepository {
         return books;
     }
 
-    public Book selectBookById(UUID id) throws SQLException {
+    public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from books WHERE id = '%s'", id.toString());
         Book book = new Book();
         try (Statement stmt = connection.createStatement()) {
@@ -60,10 +61,12 @@ public class BookRepository {
         return book;
     }
 
-    public void addBook(UUID id, String title, UUID authorId, String shortDescription, Double cost, String imageLink, String downloadLink) throws SQLException {
+    public void add(IEntity entity) throws SQLException {
+        var book = (Book)entity;
         String query = String.format("INSERT INTO books " +
                         "VALUES ('%s', '%s', '%s', '%s', %f, '%s', '%s')", 
-                        id.toString(), title, authorId.toString(), shortDescription, cost, imageLink, downloadLink);
+                        book.getId().toString(), book.getTitle(), book.getAuthorId().toString(), book.getShortDescription(), 
+                        book.getCost(), book.getImageLink(), book.getDownloadLink(), book.getId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -71,7 +74,7 @@ public class BookRepository {
         }
     }
 
-    public void removeBook(UUID id) throws SQLException {
+    public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM books WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
@@ -80,11 +83,13 @@ public class BookRepository {
         }
     }
 
-    public void updateBook(UUID id, String title, UUID authorId, String shortDescription, Double cost, String imageLink, String downloadLink) throws SQLException {
+    public void update(IEntity entity) throws SQLException {
+        var book = (Book)entity;
         String query = String.format("UPDATE books " +
                         "SET title = '%s', author_id = '%s', short_description = '%s', cost = %f " +
                         "image_link = '%s', download_link = '%s' WHERE id = '%s'", 
-                        title, authorId.toString(), shortDescription, cost, imageLink, downloadLink, id.toString());
+                        book.getTitle(), book.getAuthorId().toString(), book.getShortDescription(), book.getCost(), 
+                        book.getImageLink(), book.getDownloadLink(), book.getId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

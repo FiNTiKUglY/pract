@@ -2,7 +2,7 @@ package entities;
 
 import java.util.UUID;
 
-public class Book {
+public class Book implements IEntity {
     private UUID id;
     private String title;
     private UUID authorId;

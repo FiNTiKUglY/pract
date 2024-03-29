@@ -2,21 +2,19 @@ package entities;
 
 import java.util.UUID;
 
-public class Order {
+public class Order implements IEntity {
     private UUID id;
-    private UUID bookId;
     private UUID userId;
-    private String adress;
+    private String address;
     private boolean status;
 
     public Order() {}
 
-    public Order(UUID id, UUID bookId, UUID userId, 
-                    String adress, boolean status) {
+    public Order(UUID id, UUID userId, 
+                    String address, boolean status) {
         this.id = id;
-        this.bookId = bookId;
         this.userId = userId;
-        this.adress = adress;
+        this.address = address;
         this.status = status;
     }
 
@@ -28,14 +26,6 @@ public class Order {
         this.id = id;
     }
 
-    public UUID getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(UUID bookId) {
-        this.bookId = bookId;
-    }
-
     public UUID getUserId() {
         return userId;
     }
@@ -44,15 +34,15 @@ public class Order {
         this.userId = userId;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -62,6 +52,6 @@ public class Order {
 
     @Override
     public String toString() {
-        return String.format("%s,%n status: %b%nuser id: %s%nbook id: %s%nid: %s", adress, status, userId.toString(), bookId.toString(), id.toString());
+        return String.format("%s,%n status: %b%nuser id: %s%nid: %s", address, status, userId.toString(), id.toString());
     }
 }

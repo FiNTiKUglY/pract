@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import entities.IEntity;
 import entities.Review;
 
-public class ReviewRepository {
+public class ReviewRepository implements BaseRepository {
     private Connection connection;
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -19,8 +20,8 @@ public class ReviewRepository {
         this.connection = connection;
     }
 
-    public List<Review> getReviews() throws SQLException {
-        ArrayList<Review> reviews = new ArrayList<>();
+    public List<IEntity> getAll() throws SQLException {
+        ArrayList<IEntity> reviews = new ArrayList<>();
         String query = "select * from reviews";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -37,7 +38,7 @@ public class ReviewRepository {
         return reviews;
     }
 
-    public Review selectReviewById(UUID id) throws SQLException {
+    public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from reviews WHERE id = '%s'", id.toString());
         Review review = new Review();
         try (Statement stmt = connection.createStatement()) {
@@ -55,9 +56,12 @@ public class ReviewRepository {
         return review;
     }
 
-    public void addReview(UUID id, int mark, String text, UUID userId, UUID bookId) throws SQLException {
+    public void add(IEntity entity) throws SQLException {
+        var review = (Review)entity;
         String query = String.format("INSERT INTO reviews " +
-                        "VALUES ('%s', %d, '%s', '%s', '%s')", id.toString(), mark, text, userId.toString(), bookId.toString());
+                        "VALUES ('%s', %d, '%s', '%s', '%s')", 
+                        review.getId().toString(), review.getMark(), review.getText(), 
+                        review.getUserId().toString(), review.getBookId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -65,7 +69,7 @@ public class ReviewRepository {
         }
     }
 
-    public void removeReview(UUID id) throws SQLException {
+    public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM reviews WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
@@ -74,10 +78,12 @@ public class ReviewRepository {
         }
     }
 
-    public void updateReview(UUID id, int mark, String text, UUID userId, UUID bookId) throws SQLException {
+    public void update(IEntity entity) throws SQLException {
+        var review = (Review)entity;
         String query = String.format("UPDATE reviews " +
                         "SET mark = %d, text = '%s', user_id = '%s', book_id = '%s' WHERE id = '%s'", 
-                        mark, text, userId.toString(), bookId.toString(), id.toString());
+                        review.getMark(), review.getText(), review.getUserId().toString(),
+                        review.getBookId().toString(), review.getId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

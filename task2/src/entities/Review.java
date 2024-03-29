@@ -2,7 +2,7 @@ package entities;
 
 import java.util.UUID;
 
-public class Review {
+public class Review implements IEntity {
     private UUID id;
     private int mark;
     private String text;

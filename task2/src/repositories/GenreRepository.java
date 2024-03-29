@@ -10,8 +10,9 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import entities.Genre;
+import entities.IEntity;
 
-public class GenreRepository {
+public class GenreRepository implements BaseRepository {
     private Connection connection;
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -20,8 +21,8 @@ public class GenreRepository {
         this.connection = connection;
     }
 
-    public List<Genre> getGenres() throws SQLException {
-        ArrayList<Genre> genres = new ArrayList<>();
+    public List<IEntity> getAll() throws SQLException {
+        ArrayList<IEntity> genres = new ArrayList<>();
         String query = "select * from genres";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -36,7 +37,7 @@ public class GenreRepository {
         return genres;
     }
 
-    public Genre selectGenreById(UUID id) throws SQLException {
+    public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from genres WHERE id = '%s'", id.toString());
         Genre genre = new Genre();
         try (Statement stmt = connection.createStatement()) {
@@ -52,9 +53,11 @@ public class GenreRepository {
         return genre;
     }
 
-    public void addGenre(UUID id, String name, String description) throws SQLException {
+    public void add(IEntity entity) throws SQLException {
+        var genre = (Genre)entity;
         String query = String.format("INSERT INTO orders " +
-                        "VALUES ('%s', '%s', '%s')", id.toString(), name, description);
+                        "VALUES ('%s', '%s', '%s')", 
+                        genre.getId().toString(), genre.getName(), genre.getDescription());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -62,7 +65,7 @@ public class GenreRepository {
         }
     }
 
-    public void removeGenre(UUID id) throws SQLException {
+    public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM genres WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
@@ -71,9 +74,11 @@ public class GenreRepository {
         }
     }
 
-    public void updateGenre(UUID id, String name, String description) throws SQLException {
+    public void update(IEntity entity) throws SQLException {
+        var genre = (Genre)entity;
         String query = String.format("UPDATE genres " +
-                        "SET name = '%s', description = '%s' WHERE id = '%s'", name, description, id.toString());
+                        "SET name = '%s', description = '%s' WHERE id = '%s'", 
+                        genre.getName(), genre.getDescription(), genre.getId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

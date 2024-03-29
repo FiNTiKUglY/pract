@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import entities.IEntity;
 import entities.User;
 
-public class UserRepository {
+public class UserRepository implements BaseRepository {
     private Connection connection;
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -20,8 +20,8 @@ public class UserRepository {
         this.connection = connection;
     }
 
-    public List<User> getUsers() throws SQLException {
-        ArrayList<User> users = new ArrayList<>();
+    public List<IEntity> getAll() throws SQLException {
+        ArrayList<IEntity> users = new ArrayList<>();
         String query = "select * from users";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -40,7 +40,7 @@ public class UserRepository {
         return users;
     }
 
-    public User selectUserById(UUID id) throws SQLException {
+    public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from users WHERE id = '%s'", id.toString());
         User user = new User();
         try (Statement stmt = connection.createStatement()) {
@@ -60,10 +60,12 @@ public class UserRepository {
         return user;
     }
 
-    public void addUser(UUID id, String name, String surname, UUID roleId, Date birthDate, String email, String passwordHash) throws SQLException {
+    public void add(IEntity entity) throws SQLException {
+        var user = (User)entity;
         String query = String.format("INSERT INTO users " +
                         "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
-                        id.toString(), name, surname, email, passwordHash, roleId.toString(), birthDate.toString());
+                        user.getId().toString(), user.getName(), user.getSurname(), user.getEmail(), 
+                        user.getPasswordHash(), user.getRoleId().toString(), user.getBirthDate().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -71,7 +73,7 @@ public class UserRepository {
         }
     }
 
-    public void removeUser(UUID id) throws SQLException {
+    public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM users WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
@@ -80,11 +82,13 @@ public class UserRepository {
         }
     }
 
-    public void updateUser(UUID id, String name, String surname, UUID roleId, Date birthDate, String email, String passwordHash) throws SQLException {
+    public void update(IEntity entity) throws SQLException {
+        var user = (User)entity;
         String query = String.format("UPDATE users " +
                         "SET name = '%s', surname = '%s', role_id = '%s', birth_date = '%s' " +
                         "email = '%s', password_hash = '%s' WHERE id = '%s'", 
-                        name, surname, roleId.toString(), birthDate.toString(), email, passwordHash, id.toString());
+                        user.getName(), user.getSurname(), user.getEmail(), user.getPasswordHash(),
+                        user.getRoleId().toString(), user.getBirthDate().toString(), user.getId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {

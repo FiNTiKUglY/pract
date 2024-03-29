@@ -2,7 +2,7 @@ package entities;
 
 import java.util.UUID;
 
-public class Role {
+public class Role implements IEntity {
     private UUID id;
     private String name;
 

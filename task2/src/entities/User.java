@@ -3,7 +3,7 @@ package entities;
 import java.util.UUID;
 import java.util.Date;
 
-public class User {
+public class User implements IEntity {
     private UUID id;
     private String name;
     private String surname;
