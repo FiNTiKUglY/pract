@@ -74,8 +74,11 @@ public class App {
                 repository.add(entity);
                 break;
             case 2:
-                repository.getAll();
-                logger.info("%nType id for update");
+                var listEntities = repository.getAll();
+                for (int i = 0; i < listEntities.size(); i++) {
+                    logger.info(String.format("%d. %s%n", i+1, listEntities.get(i).toString()));
+                }
+                logger.info("\nType id for update");
                 var id = UUID.fromString(in.next());
                 entity = repository.getById(id);
                 fields = entity.getClass().getDeclaredFields();
@@ -115,13 +118,19 @@ public class App {
                 repository.update(entity);
                 break;
             case 3:
-                repository.getAll();
-                logger.info("%nType id for remove");
+                listEntities = repository.getAll();
+                for (int i = 0; i < listEntities.size(); i++) {
+                    logger.info(String.format("%d. %s%n", i+1, listEntities.get(i).toString()));
+                }
+                logger.info("\nType id for remove");
                 var value = UUID.fromString(in.next());
                 repository.remove(value);
                 break;
             case 4:
-                repository.getAll();
+                listEntities = repository.getAll();
+                for (int i = 0; i < listEntities.size(); i++) {
+                    logger.info(String.format("%d. %s%n", i+1, listEntities.get(i).toString()));
+                }
                 break;
             default:
                 return;
@@ -178,14 +187,17 @@ public class App {
                     drawMenu(reviewRepo, review);
                     break;
                 default:
+                    if (connection != null) {
+                        try {
+                            connection.close();
+                        } catch (SQLException e) {
+                            logger.warning(e.getMessage());
+                        }
+                    }
                     return;
             }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {}
-            }
         }
+        
     }
 }
 

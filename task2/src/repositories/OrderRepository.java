@@ -79,7 +79,7 @@ public class OrderRepository implements BaseRepository {
         var order = (Order)entity;
         String query = String.format("UPDATE orders " +
                         "SET bookId = '%s', userId = '%s', adress = '%s', status = %b WHERE id = '%s'", 
-                        order.getId().toString(), order.getUserId().toString(), order.getAddress(), order.getStatus());
+                        order.getUserId().toString(), order.getAddress(), order.getStatus(), order.getId().toString());
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
