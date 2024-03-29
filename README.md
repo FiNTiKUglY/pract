@@ -1,14 +1,36 @@
-# ElecLibrary
+# Elec Library
+# Тема проекта: Электронная библиотека
 
-## 1. Сделать схему БД:
-план: 2 ч
+### [Ссылка на схему БД](https://github.com/FiNTiKUglY/pract/blob/master/schema.png "Схема БД - Электронная библиотека")
+### [Ссылка на ветку JDBC](https://github.com/FiNTiKUglY/pract/tree/jdbc "Ветка для JDBC приложения")  
 
-факт: 2 ч
-## 2. CRUD-операции с использованием JDBC:
-план: 6 ч
+### Задание 1
+* Придумать схему согласно теме проекта (минимум 7 таблиц). 
+* Обязательное наличие связи многие ко многим. 
+* Необходимо использовать PostgreSQL.
 
-факт: 6 ч
-## 3. Backend на SpringBoot + Hibernate:
-план: 18 ч
+#### [Результаты работы](https://github.com/rondarchik/PracticeTask/tree/main/docs "Схема БД и скрипты")
+* Ориентировачное время выполнения: 6 часов.
+* Фактическое время выполнения: 2 часа.
+* [Схема БД](https://github.com/FiNTiKUglY/pract/blob/master/schema.png)
+* [Скрипт создания таблиц](https://github.com/FiNTiKUglY/pract/blob/master/script.pgsql)
 
-факт: выполняется
+### Задание 2
+* Создать консольное приложение (CRUD-операции) с использованием JDBC.
+
+#### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/jdbc/task2/src "JDBC приложение")
+* Ориентировачное время выполнения: 12 часов.
+* Фактическое время выполнения: 6 часов.
+
+### Задание 3
+* Создать приложение с использованием на SpringBoot + Hibernate
+
+#### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/master/libraryapi/src/main/java/com/library/api/libraryapi "Java Spring приложение")
+* Ориентировачное время выполнения: 18 часов.
+* Фактическое время выполнения: в процессе.
+
+### Задание 4
+* Angular - Frontend
+
+### Задание 5
+* React - Frontend
