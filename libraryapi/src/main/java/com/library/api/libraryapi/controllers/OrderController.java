@@ -3,6 +3,7 @@ package com.library.api.libraryapi.controllers;
 import java.util.List;
 import java.util.UUID;
 import com.library.api.libraryapi.services.OrderService;
+import com.library.api.libraryapi.services.UserService;
 import com.library.api.libraryapi.entities.Order;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,12 +21,17 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping("/api/orders/get")
+    @GetMapping("/api/orders")
     public List<Order> getOrders() {
         return orderService.getOrders();
     }
 
-    @GetMapping("/api/orders/get/{id}")
+    @GetMapping("/api/users/{userId}/orders")
+    public List<Order> getUserOrders(@PathVariable UUID userId) {
+        return orderService.getUserOrders(userId);
+    }
+
+    @GetMapping("/api/orders/{id}")
     public Order getOrderById(@PathVariable UUID id) {
         return orderService.getOrderById(id);
     }

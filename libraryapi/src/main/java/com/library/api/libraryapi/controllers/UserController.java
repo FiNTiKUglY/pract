@@ -20,12 +20,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/api/users/get")
+    @GetMapping("/api/users")
     public List<User> getUsers() {
         return userService.getUsers();
     }
 
-    @GetMapping("/api/users/get/{id}")
+    @GetMapping("/api/users/{id}")
     public User getUserById(@PathVariable UUID id) {
         return userService.getUserById(id);
     }

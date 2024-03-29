@@ -20,12 +20,12 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
-    @GetMapping("/api/roles/get")
+    @GetMapping("/api/roles")
     public List<Role> getRoles() {
         return roleService.getRoles();
     }
 
-    @GetMapping("/api/roles/get/{id}")
+    @GetMapping("/api/roles/{id}")
     public Role getRoleById(@PathVariable UUID id) {
         return roleService.getRoleById(id);
     }

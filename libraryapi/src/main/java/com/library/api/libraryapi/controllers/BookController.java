@@ -20,12 +20,12 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @GetMapping("/api/books/get")
+    @GetMapping("/api/books")
     public List<Book> getBooks() {
         return bookService.getBooks();
     }
 
-    @GetMapping("/api/books/get/{id}")
+    @GetMapping("/api/books/{id}")
     public Book getBookById(@PathVariable UUID id) {
         return bookService.getBookById(id);
     }

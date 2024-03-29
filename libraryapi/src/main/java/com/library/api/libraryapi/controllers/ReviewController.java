@@ -20,12 +20,12 @@ public class ReviewController {
     @Autowired
     ReviewService reviewService;
 
-    @GetMapping("/api/reviews/get")
+    @GetMapping("/api/reviews")
     public List<Review> getReviews() {
         return reviewService.getReviews();
     }
 
-    @GetMapping("/api/reviews/get/{id}")
+    @GetMapping("/api/reviews/{id}")
     public Review getReviewById(@PathVariable UUID id) {
         return reviewService.getReviewById(id);
     }

@@ -26,6 +26,12 @@ public class Book {
     @Column(name = "cost")
     private Double cost;
 
+    @Column(name = "image_link")
+    private String imageLink;
+
+    @Column(name = "download_link")
+    private String downloadLink;
+
     public UUID getId() {
         return id;
     }
@@ -66,4 +72,19 @@ public class Book {
         this.cost = cost;
     }
 
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    public String getDownloadLink() {
+        return downloadLink;
+    }
+
+    public void setDownloadLink(String downloadLink) {
+        this.downloadLink = downloadLink;
+    }
 }

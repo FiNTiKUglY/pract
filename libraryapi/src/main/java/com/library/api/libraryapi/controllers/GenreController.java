@@ -20,12 +20,12 @@ public class GenreController {
     @Autowired
     GenreService genreService;
 
-    @GetMapping("/api/genres/get")
+    @GetMapping("/api/genres")
     public List<Genre> getGenres() {
         return genreService.getGenres();
     }
 
-    @GetMapping("/api/genres/get/{id}")
+    @GetMapping("/api/genres/{id}")
     public Genre getGenreById(@PathVariable UUID id) {
         return genreService.getGenreById(id);
     }

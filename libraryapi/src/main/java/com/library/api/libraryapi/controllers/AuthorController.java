@@ -20,12 +20,12 @@ public class AuthorController {
     @Autowired
     AuthorService authorService;
 
-    @GetMapping("/api/authors/get")
+    @GetMapping("/api/authors")
     public List<Author> getAuthors() {
         return authorService.getAuthors();
     }
 
-    @GetMapping("/api/authors/get/{id}")
+    @GetMapping("/api/authors/{id}")
     public Author getAuthorById(@PathVariable UUID id) {
         return authorService.getAuthorById(id);
     }

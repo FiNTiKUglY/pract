@@ -22,11 +22,33 @@ public class User {
     @Column(name = "surname")
     private String surname;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password_hash")
+    private String passwordHash;
+
     @Column(name = "role_id")
     private UUID roleId;
 
     @Column(name = "birth_date")
     private Date birthDate;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 
     public UUID getId() {
         return id;
@@ -67,6 +89,4 @@ public class User {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
-
-    
 }

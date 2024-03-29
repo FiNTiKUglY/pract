@@ -23,6 +23,9 @@ public class Author {
     @Column(name = "biography")
     private String biography;
 
+    @Column(name = "image_link")
+    private String imageLink;
+
     public UUID getId() {
         return id;
     }
@@ -55,4 +58,11 @@ public class Author {
         this.biography = biography;
     }
 
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
 }
