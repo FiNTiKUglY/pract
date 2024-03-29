@@ -180,7 +180,11 @@ public class App {
                 default:
                     return;
             }
-            connection.close();
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {}
+            }
         }
     }
 }
