@@ -9,7 +9,7 @@
 * Обязательное наличие связи многие ко многим. 
 * Необходимо использовать PostgreSQL.
 
-#### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/master"Схема БД и скрипты")
+#### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/master "Схема БД и скрипты")
 * Ориентировачное время выполнения: 6 часов.
 * Фактическое время выполнения: 2 часа.
 * [Схема БД](https://github.com/FiNTiKUglY/pract/blob/master/schema.png)
