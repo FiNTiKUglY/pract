@@ -78,7 +78,7 @@ public class AuthorRepository implements BaseRepository {
 
     public void update(IEntity entity) throws SQLException {
         var author = (Author)entity;
-        String query = String.format("UPDATE roles " +
+        String query = String.format("UPDATE authors " +
                         "SET name = '%s', surname = '%s', biography = '%s', image_link = '%s' WHERE id = '%s'", 
                         author.getName(), author.getSurname(), author.getBiography(), author.getImageLink(), author.getId().toString());
         try (Statement stmt = connection.createStatement()) {

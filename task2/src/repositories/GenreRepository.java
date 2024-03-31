@@ -55,7 +55,7 @@ public class GenreRepository implements BaseRepository {
 
     public void add(IEntity entity) throws SQLException {
         var genre = (Genre)entity;
-        String query = String.format("INSERT INTO orders " +
+        String query = String.format("INSERT INTO genres " +
                         "VALUES ('%s', '%s', '%s')", 
                         genre.getId().toString(), genre.getName(), genre.getDescription());
         try (Statement stmt = connection.createStatement()) {
