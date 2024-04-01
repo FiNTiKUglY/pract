@@ -22,7 +22,7 @@ public class BookRepository implements BaseRepository {
     }
 
     public List<IEntity> getAll() throws SQLException {
-        ArrayList<IEntity> books = new ArrayList<>();
+        List<IEntity> books = new ArrayList<>();
         String query = "select * from books";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);

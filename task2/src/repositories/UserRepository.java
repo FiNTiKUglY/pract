@@ -21,7 +21,7 @@ public class UserRepository implements BaseRepository {
     }
 
     public List<IEntity> getAll() throws SQLException {
-        ArrayList<IEntity> users = new ArrayList<>();
+        List<IEntity> users = new ArrayList<>();
         String query = "select * from users";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);

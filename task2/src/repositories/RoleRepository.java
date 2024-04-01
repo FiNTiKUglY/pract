@@ -21,7 +21,7 @@ public class RoleRepository implements BaseRepository {
     }
 
     public List<IEntity> getAll() throws SQLException {
-        ArrayList<IEntity> roles = new ArrayList<>();
+        List<IEntity> roles = new ArrayList<>();
         String query = "select * from roles";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);

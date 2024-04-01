@@ -21,7 +21,7 @@ public class OrderRepository implements BaseRepository {
     }
 
     public List<IEntity> getAll() throws SQLException {
-        ArrayList<IEntity> orders = new ArrayList<>();
+        List<IEntity> orders = new ArrayList<>();
         String query = "select * from orders";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);

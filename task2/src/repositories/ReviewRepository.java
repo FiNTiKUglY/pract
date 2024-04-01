@@ -21,7 +21,7 @@ public class ReviewRepository implements BaseRepository {
     }
 
     public List<IEntity> getAll() throws SQLException {
-        ArrayList<IEntity> reviews = new ArrayList<>();
+        List<IEntity> reviews = new ArrayList<>();
         String query = "select * from reviews";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);

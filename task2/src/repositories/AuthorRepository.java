@@ -20,7 +20,7 @@ public class AuthorRepository implements BaseRepository {
     }
 
     public List<IEntity> getAll() throws SQLException {
-        ArrayList<IEntity> authors = new ArrayList<>();
+        List<IEntity> authors = new ArrayList<>();
         String query = "select * from authors";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
