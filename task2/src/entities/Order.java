@@ -1,14 +1,19 @@
 package entities;
 
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order implements IEntity {
     private UUID id;
     private UUID userId;
     private String address;
     private boolean status;
+    private List<UUID> booksIds;
 
-    public Order() {}
+    public Order() {
+        this.booksIds = new ArrayList<>();
+    }
 
     public Order(UUID id, UUID userId, 
                     String address, boolean status) {
@@ -16,6 +21,7 @@ public class Order implements IEntity {
         this.userId = userId;
         this.address = address;
         this.status = status;
+        this.booksIds = new ArrayList<>();
     }
 
     public UUID getId() {
@@ -48,6 +54,18 @@ public class Order implements IEntity {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public void addBook(UUID bookId) {
+        this.booksIds.add(bookId);
+    }
+
+    public void removeBook(UUID bookId) {
+        this.booksIds.remove(bookId);
+    }
+
+    public List<UUID> getBooks() {
+        return booksIds;
     }
 
     @Override

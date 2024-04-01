@@ -1,17 +1,22 @@
 package entities;
 
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Book implements IEntity {
     private UUID id;
     private String title;
     private UUID authorId;
     private String shortDescription;
-    private Double cost;
+    private double cost;
     private String imageLink;
     private String downloadLink;
+    private List<UUID> genresIds;
 
-    public Book() {}
+    public Book() {
+        this.genresIds = new ArrayList<>();
+    }
 
     public Book(UUID id, String title, UUID authorId, 
                     String shortDescription, Double cost,
@@ -23,6 +28,7 @@ public class Book implements IEntity {
         this.cost = cost;
         this.imageLink = imageLink;
         this.downloadLink = downloadLink;
+        this.genresIds = new ArrayList<>();
     }
 
     public UUID getId() {
@@ -79,6 +85,18 @@ public class Book implements IEntity {
 
     public void setDownloadLink(String downloadLink) {
         this.downloadLink = downloadLink;
+    }
+
+    public void addGenre(UUID genreId) {
+        this.genresIds.add(genreId);
+    }
+
+    public void removeGenre(UUID genreId) {
+        this.genresIds.remove(genreId);
+    }
+
+    public List<UUID> getGenres() {
+        return genresIds;
     }
 
     @Override

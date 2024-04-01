@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -46,6 +47,7 @@ public class App {
         for (var field : fields) {
             field.setAccessible(true);
             logger.info("Type " + field.getName());
+            logger.info("Type " + field.getType());
             if (field.getType() == boolean.class)  {
                 String valueStr = in.next();
                 var value = Boolean.parseBoolean(valueStr);
@@ -70,6 +72,32 @@ public class App {
                 var strValue = in.next();
                 var value = formatter.parse(strValue);
                 field.set(entity, value);
+            }
+            else if (field.getName().equals("booksIds")) {
+                List<UUID> booksIds = (List<UUID>)field.get(entity);
+                while (true) {
+                    logger.info("Type 'cancel' if you want to stop add books");
+                    var value = in.next();
+                    if (value.equals("cancel")) {
+                        break;
+                    }
+                    var valueUUID = UUID.fromString(value);
+                    booksIds.add(valueUUID);
+                }
+                field.set(entity, booksIds);
+            }
+            else if (field.getName().equals("genresIds")) {
+                List<UUID> genreIds = (List<UUID>)field.get(entity);
+                while (true) {
+                    logger.info("Type 'cancel' if you want to stop add genres");
+                    var value = in.next();
+                    if (value.equals("cancel")) {
+                        break;
+                    }
+                    var valueUUID = UUID.fromString(value);
+                    genreIds.add(valueUUID);
+                }
+                field.set(entity, genreIds);
             }
             else {
                 var value = in.next();
@@ -111,6 +139,32 @@ public class App {
                 var strValue = in.next();
                 var value = formatter.parse(strValue);
                 field.set(entity, value);
+            }
+            else if (field.getName().equals("booksIds")) {
+                List<UUID> booksIds = (List<UUID>)field.get(entity);
+                while (true) {
+                    logger.info("Type 'cancel' if you want to stop add books");
+                    var value = in.next();
+                    if (value.equals("cancel")) {
+                        break;
+                    }
+                    var valueUUID = UUID.fromString(value);
+                    booksIds.add(valueUUID);
+                }
+                field.set(entity, booksIds);
+            }
+            else if (field.getName().equals("genresIds")) {
+                List<UUID> genreIds = (List<UUID>)field.get(entity);
+                while (true) {
+                    logger.info("Type 'cancel' if you want to stop add genres");
+                    var value = in.next();
+                    if (value.equals("cancel")) {
+                        break;
+                    }
+                    var valueUUID = UUID.fromString(value);
+                    genreIds.add(valueUUID);
+                }
+                field.set(entity, genreIds);
             }
             else {
                 var value = in.next();

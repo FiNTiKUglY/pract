@@ -67,11 +67,17 @@ public class BookRepository implements BaseRepository {
     public void add(IEntity entity) throws SQLException {
         var book = (Book)entity;
         String query = String.format("INSERT INTO books " +
-                        "VALUES ('%s', '%s', '%s', '%s', %f, '%s', '%s')", 
+                        "VALUES ('%s', '%s', '%s', '%s', %s, '%s', '%s')", 
                         book.getId().toString(), book.getTitle(), book.getAuthorId().toString(), book.getShortDescription(), 
-                        book.getCost(), book.getImageLink(), book.getDownloadLink(), book.getId().toString());
+                        book.getCost().toString().replace(',', '.'), book.getImageLink(), book.getDownloadLink(), book.getId().toString());
+        String query2 = "INSERT INTO books_genres VALUES ";
+        for (UUID genreId : book.getGenres()) {
+            query2 += String.format("('%s', '%s'), ", book.getId().toString(), genreId);
+        }
+        query2 = query2.substring(0, query2.length() - 2);
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
+            stmt.executeUpdate(query2);
         } catch (SQLException e) {
             logger.info(e.toString());
         }
@@ -91,12 +97,20 @@ public class BookRepository implements BaseRepository {
     public void update(IEntity entity) throws SQLException {
         var book = (Book)entity;
         String query = String.format("UPDATE books " +
-                        "SET title = '%s', author_id = '%s', short_description = '%s', cost = %f " +
+                        "SET title = '%s', author_id = '%s', short_description = '%s', cost = %s " +
                         "image_link = '%s', download_link = '%s' WHERE id = '%s'", 
-                        book.getTitle(), book.getAuthorId().toString(), book.getShortDescription(), book.getCost(), 
+                        book.getTitle(), book.getAuthorId().toString(), book.getShortDescription(), book.getCost().toString().replace(',', '.'), 
                         book.getImageLink(), book.getDownloadLink(), book.getId().toString());
+        String query2 = String.format("DELETE FROM books_genres WHERE book_id = '%s", book.getId().toString());
+        String query3 = "INSERT INTO books_genres VALUES ";
+        for (UUID genreId : book.getGenres()) {
+            query3 += String.format("('%s', '%s'), ", book.getId().toString(), genreId);
+        }
+        query3 = query3.substring(0, query3.length() - 2);
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
+            stmt.executeUpdate(query2);
+            stmt.executeUpdate(query3);
         } catch (SQLException e) {
             logger.info(e.toString());
         }

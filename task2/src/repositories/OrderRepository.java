@@ -62,8 +62,14 @@ public class OrderRepository implements BaseRepository {
         String query = String.format("INSERT INTO orders " +
                         "VALUES ('%s', '%s', '%s', %b)", 
                         order.getId().toString(), order.getUserId().toString(), order.getAddress(), order.getStatus());
+        String query2 = "INSERT INTO books_orders VALUES ";
+        for (UUID bookId : order.getBooks()) {
+            query2 += String.format("('%s', '%s'), ", bookId, order.getId().toString());
+        }
+        query2 = query2.substring(0, query2.length() - 2);
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
+            stmt.executeUpdate(query2);
         } catch (SQLException e) {
             logger.info(e.toString());
         }
@@ -84,8 +90,16 @@ public class OrderRepository implements BaseRepository {
         String query = String.format("UPDATE orders " +
                         "SET bookId = '%s', userId = '%s', adress = '%s', status = %b WHERE id = '%s'", 
                         order.getUserId().toString(), order.getAddress(), order.getStatus(), order.getId().toString());
+        String query2 = String.format("DELETE FROM books_orders WHERE order_id = '%s", order.getId().toString());
+        String query3 = "INSERT INTO books_orders VALUES ";
+        for (UUID bookId : order.getBooks()) {
+            query3 += String.format("('%s', '%s'), ", bookId, order.getId().toString());
+        }
+        query3 = query3.substring(0, query3.length() - 2);
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
+            stmt.executeUpdate(query2);
+            stmt.executeUpdate(query3);
         } catch (SQLException e) {
             logger.info(e.toString());
         }
