@@ -1,6 +1,9 @@
 package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,10 +28,12 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
+    @JsonIgnoreProperties(value = {"reviews", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="book_id")
+    @JsonIgnoreProperties(value = {"reviews", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Book book;
 
     public UUID getId() {

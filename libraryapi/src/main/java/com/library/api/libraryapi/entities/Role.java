@@ -2,6 +2,9 @@ package com.library.api.libraryapi.entities;
 
 import java.util.Set;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,6 +23,7 @@ public class Role {
     private String name;
 
     @OneToMany(mappedBy="role")
+    @JsonIgnoreProperties(value = {"role", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Set<User> users;
 
     public UUID getId() {

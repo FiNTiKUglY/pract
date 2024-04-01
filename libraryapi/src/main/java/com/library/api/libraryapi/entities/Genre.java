@@ -1,6 +1,9 @@
 package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,6 +28,7 @@ public class Genre {
     private String description;
 
     @ManyToMany()
+    @JsonIgnoreProperties(value = {"genres", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     @JoinTable(name="books_genres",
             joinColumns=@JoinColumn(name="genre_id",referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id"))

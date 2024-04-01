@@ -2,6 +2,9 @@ package com.library.api.libraryapi.entities;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,6 +25,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
+    @JsonIgnoreProperties(value = {"orders", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private User user;
 
     @Column(name = "adress")
@@ -31,6 +35,7 @@ public class Order {
     private boolean status;
 
     @ManyToMany()
+    @JsonIgnoreProperties(value = {"orders", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     @JoinTable(name="books_orders",
             joinColumns=@JoinColumn(name="order_id",referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id"))

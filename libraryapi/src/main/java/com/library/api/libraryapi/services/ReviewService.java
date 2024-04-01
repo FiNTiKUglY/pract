@@ -25,6 +25,10 @@ public class ReviewService {
         return reviewRepository.findByBookId(bookId);
     }
 
+    public List<Review> getUserReviews(UUID userId) {
+        return reviewRepository.findByUserId(userId);
+    }
+
     public Review addReview(Review review) {
         return reviewRepository.save(review);
     }

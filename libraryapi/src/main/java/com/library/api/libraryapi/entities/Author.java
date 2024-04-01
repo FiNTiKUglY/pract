@@ -1,6 +1,9 @@
 package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +32,7 @@ public class Author {
     private String imageLink;
 
     @OneToMany(mappedBy="author")
+    @JsonIgnoreProperties(value = {"author", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Set<Book> books;
 
     public UUID getId() {

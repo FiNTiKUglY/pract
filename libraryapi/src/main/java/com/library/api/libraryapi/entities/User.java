@@ -1,6 +1,10 @@
 package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -32,19 +36,23 @@ public class User {
     private String email;
 
     @Column(name = "password_hash")
+    @JsonIgnore
     private String passwordHash;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="role_id")
+    @JsonIgnoreProperties(value = {"users", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Role role;
 
     @Column(name = "birth_date")
     private Date birthDate;
 
     @OneToMany(mappedBy="user")
+    @JsonIgnoreProperties(value = {"user", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Set<Order> orders;
 
     @OneToMany(mappedBy="user")
+    @JsonIgnoreProperties(value = {"user", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Set<Review> reviews;
 
     public String getEmail() {

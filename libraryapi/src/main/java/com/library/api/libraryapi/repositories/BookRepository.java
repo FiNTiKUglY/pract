@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookRepository extends JpaRepository<Book, UUID> {
     List<Book> findByAuthorId(UUID authorId);
+    List<Book> findByGenreId(UUID genreId);
 }

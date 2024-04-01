@@ -25,6 +25,10 @@ public class BookService {
         return bookRepository.findByAuthorId(authorId);
     }
 
+    public List<Book> getGenreBooks(UUID genreId) {
+        return bookRepository.findByGenreId(genreId);
+    }
+
     public Book addBook(Book book) {
         return bookRepository.save(book);
     }

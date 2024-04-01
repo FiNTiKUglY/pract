@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, UUID> {
     List<Review> findByBookId(UUID bookId);
+    List<Review> findByUserId(UUID userId);
 }

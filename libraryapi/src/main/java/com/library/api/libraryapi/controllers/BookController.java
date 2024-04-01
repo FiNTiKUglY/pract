@@ -30,6 +30,11 @@ public class BookController {
         return bookService.getAuthorBooks(authorId);
     }
 
+    @GetMapping("/api/genres/{genreId}/books")
+    public List<Book> getGenreBooks(@PathVariable UUID genreId) {
+        return bookService.getGenreBooks(genreId);
+    }
+
     @GetMapping("/api/books/{id}")
     public Book getBookById(@PathVariable UUID id) {
         return bookService.getBookById(id);

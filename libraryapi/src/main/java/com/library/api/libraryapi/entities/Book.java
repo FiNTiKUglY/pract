@@ -1,6 +1,9 @@
 package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +30,7 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="author_id")
+    @JsonIgnoreProperties(value = {"books", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Author author;
 
     @Column(name = "short_description")
@@ -42,12 +46,15 @@ public class Book {
     private String downloadLink;
 
     @ManyToMany(mappedBy="books")
+    @JsonIgnoreProperties(value = {"books", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private List<Genre> genres;
 
     @OneToMany(mappedBy="book")
+    @JsonIgnoreProperties(value = {"book", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Set<Review> reviews;
 
     @ManyToMany(mappedBy="books")
+    @JsonIgnoreProperties(value = {"books", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private List<Order> orders;
 
     public UUID getId() {
