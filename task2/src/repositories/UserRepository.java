@@ -20,6 +20,7 @@ public class UserRepository implements BaseRepository {
         this.connection = connection;
     }
 
+    @Override
     public List<IEntity> getAll() throws SQLException {
         List<IEntity> users = new ArrayList<>();
         String query = "select * from users";
@@ -40,6 +41,7 @@ public class UserRepository implements BaseRepository {
         return users;
     }
 
+    @Override
     public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from users WHERE id = '%s'", id.toString());
         User user = new User();
@@ -60,6 +62,7 @@ public class UserRepository implements BaseRepository {
         return user;
     }
 
+    @Override
     public void add(IEntity entity) throws SQLException {
         var user = (User)entity;
         String query = String.format("INSERT INTO users " +
@@ -73,6 +76,7 @@ public class UserRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM users WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
@@ -82,6 +86,7 @@ public class UserRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void update(IEntity entity) throws SQLException {
         var user = (User)entity;
         String query = String.format("UPDATE users " +

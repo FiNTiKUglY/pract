@@ -20,6 +20,7 @@ public class OrderRepository implements BaseRepository {
         this.connection = connection;
     }
 
+    @Override
     public List<IEntity> getAll() throws SQLException {
         List<IEntity> orders = new ArrayList<>();
         String query = "select * from orders";
@@ -37,6 +38,7 @@ public class OrderRepository implements BaseRepository {
         return orders;
     }
 
+    @Override
     public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from orders WHERE id = '%s'", id.toString());
         Order order = new Order();
@@ -54,6 +56,7 @@ public class OrderRepository implements BaseRepository {
         return order;
     }
 
+    @Override
     public void add(IEntity entity) throws SQLException {
         var order = (Order)entity;
         String query = String.format("INSERT INTO orders " +
@@ -75,6 +78,7 @@ public class OrderRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void update(IEntity entity) throws SQLException {
         var order = (Order)entity;
         String query = String.format("UPDATE orders " +

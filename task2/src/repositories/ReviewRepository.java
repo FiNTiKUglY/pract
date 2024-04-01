@@ -20,6 +20,7 @@ public class ReviewRepository implements BaseRepository {
         this.connection = connection;
     }
 
+    @Override
     public List<IEntity> getAll() throws SQLException {
         List<IEntity> reviews = new ArrayList<>();
         String query = "select * from reviews";
@@ -38,6 +39,7 @@ public class ReviewRepository implements BaseRepository {
         return reviews;
     }
 
+    @Override
     public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from reviews WHERE id = '%s'", id.toString());
         Review review = new Review();
@@ -56,6 +58,7 @@ public class ReviewRepository implements BaseRepository {
         return review;
     }
 
+    @Override
     public void add(IEntity entity) throws SQLException {
         var review = (Review)entity;
         String query = String.format("INSERT INTO reviews " +
@@ -69,6 +72,7 @@ public class ReviewRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM reviews WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
@@ -78,6 +82,7 @@ public class ReviewRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void update(IEntity entity) throws SQLException {
         var review = (Review)entity;
         String query = String.format("UPDATE reviews " +

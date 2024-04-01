@@ -21,6 +21,7 @@ public class BookRepository implements BaseRepository {
         this.connection = connection;
     }
 
+    @Override
     public List<IEntity> getAll() throws SQLException {
         List<IEntity> books = new ArrayList<>();
         String query = "select * from books";
@@ -41,6 +42,7 @@ public class BookRepository implements BaseRepository {
         return books;
     }
 
+    @Override
     public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from books WHERE id = '%s'", id.toString());
         Book book = new Book();
@@ -61,6 +63,7 @@ public class BookRepository implements BaseRepository {
         return book;
     }
 
+    @Override
     public void add(IEntity entity) throws SQLException {
         var book = (Book)entity;
         String query = String.format("INSERT INTO books " +
@@ -74,6 +77,7 @@ public class BookRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM books WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
@@ -83,6 +87,7 @@ public class BookRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void update(IEntity entity) throws SQLException {
         var book = (Book)entity;
         String query = String.format("UPDATE books " +

@@ -21,6 +21,7 @@ public class GenreRepository implements BaseRepository {
         this.connection = connection;
     }
 
+    @Override
     public List<IEntity> getAll() throws SQLException {
         List<IEntity> genres = new ArrayList<>();
         String query = "select * from genres";
@@ -37,6 +38,7 @@ public class GenreRepository implements BaseRepository {
         return genres;
     }
 
+    @Override
     public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from genres WHERE id = '%s'", id.toString());
         Genre genre = new Genre();
@@ -53,6 +55,7 @@ public class GenreRepository implements BaseRepository {
         return genre;
     }
 
+    @Override
     public void add(IEntity entity) throws SQLException {
         var genre = (Genre)entity;
         String query = String.format("INSERT INTO genres " +
@@ -65,6 +68,7 @@ public class GenreRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM genres WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
@@ -74,6 +78,7 @@ public class GenreRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void update(IEntity entity) throws SQLException {
         var genre = (Genre)entity;
         String query = String.format("UPDATE genres " +

@@ -20,6 +20,7 @@ public class RoleRepository implements BaseRepository {
         this.connection = connection;
     }
 
+    @Override
     public List<IEntity> getAll() throws SQLException {
         List<IEntity> roles = new ArrayList<>();
         String query = "select * from roles";
@@ -35,6 +36,7 @@ public class RoleRepository implements BaseRepository {
         return roles;
     }
 
+    @Override
     public IEntity getById(UUID id) throws SQLException {
         String query = String.format("select * from roles WHERE id = '%s'", id.toString());
         Role role = new Role();
@@ -50,6 +52,7 @@ public class RoleRepository implements BaseRepository {
         return role;
     }
 
+    @Override
     public void add(IEntity entity) throws SQLException {
         var role = (Role)entity;
         String query = String.format("INSERT INTO roles " +
@@ -61,6 +64,7 @@ public class RoleRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void remove(UUID id) throws SQLException {
         String query = String.format("DELETE FROM roles WHERE id = '%s'", id.toString());
         try (Statement stmt = connection.createStatement()) {
@@ -70,6 +74,7 @@ public class RoleRepository implements BaseRepository {
         }
     }
 
+    @Override
     public void update(IEntity entity) throws SQLException {
         var role = (Role)entity;
         String query = String.format("UPDATE roles " +
