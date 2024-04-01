@@ -63,6 +63,7 @@ CREATE TABLE books_genres (
     FOREIGN KEY (book_id) REFERENCES books (id),
     FOREIGN KEY (genre_id) REFERENCES genres (id)
 );
+ALTER TABLE books_genres ADD PRIMARY KEY (book_id, genre_id);
 
 CREATE TABLE books_orders (
     book_id uuid NOT NULL,
@@ -70,3 +71,4 @@ CREATE TABLE books_orders (
     FOREIGN KEY (book_id) REFERENCES books (id),
     FOREIGN KEY (order_id) REFERENCES orders (id)
 );
+ALTER TABLE books_orders ADD PRIMARY KEY (book_id, order_id);
