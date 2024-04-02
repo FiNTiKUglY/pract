@@ -24,6 +24,11 @@ public class BookController {
         return bookService.getAuthorBooks(authorId);
     }
 
+    @GetMapping("/api/books")
+    public List<Book> getBooks() {
+        return bookService.getBooks();
+    }
+
     @GetMapping("/api/books/{id}")
     public Book getBookById(@PathVariable UUID id) {
         return bookService.getBookById(id);
