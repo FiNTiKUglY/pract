@@ -52,7 +52,7 @@ public class BookRepository implements BaseRepository {
                 book = new Book(UUID.fromString(rs.getString("id")),
                                     rs.getString("title"),
                                     UUID.fromString(rs.getString("author_id")),
-                                    rs.getString("description"),
+                                    rs.getString("short_description"),
                                     rs.getDouble("cost"),
                                     rs.getString("image_link"),
                                     rs.getString("download_link"));
