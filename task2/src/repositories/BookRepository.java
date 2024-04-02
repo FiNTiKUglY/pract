@@ -68,7 +68,7 @@ public class BookRepository implements BaseRepository {
         var book = (Book)entity;
         String query = String.format("INSERT INTO books " +
                         "VALUES ('%s', '%s', '%s', '%s', %s, '%s', '%s')", 
-                        book.getId().toString(), book.getTitle(), book.getAuthorId().toString(), book.getShortDescription(), 
+                        book.getId().toString(), book.getTitle(), book.getShortDescription(), book.getAuthorId().toString(),
                         book.getCost().toString().replace(',', '.'), book.getImageLink(), book.getDownloadLink(), book.getId().toString());
         String query2 = "INSERT INTO books_genres VALUES ";
         for (UUID genreId : book.getGenres()) {
@@ -97,9 +97,9 @@ public class BookRepository implements BaseRepository {
     public void update(IEntity entity) throws SQLException {
         var book = (Book)entity;
         String query = String.format("UPDATE books " +
-                        "SET title = '%s', author_id = '%s', short_description = '%s', cost = %s " +
+                        "SET title = '%s', short_description = '%s', author_id = '%s',  cost = %s " +
                         "image_link = '%s', download_link = '%s' WHERE id = '%s'", 
-                        book.getTitle(), book.getAuthorId().toString(), book.getShortDescription(), book.getCost().toString().replace(',', '.'), 
+                        book.getTitle(), book.getShortDescription(), book.getAuthorId().toString(), book.getCost().toString().replace(',', '.'), 
                         book.getImageLink(), book.getDownloadLink(), book.getId().toString());
         String query2 = String.format("DELETE FROM books_genres WHERE book_id = '%s", book.getId().toString());
         String query3 = "INSERT INTO books_genres VALUES ";

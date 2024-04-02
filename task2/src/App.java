@@ -9,16 +9,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.logging.Logger;
-
 
 import config.DbConfig;
 import repositories.*;
 import entities.*;
 
 public class App {
-    private static final Logger logger = Logger.getLogger(App.class.getName());
     private static final Scanner in = new Scanner(System.in);
+    private static final Connection connection;
+
+    static {
+        Connection tmp = null;
+        try {
+            tmp = connect();
+        } catch (SQLException e) {
+            System.console().printf(e.getMessage());
+        }
+        connection = tmp;
+    }
 
     public static Connection connect() throws SQLException {
         
@@ -30,7 +38,7 @@ public class App {
             return DriverManager.getConnection(jdbcUrl, user, password);
 
         } catch (SQLException  e) {
-            logger.warning(e.getMessage());
+            System.console().printf(e.getMessage());
             return null;
         }
     }
@@ -38,7 +46,34 @@ public class App {
     public static void printEntities(BaseRepository repository) throws SQLException {
         var listEntities = repository.getAll();
         for (int i = 0; i < listEntities.size(); i++) {
-            logger.info(String.format("%d. %s%n", i+1, listEntities.get(i).toString()));
+            System.console().printf(String.format("%d. %s%n%n", i+1, listEntities.get(i).toString()));
+        }
+    }
+
+    public static void printEntities(String fieldName) throws SQLException{
+        if (fieldName.startsWith("book")) {
+            BookRepository bookRepository = new BookRepository(connection);
+            printEntities(bookRepository);
+        }
+        else if (fieldName.startsWith("author")) {
+            AuthorRepository authorRepository = new AuthorRepository(connection);
+            printEntities(authorRepository);
+        }
+        else if (fieldName.startsWith("role")) {
+            RoleRepository roleRepository = new RoleRepository(connection);
+            printEntities(roleRepository);
+        }
+        else if (fieldName.startsWith("order")) {
+            OrderRepository orderRepository = new OrderRepository(connection);
+            printEntities(orderRepository);
+        }
+        else if (fieldName.startsWith("genre")) {
+            GenreRepository genreRepository = new GenreRepository(connection);
+            printEntities(genreRepository);
+        }
+        else if (fieldName.startsWith("user")) {
+            UserRepository userRepository = new UserRepository(connection);
+            printEntities(userRepository);
         }
     }
 
@@ -46,8 +81,7 @@ public class App {
         var fields = entity.getClass().getDeclaredFields();
         for (var field : fields) {
             field.setAccessible(true);
-            logger.info("Type " + field.getName());
-            logger.info("Type " + field.getType());
+            System.console().printf("Type " + field.getName() + "\n");
             if (field.getType() == boolean.class)  {
                 String valueStr = in.next();
                 var value = Boolean.parseBoolean(valueStr);
@@ -63,7 +97,12 @@ public class App {
                 var value = Double.parseDouble(valueStr);
                 field.set(entity, value);
             }
-            else if (field.getType() == UUID.class) {
+            else if (field.getType() == UUID.class && field.getName().contains("Id")) {
+                printEntities(field.getName());
+                var value = UUID.fromString(in.next());
+                field.set(entity, value);
+            }
+            else if (field.getType() == UUID.class && field.getName().equals("id")) {
                 var value = UUID.fromString(in.next());
                 field.set(entity, value);
             }
@@ -73,10 +112,15 @@ public class App {
                 var value = formatter.parse(strValue);
                 field.set(entity, value);
             }
+            else if (field.getType() == String.class) {
+                var value = in.next();
+                field.set(entity, value);
+            }
             else if (field.getName().equals("booksIds")) {
                 List<UUID> booksIds = (List<UUID>)field.get(entity);
+                printEntities(field.getName());
                 while (true) {
-                    logger.info("Type 'cancel' if you want to stop add books");
+                    System.console().printf("Type 'cancel' if you want to stop add books\n");
                     var value = in.next();
                     if (value.equals("cancel")) {
                         break;
@@ -88,8 +132,9 @@ public class App {
             }
             else if (field.getName().equals("genresIds")) {
                 List<UUID> genreIds = (List<UUID>)field.get(entity);
+                printEntities(field.getName());
                 while (true) {
-                    logger.info("Type 'cancel' if you want to stop add genres");
+                    System.console().printf("Type 'cancel' if you want to stop add genres\n");
                     var value = in.next();
                     if (value.equals("cancel")) {
                         break;
@@ -100,8 +145,7 @@ public class App {
                 field.set(entity, genreIds);
             }
             else {
-                var value = in.next();
-                field.set(entity, value);
+                System.console().printf("Unknown type");
             }
         }
         repository.add(entity);
@@ -114,7 +158,7 @@ public class App {
                 continue;
             }
             field.setAccessible(true);
-            logger.info("Type " + field.getName());
+            System.console().printf("Type " + field.getName());
             if (field.getType() == boolean.class)  {
                 String valueStr = in.next();
                 var value = Boolean.parseBoolean(valueStr);
@@ -143,7 +187,7 @@ public class App {
             else if (field.getName().equals("booksIds")) {
                 List<UUID> booksIds = (List<UUID>)field.get(entity);
                 while (true) {
-                    logger.info("Type 'cancel' if you want to stop add books");
+                    System.console().printf("Type 'cancel' if you want to stop add books\n");
                     var value = in.next();
                     if (value.equals("cancel")) {
                         break;
@@ -156,7 +200,7 @@ public class App {
             else if (field.getName().equals("genresIds")) {
                 List<UUID> genreIds = (List<UUID>)field.get(entity);
                 while (true) {
-                    logger.info("Type 'cancel' if you want to stop add genres");
+                    System.console().printf("Type 'cancel' if you want to stop add genres\n");
                     var value = in.next();
                     if (value.equals("cancel")) {
                         break;
@@ -176,11 +220,11 @@ public class App {
 
     public static void drawMenu(BaseRepository repository, IEntity entity) throws Exception {
         try {
-            logger.info("Choose action:");
-            logger.info("1. Add");
-            logger.info("2. Update");
-            logger.info("3. Remove");
-            logger.info("4. Show");
+            System.console().printf("Choose action:\n");
+            System.console().printf("1. Add\n");
+            System.console().printf("2. Update\n");
+            System.console().printf("3. Remove\n");
+            System.console().printf("4. Show\n");
             String chosenNumberStr = in.next();
             var chosenNumber = Integer.parseInt(chosenNumberStr);
             switch (chosenNumber) {
@@ -189,14 +233,14 @@ public class App {
                     break;
                 case 2:
                     printEntities(repository);
-                    logger.info("\nType id for update");
+                    System.console().printf("\nType id for update\n");
                     var id = UUID.fromString(in.next());
                     entity = repository.getById(id);
                     update(repository, entity);
                     break;
                 case 3:
                     printEntities(repository);
-                    logger.info("\nType id for remove");
+                    System.console().printf("\nType id for remove\n");
                     var value = UUID.fromString(in.next());
                     repository.remove(value);
                     break;
@@ -207,33 +251,32 @@ public class App {
                     return;
             }    
         } catch (NumberFormatException e) {
-            logger.warning("Typed value not number, try again");
+            System.console().printf("Typed value not number, try again\n");
         } catch (IllegalArgumentException e) {
-            logger.warning("Not correct format");
+            System.console().printf("Not correct format\n");
         } catch (ParseException e) {
-            logger.warning("Not correct date format");
+            System.console().printf("Not correct date format\n");
         } catch (SQLException e) {
-            logger.warning("UUID not found in db or connection lost");
+            System.console().printf("UUID not found in db or connection lost\n");
         }
     }    
 
     public static void main(String[] args) throws Exception {
-        Connection connection = connect();
         if (connection == null) {
-            logger.warning("Connection not found, cancelled...");
+            System.console().printf("Connection not found, cancelled...\n");
             return;
         }
         while (true) {
             try {
-                logger.info("Choose repo:");
-                logger.info("1. User");
-                logger.info("2. Role");
-                logger.info("3. Author");
-                logger.info("4. Book");
-                logger.info("5. Genre:");
-                logger.info("6. Order:");
-                logger.info("7. Review:");
-                logger.info("Type any other number to end.");
+                System.console().printf("Choose repo:\n");
+                System.console().printf("1. User\n");
+                System.console().printf("2. Role\n");
+                System.console().printf("3. Author\n");
+                System.console().printf("4. Book\n");
+                System.console().printf("5. Genre:\n");
+                System.console().printf("6. Order:\n");
+                System.console().printf("7. Review:\n");
+                System.console().printf("Type any other number to end.\n");
                 String chosenNumberStr = in.next();
                 var chosenNumber = Integer.parseInt(chosenNumberStr);
                 switch (chosenNumber) {
@@ -278,9 +321,9 @@ public class App {
                 }
             
             } catch (NumberFormatException e) {
-                logger.warning("Typed value not int, try again");
+                System.console().printf("Typed value not int, try again\n");
             } catch (SQLException e) {
-                logger.warning(e.getMessage());
+                System.console().printf(e.getMessage());
             }
         }
         
