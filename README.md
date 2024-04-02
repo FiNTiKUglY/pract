@@ -10,7 +10,7 @@
 * Необходимо использовать PostgreSQL.
 
 #### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/master "Схема БД и скрипты")
-* Ориентировачное время выполнения: 6 часов.
+* Ориентировочное время выполнения: 6 часов.
 * Фактическое время выполнения: 2 часа.
 * [Схема БД](https://github.com/FiNTiKUglY/pract/blob/master/schema.png)
 * [Скрипт создания таблиц](https://github.com/FiNTiKUglY/pract/blob/master/script.pgsql)
@@ -19,14 +19,14 @@
 * Создать консольное приложение (CRUD-операции) с использованием JDBC.
 
 #### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/jdbc/task2/src "JDBC приложение")
-* Ориентировачное время выполнения: 6 часов.
+* Ориентировочное время выполнения: 6 часов.
 * Фактическое время выполнения: 18 часов.
 
 ### Задание 3
 * Создать приложение с использованием на SpringBoot + Hibernate
 
 #### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/master/libraryapi/src/main/java/com/library/api/libraryapi "Java Spring приложение")
-* Ориентировачное время выполнения: 18 часов.
+* Ориентировочное время выполнения: 18 часов.
 * Фактическое время выполнения: в процессе.
 
 ### Задание 4
