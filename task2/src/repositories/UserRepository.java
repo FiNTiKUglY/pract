@@ -90,7 +90,7 @@ public class UserRepository implements BaseRepository {
     public void update(IEntity entity) throws SQLException {
         var user = (User)entity;
         String query = String.format("UPDATE users " +
-                        "SET name = '%s', surname = '%s', role_id = '%s', birth_date = '%s' " +
+                        "SET name = '%s', surname = '%s', role_id = '%s', birth_date = '%s', " +
                         "email = '%s', password_hash = '%s' WHERE id = '%s'", 
                         user.getName(), user.getSurname(), user.getEmail(), user.getPasswordHash(),
                         user.getRoleId().toString(), user.getBirthDate().toString(), user.getId().toString());

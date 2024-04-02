@@ -69,7 +69,7 @@ public class BookRepository implements BaseRepository {
         String query = String.format("INSERT INTO books " +
                         "VALUES ('%s', '%s', '%s', '%s', %s, '%s', '%s')", 
                         book.getId().toString(), book.getTitle(), book.getShortDescription(), book.getAuthorId().toString(),
-                        book.getCost().toString().replace(',', '.'), book.getImageLink(), book.getDownloadLink(), book.getId().toString());
+                        book.getCost().toString().replace(',', '.'), book.getDownloadLink(), book.getImageLink());
         String query2 = "INSERT INTO books_genres VALUES ";
         for (UUID genreId : book.getGenres()) {
             query2 += String.format("('%s', '%s'), ", book.getId().toString(), genreId);
@@ -97,11 +97,11 @@ public class BookRepository implements BaseRepository {
     public void update(IEntity entity) throws SQLException {
         var book = (Book)entity;
         String query = String.format("UPDATE books " +
-                        "SET title = '%s', short_description = '%s', author_id = '%s',  cost = %s " +
-                        "image_link = '%s', download_link = '%s' WHERE id = '%s'", 
+                        "SET title = '%s', short_description = '%s', author_id = '%s', cost = %s, " +
+                        "download_link = '%s', image_link = '%s' WHERE id = '%s'", 
                         book.getTitle(), book.getShortDescription(), book.getAuthorId().toString(), book.getCost().toString().replace(',', '.'), 
                         book.getImageLink(), book.getDownloadLink(), book.getId().toString());
-        String query2 = String.format("DELETE FROM books_genres WHERE book_id = '%s", book.getId().toString());
+        String query2 = String.format("DELETE FROM books_genres WHERE book_id = '%s'", book.getId().toString());
         String query3 = "INSERT INTO books_genres VALUES ";
         for (UUID genreId : book.getGenres()) {
             query3 += String.format("('%s', '%s'), ", book.getId().toString(), genreId);

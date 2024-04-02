@@ -90,7 +90,7 @@ public class OrderRepository implements BaseRepository {
         String query = String.format("UPDATE orders " +
                         "SET bookId = '%s', userId = '%s', adress = '%s', status = %b WHERE id = '%s'", 
                         order.getUserId().toString(), order.getAddress(), order.getStatus(), order.getId().toString());
-        String query2 = String.format("DELETE FROM books_orders WHERE order_id = '%s", order.getId().toString());
+        String query2 = String.format("DELETE FROM books_orders WHERE order_id = '%s'", order.getId().toString());
         String query3 = "INSERT INTO books_orders VALUES ";
         for (UUID bookId : order.getBooks()) {
             query3 += String.format("('%s', '%s'), ", bookId, order.getId().toString());
