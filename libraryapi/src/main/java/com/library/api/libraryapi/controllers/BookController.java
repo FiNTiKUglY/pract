@@ -13,26 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-
 @RestController
 public class BookController {
 
     @Autowired
     BookService bookService;
 
-    @GetMapping("/api/books")
-    public List<Book> getBooks() {
-        return bookService.getBooks();
-    }
-
     @GetMapping("/api/authors/{authorId}/books")
     public List<Book> getAuthorBooks(@PathVariable UUID authorId) {
         return bookService.getAuthorBooks(authorId);
-    }
-
-    @GetMapping("/api/genres/{genreId}/books")
-    public List<Book> getGenreBooks(@PathVariable UUID genreId) {
-        return bookService.getGenreBooks(genreId);
     }
 
     @GetMapping("/api/books/{id}")
