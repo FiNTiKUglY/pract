@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @RestController
@@ -34,16 +35,19 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/api/books/add")
     public Book addBook(@RequestBody Book book) {
         return bookService.addBook(book);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/api/books/update/{id}")
     public Book updateBook(@PathVariable UUID id, @RequestBody Book book) {
         return bookService.updateBook(id, book);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @DeleteMapping("/api/books/delete/{id}")
     public void deleteBook(@PathVariable UUID id) {
         bookService.deleteBookById(id);

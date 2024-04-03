@@ -2,6 +2,7 @@ package com.library.api.libraryapi.entities;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class Book {
     private Set<Review> reviews;
 
     @ManyToMany(mappedBy="books")
-    @JsonIgnoreProperties(value = {"books", "handler", "hibernateLazyInitializer"}, allowSetters=true)
+    @JsonIgnore
     private List<Order> orders;
 
     public UUID getId() {

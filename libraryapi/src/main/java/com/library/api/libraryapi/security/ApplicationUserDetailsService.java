@@ -31,7 +31,7 @@ public class ApplicationUserDetailsService implements UserDetailsService {
         var roleName = user.get().getRole().getName();
 
         return new User(
-                email,
+                user.get().getId().toString(),
                 user.get().getPasswordHash(),
                 Collections.singletonList(new SimpleGrantedAuthority(roleName)));
     }

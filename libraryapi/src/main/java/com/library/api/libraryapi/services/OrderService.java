@@ -1,17 +1,23 @@
 package com.library.api.libraryapi.services;
 
 import com.library.api.libraryapi.entities.Order;
+import com.library.api.libraryapi.entities.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
 
 import com.library.api.libraryapi.repositories.OrderRepository;
+import com.library.api.libraryapi.repositories.UserRepository;
 
 @Service
 public class OrderService {
     
     @Autowired OrderRepository orderRepository;
+    @Autowired UserRepository userRepository;
 
     public OrderService() {
         //Constructor for service
@@ -21,16 +27,25 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<Order> getUserOrders(UUID userId) {
+    public List<Order> getUserOrders(UUID userId, String userName) throws AccessDeniedException {
+        if (UUID.fromString(userName) != userId) {
+            throw new AccessDeniedException("");
+        }
         return orderRepository.findByUserId(userId);
     }
 
-    public Order addOrder(Order order) {
+    public Order addOrder(Order order, String userName) {
+        User user = userRepository.findById(UUID.fromString(userName)).get();
+        order.setUser(user);
         return orderRepository.save(order);
     }
 
-    public Order getOrderById(UUID id) {
-        return orderRepository.findById(id).get();
+    public Order getOrderById(UUID id, String userName) throws AccessDeniedException {
+        var order = orderRepository.findById(id).get();
+        if (UUID.fromString(userName) != order.getUser().getId()) {
+            throw new AccessDeniedException("");
+        }
+        return order;
     }
 
     public void deleteOrderById(UUID id) {

@@ -6,6 +6,8 @@ import com.library.api.libraryapi.models.RegisterModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,8 +41,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUserById(UUID id) {
-        return userRepository.findById(id).get();
+    public User getUserById(UUID id, String userName) throws AccessDeniedException {
+        var user = userRepository.findById(id).get();
+        if (UUID.fromString(userName) != user.getId()) {
+            throw new AccessDeniedException("");
+        }
+        return user;
     }
 
     public User getUserByEmail(String email) {
@@ -55,7 +61,10 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User updateUser(UUID id, User user) {
+    public User updateUser(UUID id, User user, String userName) throws AccessDeniedException {
+        if (UUID.fromString(userName) != user.getId()) {
+            throw new AccessDeniedException("");
+        }
         user.setId(id);
         return userRepository.save(user);
     }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @RestController
@@ -29,16 +30,19 @@ public class AuthorController {
         return authorService.getAuthorById(id);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/api/authors/add")
     public Author addAuthor(@RequestBody Author author) {
         return authorService.addAuthor(author);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/api/authors/update/{id}")
     public Author updateAuthor(@PathVariable UUID id, @RequestBody Author author) {
         return authorService.updateAuthor(id, author);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @DeleteMapping("/api/authors/delete/{id}")
     public void deleteAuthor(@PathVariable UUID id) {
         authorService.deleteAuthorById(id);

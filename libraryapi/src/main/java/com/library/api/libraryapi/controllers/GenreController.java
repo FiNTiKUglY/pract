@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @RestController
@@ -29,16 +30,19 @@ public class GenreController {
         return genreService.getGenreById(id);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/api/genres/add")
     public Genre addGenre(@RequestBody Genre genre) {
         return genreService.addGenre(genre);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/api/genres/update/{id}")
     public Genre updateGenre(@PathVariable UUID id, @RequestBody Genre genre) {
         return genreService.updateGenre(id, genre);
     }
 
+    @PreAuthorize("hasRole('admin')")
     @DeleteMapping("/api/genres/delete/{id}")
     public void deleteGenre(@PathVariable UUID id) {
         genreService.deleteGenreById(id);
