@@ -60,15 +60,15 @@ CREATE TABLE genres (
 CREATE TABLE books_genres (
     book_id uuid NOT NULL,
     genre_id uuid NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES books (id),
-    FOREIGN KEY (genre_id) REFERENCES genres (id)
+    FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES genres (id) ON DELETE CASCADE
 );
 ALTER TABLE books_genres ADD PRIMARY KEY (book_id, genre_id);
 
 CREATE TABLE books_orders (
     book_id uuid NOT NULL,
     order_id uuid NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES books (id),
-    FOREIGN KEY (order_id) REFERENCES orders (id)
+    FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE
 );
 ALTER TABLE books_orders ADD PRIMARY KEY (book_id, order_id);
