@@ -28,7 +28,7 @@ public class OrderService {
     }
 
     public List<Order> getUserOrders(UUID userId, String userName) throws AccessDeniedException {
-        if (UUID.fromString(userName) != userId) {
+        if (!userName.equals(userId.toString())) {
             throw new AccessDeniedException("");
         }
         return orderRepository.findByUserId(userId);
@@ -42,7 +42,7 @@ public class OrderService {
 
     public Order getOrderById(UUID id, String userName) throws AccessDeniedException {
         var order = orderRepository.findById(id).get();
-        if (UUID.fromString(userName) != order.getUser().getId()) {
+        if (!userName.equals(order.getUser().getId().toString())) {
             throw new AccessDeniedException("");
         }
         return order;

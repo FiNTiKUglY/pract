@@ -46,7 +46,7 @@ public class ReviewService {
 
     public void deleteReviewById(UUID id, String userName) throws AccessDeniedException {
         var review = getReviewById(id);
-        if (UUID.fromString(userName) != review.getUser().getId()) {
+        if (!userName.equals(review.getUser().getId().toString())) {
             throw new AccessDeniedException("");
         }
         reviewRepository.deleteById(id);
@@ -54,7 +54,7 @@ public class ReviewService {
 
     public Review updateReview(UUID id, Review review, String userName) throws AccessDeniedException {
         review.setId(id);
-        if (UUID.fromString(userName) != review.getUser().getId()) {
+        if (!userName.equals(review.getUser().getId().toString())) {
             throw new AccessDeniedException("");
         }
         return reviewRepository.save(review);

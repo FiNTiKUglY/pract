@@ -62,7 +62,7 @@ public class UserService {
     }
 
     public User updateUser(UUID id, User user, String userName) throws AccessDeniedException {
-        if (UUID.fromString(userName) != user.getId()) {
+        if (!userName.equals(user.getId().toString())) {
             throw new AccessDeniedException("");
         }
         user.setId(id);
