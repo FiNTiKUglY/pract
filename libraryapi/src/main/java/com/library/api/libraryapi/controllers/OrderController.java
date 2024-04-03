@@ -22,7 +22,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/api/orders")
     public List<Order> getOrders() {
         return orderService.getOrders();
@@ -46,13 +46,13 @@ public class OrderController {
         return orderService.addOrder(order, principal.getName());
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/orders/update/{id}")
     public Order updateOrder(@PathVariable UUID id, @RequestBody Order order) {
         return orderService.updateOrder(id, order);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/api/orders/delete/{id}")
     public void deleteOrder(@PathVariable UUID id) {
         orderService.deleteOrderById(id);

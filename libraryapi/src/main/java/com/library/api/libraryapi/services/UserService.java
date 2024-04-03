@@ -43,7 +43,7 @@ public class UserService {
 
     public User getUserById(UUID id, String userName) throws AccessDeniedException {
         var user = userRepository.findById(id).get();
-        if (UUID.fromString(userName) != user.getId()) {
+        if (!userName.equals(user.getId().toString())) {
             throw new AccessDeniedException("");
         }
         return user;

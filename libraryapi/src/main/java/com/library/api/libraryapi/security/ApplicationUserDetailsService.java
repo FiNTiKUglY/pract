@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.UUID;
 
 @Component
 public class ApplicationUserDetailsService implements UserDetailsService {
@@ -21,11 +22,11 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        var user = userRepository.findByEmail(email);
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        var user = userRepository.findById(UUID.fromString(id));
 
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("No such user with email " + email);
+            throw new UsernameNotFoundException("No such user with id " + id);
         }
 
         var roleName = user.get().getRole().getName();

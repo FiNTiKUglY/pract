@@ -30,19 +30,19 @@ public class AuthorController {
         return authorService.getAuthorById(id);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/authors/add")
     public Author addAuthor(@RequestBody Author author) {
         return authorService.addAuthor(author);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/authors/update/{id}")
     public Author updateAuthor(@PathVariable UUID id, @RequestBody Author author) {
         return authorService.updateAuthor(id, author);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/api/authors/delete/{id}")
     public void deleteAuthor(@PathVariable UUID id) {
         authorService.deleteAuthorById(id);

@@ -35,19 +35,19 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/books/add")
     public Book addBook(@RequestBody Book book) {
         return bookService.addBook(book);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/books/update/{id}")
     public Book updateBook(@PathVariable UUID id, @RequestBody Book book) {
         return bookService.updateBook(id, book);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/api/books/delete/{id}")
     public void deleteBook(@PathVariable UUID id) {
         bookService.deleteBookById(id);

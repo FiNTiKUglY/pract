@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/api/users")
     public List<User> getUsers() {
         return userService.getUsers();
@@ -41,7 +41,7 @@ public class UserController {
         return userService.updateUser(id, user, principal.getName());
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/api/users/delete/{id}")
     public void deleteUser(@PathVariable UUID id) {
         userService.deleteUserById(id);

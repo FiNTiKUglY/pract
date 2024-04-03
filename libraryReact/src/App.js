@@ -4,16 +4,16 @@ import './App.css';
 
 function App() {
 
-    const [users, setUsers] = useState([]);
+    const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
 
-        fetch('api/users')
+        fetch('api/books')
         .then(response => response.json())
         .then(data => {
-            setUsers(data);
+            setBooks(data);
             setLoading(false);
         })
     }, []);
@@ -27,9 +27,9 @@ function App() {
             <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <div className="App-intro">
-                {users.map(user =>
-                    <div key={user.id}>
-                        {user.surname}
+                {books.map(book =>
+                    <div key={book.id}>
+                        {book.title}
                     </div>
                 )}
             </div>

@@ -20,31 +20,31 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/api/roles")
     public List<Role> getRoles() {
         return roleService.getRoles();
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/api/roles/{id}")
     public Role getRoleById(@PathVariable UUID id) {
         return roleService.getRoleById(id);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/roles/add")
     public Role addRole(@RequestBody Role role) {
         return roleService.addRole(role);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/roles/update/{id}")
     public Role updateRole(@PathVariable UUID id, @RequestBody Role role) {
         return roleService.updateRole(id, role);
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/api/roles/delete/{id}")
     public void deleteRole(@PathVariable UUID id) {
         roleService.deleteRoleById(id);

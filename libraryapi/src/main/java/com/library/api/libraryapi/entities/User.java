@@ -39,7 +39,7 @@ public class User {
     @JsonIgnore
     private String passwordHash;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="role_id")
     @JsonIgnoreProperties(value = {"users", "handler", "hibernateLazyInitializer"}, allowSetters=true)
     private Role role;
