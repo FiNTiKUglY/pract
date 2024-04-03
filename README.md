@@ -27,7 +27,7 @@
 
 #### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/master/libraryapi/src/main/java/com/library/api/libraryapi "Java Spring приложение")
 * Ориентировочное время выполнения: 18 часов.
-* Фактическое время выполнения: в процессе.
+* Фактическое время выполнения: 18 часов.
 
 ### Задание 4
 * Angular - Frontend
