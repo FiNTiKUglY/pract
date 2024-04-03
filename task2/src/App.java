@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import config.DbConfig;
 import repositories.*;
@@ -16,6 +17,7 @@ import entities.*;
 
 public class App {
     private static final Scanner in = new Scanner(System.in);
+    private static final Logger logger = Logger.getLogger(App.class.getName());
     private static final Connection connection;
 
     static {
@@ -23,24 +25,17 @@ public class App {
         try {
             tmp = connect();
         } catch (SQLException e) {
-            System.console().printf(e.getMessage());
+            logger.warning(e.getMessage());
         }
         connection = tmp;
     }
 
     public static Connection connect() throws SQLException {
-        
-        try {
-            var jdbcUrl = DbConfig.getDbUrl();
-            var user = DbConfig.getDbUsername();
-            var password = DbConfig.getDbPassword();
+        var jdbcUrl = DbConfig.getDbUrl();
+        var user = DbConfig.getDbUsername();
+        var password = DbConfig.getDbPassword();
 
-            return DriverManager.getConnection(jdbcUrl, user, password);
-
-        } catch (SQLException  e) {
-            System.console().printf(e.getMessage());
-            return null;
-        }
+        return DriverManager.getConnection(jdbcUrl, user, password);
     }
 
     public static void printEntities(BaseRepository repository) throws SQLException {
@@ -82,79 +77,73 @@ public class App {
         for (var field : fields) {
             field.setAccessible(true);
             System.console().printf("Type " + field.getName());
-            if (field.getType() == boolean.class)  {
-                System.console().printf(" (boolean)\n");
-                String valueStr = in.next();
-                var value = Boolean.parseBoolean(valueStr);
-                field.set(entity, value);
-            }
-            else if (field.getType() == int.class) {
-                System.console().printf(" (int number)\n");
-                String valueStr = in.next();
-                var value = Integer.parseInt(valueStr);
-                field.set(entity, value);
-            } 
-            else if (field.getType() == double.class) {
-                System.console().printf(" (real number)\n");
-                String valueStr = in.next();
-                var value = Double.parseDouble(valueStr);
-                field.set(entity, value);
-            }
-            else if (field.getType() == UUID.class && field.getName().contains("Id")) {
-                System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
-                printEntities(field.getName());
-                var value = UUID.fromString(in.next());
-                field.set(entity, value);
-            }
-            else if (field.getType() == UUID.class && field.getName().equals("id")) {
-                System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
-                var value = UUID.fromString(in.next());
-                field.set(entity, value);
-            }
-            else if (field.getType() == Date.class) {
-                System.console().printf(" (date with dd-MM-yyyy format)\n");
-                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-                var strValue = in.next();
-                var value = formatter.parse(strValue);
-                field.set(entity, value);
-            }
-            else if (field.getType() == String.class) {
-                System.console().printf(" (string)\n");
-                var value = in.next();
-                field.set(entity, value);
-            }
-            else if (field.getName().equals("booksIds")) {
-                List<UUID> booksIds = (List<UUID>)field.get(entity);
-                System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
-                printEntities(field.getName());
-                while (true) {
-                    System.console().printf("Type 'cancel' if you want to stop add books\n");
-                    var value = in.next();
-                    if (value.equals("cancel")) {
-                        break;
+            switch(field.getType().getSimpleName()) {
+                case "boolean":
+                    System.console().printf(" (boolean)\n");
+                    String valueStr = in.next();
+                    boolean valueBool = Boolean.parseBoolean(valueStr);
+                    field.set(entity, valueBool);
+                    break;
+                case "int":
+                    System.console().printf(" (int number)\n");
+                    valueStr = in.next();
+                    int valueInt = Integer.parseInt(valueStr);
+                    field.set(entity, valueInt);
+                    break;
+                case "double":
+                    System.console().printf(" (real number)\n");
+                    valueStr = in.next();
+                    double valueDouble = Double.parseDouble(valueStr);
+                    field.set(entity, valueDouble);
+                    break;
+                case "UUID":
+                    if (field.getName().contains("Id")) {
+                        System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
+                        printEntities(field.getName());
+                        var value = UUID.fromString(in.next());
+                        field.set(entity, value);
                     }
-                    var valueUUID = UUID.fromString(value);
-                    booksIds.add(valueUUID);
-                }
-                field.set(entity, booksIds);
-            }
-            else if (field.getName().equals("genresIds")) {
-                List<UUID> genreIds = (List<UUID>)field.get(entity);
-                System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
-                printEntities(field.getName());
-                while (true) {
-                    System.console().printf("Type 'cancel' if you want to stop add genres\n");
-                    var value = in.next();
-                    if (value.equals("cancel")) {
-                        break;
+                    else if (field.getName().equals("id")) {
+                        System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
+                        var value = UUID.fromString(in.next());
+                        field.set(entity, value);
                     }
-                    var valueUUID = UUID.fromString(value);
-                    genreIds.add(valueUUID);
-                }
-                field.set(entity, genreIds);
-            }
-            else {
-                System.console().printf("\nUnknown type\n");
+                    else {
+                        logger.warning("\nUnknown type\n");
+                    }
+                    break;
+                case "Date":
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+                    System.console().printf(" (date with dd-MM-yyyy format)\n");
+                    valueStr = in.next();
+                    var valueDate = formatter.parse(valueStr);
+                    field.set(entity, valueDate);
+                    break;
+                case "String":
+                    System.console().printf(" (string)\n");
+                    valueStr = in.next();
+                    field.set(entity, valueStr);
+                    break;
+                default:
+                    if (field.getName().contains("Ids")) {
+                        List<UUID> listIds = (List<UUID>)field.get(entity);
+                        System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
+                        printEntities(field.getName());
+                        while (true) {
+                            System.console().printf("Type 'cancel' if you want to stop add uuids\n");
+                            var value = in.next();
+                            if (value.equals("cancel")) {
+                                break;
+                            }
+                            var valueUUID = UUID.fromString(value);
+                            listIds.add(valueUUID);
+                        }
+                        field.set(entity, listIds);
+                    }
+                    else {
+                        logger.warning("\nUnknown type\n");
+                    }
+                    break;
             }
         }
         repository.add(entity);
@@ -168,74 +157,68 @@ public class App {
             }
             field.setAccessible(true);
             System.console().printf("Type " + field.getName());
-            if (field.getType() == boolean.class)  {
-                System.console().printf(" (boolean)\n");
-                String valueStr = in.next();
-                var value = Boolean.parseBoolean(valueStr);
-                field.set(entity, value);
-            }
-            else if (field.getType() == int.class) {
-                System.console().printf(" (int number)\n");
-                String valueStr = in.next();
-                var value = Integer.parseInt(valueStr);
-                field.set(entity, value);
-            } 
-            else if (field.getType() == double.class) {
-                System.console().printf(" (real number)\n");
-                String valueStr = in.next();
-                var value = Double.parseDouble(valueStr);
-                field.set(entity, value);
-            }
-            else if (field.getType() == UUID.class && field.getName().contains("Id")) {
-                System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
-                printEntities(field.getName());
-                var value = UUID.fromString(in.next());
-                field.set(entity, value);
-            }
-            else if (field.getType() == Date.class) {
-                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-                System.console().printf(" (date with dd-MM-yyyy format)\n");
-                var strValue = in.next();
-                var value = formatter.parse(strValue);
-                field.set(entity, value);
-            }
-            else if (field.getType() == String.class) {
-                System.console().printf(" (string)\n");
-                var value = in.next();
-                field.set(entity, value);
-            }
-            else if (field.getName().equals("booksIds")) {
-                List<UUID> booksIds = (List<UUID>)field.get(entity);
-                System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
-                printEntities(field.getName());
-                while (true) {
-                    System.console().printf("Type 'cancel' if you want to stop add books\n");
-                    var value = in.next();
-                    if (value.equals("cancel")) {
-                        break;
+            switch(field.getType().getSimpleName()) {
+                case "boolean":
+                    System.console().printf(" (boolean)\n");
+                    String valueStr = in.next();
+                    boolean valueBool = Boolean.parseBoolean(valueStr);
+                    field.set(entity, valueBool);
+                    break;
+                case "int":
+                    System.console().printf(" (int number)\n");
+                    valueStr = in.next();
+                    int valueInt = Integer.parseInt(valueStr);
+                    field.set(entity, valueInt);
+                    break;
+                case "double":
+                    System.console().printf(" (real number)\n");
+                    valueStr = in.next();
+                    double valueDouble = Double.parseDouble(valueStr);
+                    field.set(entity, valueDouble);
+                    break;
+                case "UUID":
+                    if (field.getName().contains("Id")) {
+                        System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
+                        printEntities(field.getName());
+                        var value = UUID.fromString(in.next());
+                        field.set(entity, value);
                     }
-                    var valueUUID = UUID.fromString(value);
-                    booksIds.add(valueUUID);
-                }
-                field.set(entity, booksIds);
-            }
-            else if (field.getName().equals("genresIds")) {
-                List<UUID> genreIds = (List<UUID>)field.get(entity);
-                System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
-                printEntities(field.getName());
-                while (true) {
-                    System.console().printf("Type 'cancel' if you want to stop add genres\n");
-                    var value = in.next();
-                    if (value.equals("cancel")) {
-                        break;
+                    else {
+                        logger.warning("\nUnknown type\n");
                     }
-                    var valueUUID = UUID.fromString(value);
-                    genreIds.add(valueUUID);
-                }
-                field.set(entity, genreIds);
-            }
-            else {
-                System.console().printf("\nUnknown type\n");
+                    break;
+                case "Date":
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+                    System.console().printf(" (date with dd-MM-yyyy format)\n");
+                    valueStr = in.next();
+                    var valueDate = formatter.parse(valueStr);
+                    field.set(entity, valueDate);
+                    break;
+                case "String":
+                    System.console().printf(" (string)\n");
+                    valueStr = in.next();
+                    field.set(entity, valueStr);
+                    break;
+                default:
+                    if (field.getName().contains("Ids")) {
+                        List<UUID> listIds = (List<UUID>)field.get(entity);
+                        System.console().printf(" (uuid with xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx format)\n");
+                        printEntities(field.getName());
+                        while (true) {
+                            System.console().printf("Type 'cancel' if you want to stop add uuids\n");
+                            var value = in.next();
+                            if (value.equals("cancel")) {
+                                break;
+                            }
+                            var valueUUID = UUID.fromString(value);
+                            listIds.add(valueUUID);
+                        }
+                        field.set(entity, listIds);
+                    }
+                    else {
+                        logger.warning("\nUnknown type\n");
+                    }
+                    break;
             }
         }
         repository.update(entity);
@@ -274,19 +257,19 @@ public class App {
                     return;
             }    
         } catch (NumberFormatException e) {
-            System.console().printf("Typed value not number, try again\n");
+            logger.warning("Typed value not number, try again\n");
         } catch (IllegalArgumentException e) {
-            System.console().printf("Not correct format\n");
+            logger.warning("Not correct format\n");
         } catch (ParseException e) {
-            System.console().printf("Not correct date format\n");
+            logger.warning("Not correct date format\n");
         } catch (SQLException e) {
-            System.console().printf("UUID not found in db or connection lost\n");
+            logger.warning("UUID not found in db or connection lost\n");
         }
     }    
 
     public static void main(String[] args) throws Exception {
         if (connection == null) {
-            System.console().printf("Connection not found, cancelled...\n");
+            logger.warning("Connection not found, cancelled...\n");
             return;
         }
         while (true) {
@@ -344,9 +327,9 @@ public class App {
                 }
             
             } catch (NumberFormatException e) {
-                System.console().printf("Typed value not int, try again\n");
+                logger.warning("Typed value not int, try again\n");
             } catch (SQLException e) {
-                System.console().printf(e.getMessage());
+                logger.warning(e.getMessage());
             }
         }
         

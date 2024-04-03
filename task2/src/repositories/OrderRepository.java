@@ -67,6 +67,9 @@ public class OrderRepository implements BaseRepository {
             query2 += String.format("('%s', '%s'), ", bookId, order.getId().toString());
         }
         query2 = query2.substring(0, query2.length() - 2);
+        if (order.getBooks().isEmpty()) {
+            query2 = "";
+        }
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
             stmt.executeUpdate(query2);
@@ -96,6 +99,9 @@ public class OrderRepository implements BaseRepository {
             query3 += String.format("('%s', '%s'), ", bookId, order.getId().toString());
         }
         query3 = query3.substring(0, query3.length() - 2);
+        if (order.getBooks().isEmpty()) {
+            query3 = "";
+        }
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
             stmt.executeUpdate(query2);

@@ -75,6 +75,9 @@ public class BookRepository implements BaseRepository {
             query2 += String.format("('%s', '%s'), ", book.getId().toString(), genreId);
         }
         query2 = query2.substring(0, query2.length() - 2);
+        if (book.getGenres().isEmpty()) {
+            query2 = "";
+        }
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
             stmt.executeUpdate(query2);
@@ -102,11 +105,14 @@ public class BookRepository implements BaseRepository {
                         book.getTitle(), book.getShortDescription(), book.getAuthorId().toString(), book.getCost().toString().replace(',', '.'), 
                         book.getImageLink(), book.getDownloadLink(), book.getId().toString());
         String query2 = String.format("DELETE FROM books_genres WHERE book_id = '%s'", book.getId().toString());
-        String query3 = "INSERT INTO books_genres VALUES ";
+        String query3 = "INSERT INTO books_genres VALUES "; 
         for (UUID genreId : book.getGenres()) {
             query3 += String.format("('%s', '%s'), ", book.getId().toString(), genreId);
         }
         query3 = query3.substring(0, query3.length() - 2);
+        if (book.getGenres().isEmpty()) {
+            query3 = "";
+        }
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
             stmt.executeUpdate(query2);
