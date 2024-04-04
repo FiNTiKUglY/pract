@@ -1,6 +1,6 @@
 package com.library.api.libraryapi.entities;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,7 +39,7 @@ public class Order {
     @JoinTable(name="books_orders",
             joinColumns=@JoinColumn(name="order_id",referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id"))
-    private List<Book> books;
+    private Set<Book> books;
 
     public UUID getId() {
         return id;
@@ -73,11 +73,11 @@ public class Order {
         this.user = user;
     }
 
-    public List<Book> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public void setBooks(Set<Book> books) {
         this.books = books;
     }
 }

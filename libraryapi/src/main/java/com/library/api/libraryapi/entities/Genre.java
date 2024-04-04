@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
+import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -32,7 +32,7 @@ public class Genre {
     @JoinTable(name="books_genres",
             joinColumns=@JoinColumn(name="genre_id",referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id"))
-    private List<Book> books;
+    private Set<Book> books;
 
     public UUID getId() {
         return id;
@@ -58,11 +58,11 @@ public class Genre {
         this.description = description;
     }
 
-    public List<Book> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public void setBooks(Set<Book> books) {
         this.books = books;
     }
 }

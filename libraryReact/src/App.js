@@ -38,12 +38,14 @@ function App() {
 
     const [cookies] = useCookies(['jwt_token', 'user']);
 
-    if (cookies.jwt_token !== undefined) {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.jwt_token;
-    }
-    else {
-        axios.defaults.headers.common['Authorization'] = '';
-    }
+    useEffect(() => {
+        if (cookies.jwt_token !== undefined) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.jwt_token;
+        }
+        else {
+            axios.defaults.headers.common['Authorization'] = '';
+        };
+      }, []);
 
     return (
         <RouterProvider router={router} >

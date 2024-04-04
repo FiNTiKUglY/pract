@@ -52,7 +52,6 @@ public class BookController {
         return bookService.updateBook(id, book);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/api/books/delete/{id}")
     public void deleteBook(@PathVariable UUID id) {
         bookService.deleteBookById(id);

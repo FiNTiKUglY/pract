@@ -11,7 +11,7 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL,
     role_id uuid NOT NULL,
     birth_date DATE NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES roles (id)
+    FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE
 );
 
 CREATE TABLE authors (
@@ -30,7 +30,7 @@ CREATE TABLE books (
     cost DECIMAL NOT NULL,
     download_link VARCHAR(255),
     image_link VARCHAR(255),
-    FOREIGN KEY (author_id) REFERENCES authors (id)
+    FOREIGN KEY (author_id) REFERENCES authors (id) ON DELETE CASCADE
 );
 
 CREATE TABLE reviews (
@@ -39,8 +39,8 @@ CREATE TABLE reviews (
     mark INTEGER NOT NULL,
     user_id uuid NOT NULL,
     book_id uuid NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (book_id) REFERENCES books (id)
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE
 );
 
 CREATE TABLE orders (
@@ -48,7 +48,7 @@ CREATE TABLE orders (
     adress VARCHAR(255) NOT NULL,
     status BOOLEAN NOT NULL,
     user_id uuid NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
 CREATE TABLE genres (

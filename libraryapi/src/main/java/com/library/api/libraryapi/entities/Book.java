@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -48,7 +47,7 @@ public class Book {
 
     @ManyToMany(mappedBy="books")
     @JsonIgnoreProperties(value = {"books", "handler", "hibernateLazyInitializer"}, allowSetters=true)
-    private List<Genre> genres;
+    private Set<Genre> genres;
 
     @OneToMany(mappedBy="book")
     @JsonIgnoreProperties(value = {"book", "handler", "hibernateLazyInitializer"}, allowSetters=true)
@@ -56,7 +55,7 @@ public class Book {
 
     @ManyToMany(mappedBy="books")
     @JsonIgnore
-    private List<Order> orders;
+    private Set<Order> orders;
 
     public UUID getId() {
         return id;
@@ -114,11 +113,11 @@ public class Book {
         this.author = author;
     }
 
-    public List<Genre> getGenres() {
+    public Set<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
 
@@ -130,11 +129,11 @@ public class Book {
         this.reviews = reviews;
     }
 
-    public List<Order> getOrders() {
+    public Set<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
 }
