@@ -5,6 +5,9 @@ export default function Navbar() {
         <nav>
             <ul>
                 <li>
+                    <Link to={`/books`}>Книги</Link>
+                </li>
+                <li>
                     <Link to={`/signin`}>Войти</Link>
                 </li>
                 <li>

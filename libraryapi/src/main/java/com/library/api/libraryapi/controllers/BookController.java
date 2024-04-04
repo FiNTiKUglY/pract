@@ -35,6 +35,11 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
+    @GetMapping("/api/genres/{genreId}/books")
+    public List<Book> getGenreBooks(@PathVariable UUID genreId) {
+        return bookService.getGenreBooks(genreId);
+    }
+
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/books/add")
     public Book addBook(@RequestBody Book book) {

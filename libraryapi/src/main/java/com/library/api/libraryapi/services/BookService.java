@@ -1,17 +1,21 @@
 package com.library.api.libraryapi.services;
 
 import com.library.api.libraryapi.entities.Book;
+import com.library.api.libraryapi.entities.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import com.library.api.libraryapi.repositories.BookRepository;
+import com.library.api.libraryapi.repositories.GenreRepository;
 
 @Service
 public class BookService {
     
     @Autowired BookRepository bookRepository;
+    @Autowired GenreRepository genreRepository;
 
     public BookService() {
         //Constructor for service
@@ -23,6 +27,12 @@ public class BookService {
 
     public List<Book> getAuthorBooks(UUID authorId) {
         return bookRepository.findByAuthorId(authorId);
+    }
+
+    public List<Book> getGenreBooks(UUID genreId) {
+        List<Genre> genres = new ArrayList<>();
+        genres.add(genreRepository.findById(genreId).get());
+        return bookRepository.findByGenresContains(genres);
     }
 
     public Book addBook(Book book) {

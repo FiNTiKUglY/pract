@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { signIn } from "../api/authService"
+import { useCookies } from 'react-cookie'
 
 export default function Signin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [cookies, setCookie, removeCookie] = useCookies(['jwt_token', 'user']);
 
     return (
         <section>
@@ -26,6 +28,19 @@ export default function Signin() {
 
     async function signInClick() {
         let data = await signIn(email, password)
+        setCookie('jwt_token', data.token,
+        {
+            maxAge: 3600
+        });
+        setCookie('user', data.id,
+        {
+            maxAge: 3600
+        });
         console.log(data)
+    }
+
+    async function logOutClick() {
+        removeCookie('jwt_token');
+        removeCookie('user');
     }
 }

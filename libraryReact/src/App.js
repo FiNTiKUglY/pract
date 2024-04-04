@@ -1,40 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+    RouterProvider,
+    createBrowserRouter
+} from "react-router-dom";
+import Root from './routes/root';
+import Signup from './routes/signup';
+import Signin from './routes/signin';
+import Books from './routes/books';
+import { useCookies } from 'react-cookie'
+import axios from "axios"
+
+
+const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <App />,
+      children: [
+        {
+            path: "/books",
+            element: <Books />
+        },
+        {
+            path: "/signin",
+            element: <Signin />
+        },
+        {
+            path: "/signup",
+            element: <Signup />
+        }
+      ]
+    }
+]);
 
 function App() {
 
-    const [books, setBooks] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [cookies] = useCookies(['jwt_token', 'user']);
 
-    useEffect(() => {
-        setLoading(true);
-
-        fetch('api/books')
-        .then(response => response.json())
-        .then(data => {
-            setBooks(data);
-            setLoading(false);
-        })
-    }, []);
-
-    if (loading) {
-        return <p>Loading...</p>;
+    if (cookies.jwt_token !== undefined) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.jwt_token;
+    }
+    else {
+        axios.defaults.headers.common['Authorization'] = '';
     }
 
     return (
-        <div className="App">
-            <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <div className="App-intro">
-                {books.map(book =>
-                    <div key={book.id}>
-                        {book.title}
-                    </div>
-                )}
-            </div>
-      </header>
-    </div>
+        <RouterProvider router={router} >
+
+        </RouterProvider>
   );
 }
 
