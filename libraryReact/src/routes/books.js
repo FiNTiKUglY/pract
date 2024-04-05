@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { getBooks, deleteBook } from "../api/bookService"
-import { Link } from "react-router-dom";
+import { getBooks, deleteBook, getBook, addBook, updateBook } from "../api/bookService"
+import { getAuthors } from "../api/authorService"
+import { getGenres } from "../api/genreService"
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import Select  from "react-select";
 
+export async function loader({ params }) {
+    const book = await getBook(params.bookId);
+    return { book };
+}
 
 export default function Books() {
     const [books, setBooks] = useState([]);
@@ -72,7 +79,7 @@ export default function Books() {
                                     )}
                                 </td>
                                 <td>
-                                    <Link to="update/" className="btn btn-info">Изменить</Link>
+                                    <Link to={`update/${book.id}`} className="btn btn-info">Изменить</Link>
                                     |
                                     <button 
                                         onClick={() => removeBook(book.id)} 
@@ -97,5 +104,230 @@ export default function Books() {
     async function removeBook(id) {
         await deleteBook(id)
         setReload(!reload)
+    }
+}
+
+export function BooksAdd() {
+    const navigate = useNavigate();
+
+    const [title, setTitle] = useState('');
+    const [shortDescription, setShortDescription] = useState('');
+    const [cost, setCost] = useState('');
+    const [downloadLink, setDownloadLink] = useState('');
+    const [imageLink, setImageLink] = useState('');
+    const [author, setAuthor] = useState();
+    const [genres, setGenres] = useState();
+
+    let authorsList = [];
+    let genresList = [];
+
+    loadAuthors();
+    loadGenres();
+
+    return (
+        <section class="form-container">
+            <div class="form">
+                <input
+                    placeholder="Название"
+                    class="form-control"
+                    type="text"
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <Select
+                    options={authorsList}
+                    placeholder="Автор"
+                    value={author}
+                    onChange={handleSelectAuthor}
+                    isSearchable={true}
+                />
+                <textarea
+                    placeholder="Описание"
+                    class="form-control"
+                    type="text"
+                    onChange={(e) => setShortDescription(e.target.value)}
+                />
+                <Select
+                    options={genresList}
+                    placeholder="Жанры"
+                    value={genres}
+                    onChange={handleSelectGenre}
+                    isSearchable={true}
+                    isMulti
+                />
+                <input
+                    placeholder="Цена"
+                    class="form-control"
+                    type="number"
+                    onChange={(e) => setCost(e.target.value)}
+                />
+                <input
+                    placeholder="Ссылка загрузки"
+                    class="form-control"
+                    type="text"
+                    onChange={(e) => setDownloadLink(e.target.value)}
+                />
+                <input
+                    placeholder="Ссылка изображения"
+                    class="form-control"
+                    type="text"
+                    onChange={(e) => setImageLink(e.target.value)}
+                />
+                <button
+                    onClick={addBookClick}>
+                    Добавить
+                </button>
+            </div>
+        </section>
+    );
+
+    function handleSelectAuthor(data) {
+        setAuthor(data);
+    }
+
+    function handleSelectGenre(data) {
+        setGenres(data);
+    }
+
+    async function loadAuthors() {
+        const authors = await getAuthors()
+        authors.map(author =>
+            authorsList.push({ value: author, label: `${author.surname} ${author.name}`})    
+        )
+    }
+
+    async function loadGenres() {
+        const genres = await getGenres()
+        genres.map(genre =>
+            genresList.push({ value: genre, label: genre.name})    
+        )
+    }
+
+    async function addBookClick() {
+        let book = {}
+        book.id = crypto.randomUUID();
+        book.title = title
+        book.shortDescription = shortDescription
+        book.cost = cost
+        book.author = author.value
+        book.genres = genres
+        book.downloadLink = downloadLink
+        book.imageLink = imageLink
+        console.log(book)
+        await addBook(book)
+        navigate('/books')
+    }
+}
+
+export function BooksUpdate() {
+    const navigate = useNavigate();
+
+    const { book } = useLoaderData();
+    const [title, setTitle] = useState('');
+    const [shortDescription, setShortDescription] = useState('');
+    const [cost, setCost] = useState('');
+    const [downloadLink, setDownloadLink] = useState('');
+    const [imageLink, setImageLink] = useState('');
+    const [author, setAuthor] = useState();
+    const [genres, setGenres] = useState();
+
+    let authorsList = [];
+    let genresList = [];
+
+    loadAuthors();
+    loadGenres();
+
+    return (
+        <section class="form-container">
+            <div class="form">
+                <input
+                    placeholder="Название"
+                    class="form-control"
+                    type="text"
+                    value={book.title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <Select
+                    options={authorsList}
+                    placeholder="Автор"
+                    value={author}
+                    onChange={handleSelectAuthor}
+                    isSearchable={true}
+                />
+                <textarea
+                    placeholder="Описание"
+                    class="form-control"
+                    type="text"
+                    value={book.shortDescription}
+                    onChange={(e) => setShortDescription(e.target.value)}
+                />
+                <Select
+                    options={genresList}
+                    placeholder="Жанры"
+                    value={genres}
+                    onChange={handleSelectGenre}
+                    isSearchable={true}
+                    isMulti
+                />
+                <input
+                    placeholder="Цена"
+                    class="form-control"
+                    type="number"
+                    value={book.cost}
+                    onChange={(e) => setCost(e.target.value)}
+                />
+                <input
+                    placeholder="Ссылка загрузки"
+                    class="form-control"
+                    type="text"
+                    value={book.downloadLink}
+                    onChange={(e) => setDownloadLink(e.target.value)}
+                />
+                <input
+                    placeholder="Ссылка изображения"
+                    class="form-control"
+                    type="text"
+                    value={book.imageLink}
+                    onChange={(e) => setImageLink(e.target.value)}
+                />
+                <button
+                    onClick={updateBookClick}>
+                    Изменить
+                </button>
+            </div>
+        </section>
+    );
+
+    function handleSelectAuthor(data) {
+        setAuthor(data);
+    }
+
+    function handleSelectGenre(data) {
+        setGenres(data);
+    }
+
+    async function loadAuthors() {
+        const authors = await getAuthors()
+        authors.map(author =>
+            authorsList.push({ value: author, label: `${author.surname} ${author.name}`})    
+        )
+    }
+
+    async function loadGenres() {
+        const genres = await getGenres()
+        genres.map(genre =>
+            genresList.push({ value: genre, label: genre.name})    
+        )
+    }
+
+    async function updateBookClick() {
+        book.title = title
+        book.shortDescription = shortDescription
+        book.cost = cost
+        book.author = author.value
+        book.genres = genres
+        book.downloadLink = downloadLink
+        book.imageLink = imageLink
+        await updateBook(book)
+        navigate('/books')
     }
 }

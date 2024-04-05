@@ -7,7 +7,8 @@ import {
 import Root from './routes/root';
 import Signup from './routes/signup';
 import Signin from './routes/signin';
-import Books from './routes/books';
+import Books, { BooksAdd, BooksUpdate, loader as bookLoader } from './routes/books';
+import Genres, { GenresAdd, GenresUpdate, loader as genreLoader } from './routes/genres';
 import { useCookies } from 'react-cookie'
 import axios from "axios"
 
@@ -19,8 +20,30 @@ const router = createBrowserRouter([
       errorElement: <App />,
       children: [
         {
+            path: "/books/add",
+            element: <BooksAdd />
+        },
+        {
+            path: "/books/update/:bookId",
+            element: <BooksUpdate />,
+            loader: bookLoader
+        },
+        {
             path: "/books",
             element: <Books />
+        },
+        {
+            path: "/genres/add",
+            element: <GenresAdd />
+        },
+        {
+            path: "/genres/update/:genreId",
+            element: <GenresUpdate />,
+            loader: genreLoader
+        },
+        {
+            path: "/genres",
+            element: <Genres />
         },
         {
             path: "/signin",

@@ -30,19 +30,16 @@ public class GenreController {
         return genreService.getGenreById(id);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/genres/add")
     public Genre addGenre(@RequestBody Genre genre) {
         return genreService.addGenre(genre);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/api/genres/update/{id}")
     public Genre updateGenre(@PathVariable UUID id, @RequestBody Genre genre) {
         return genreService.updateGenre(id, genre);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/api/genres/delete/{id}")
     public void deleteGenre(@PathVariable UUID id) {
         genreService.deleteGenreById(id);

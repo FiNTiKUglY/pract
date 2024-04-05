@@ -2,16 +2,19 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
     return (
-        <nav>
-            <ul>
-                <li>
-                    <Link to={`/books`}>Книги</Link>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <Link class="nav-link" to={`/books`}>Книги</Link>
                 </li>
-                <li>
-                    <Link to={`/signin`}>Войти</Link>
+                <li class="nav-item">
+                    <Link class="nav-link" to={`/genres`}>Жанры</Link>
                 </li>
-                <li>
-                    <Link to={`/signup`}>Регистрация</Link>
+                <li class="nav-item">
+                    <Link class="nav-link" to={`/signin`}>Войти</Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link" to={`/signup`}>Регистрация</Link>
                 </li>
             </ul>
         </nav>
