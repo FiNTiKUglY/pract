@@ -5,8 +5,10 @@ import com.library.api.libraryapi.entities.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.Set;
 
 import com.library.api.libraryapi.repositories.BookRepository;
 import com.library.api.libraryapi.repositories.GenreRepository;
@@ -36,7 +38,23 @@ public class BookService {
     }
 
     public Book addBook(Book book) {
-        return bookRepository.save(book);
+        if (!book.getGenres().isEmpty()) {
+            Set<Genre> genres = book.getGenres();
+            for (Genre genre : genres) {
+                Set<Book> books = genre.getBooks();
+                if (books == null) {
+                    books = new HashSet<>();
+                }
+                books.add(book);
+                genre.setBooks(books);
+            }
+            book.setGenres(genres);
+            bookRepository.save(book);
+            for (Genre genre : genres) {
+                genreRepository.save(genre);
+            }
+        }
+        return book;
     }
 
     public Book getBookById(UUID id) {
@@ -49,6 +67,6 @@ public class BookService {
 
     public Book updateBook(UUID id, Book book) {
         book.setId(id);
-        return bookRepository.save(book);
+        return addBook(book);
     }
 }

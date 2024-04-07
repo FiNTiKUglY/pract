@@ -20,7 +20,7 @@ export default function Books() {
 
     return (
         <section >
-            <div className='table-title'>
+            <div>
                 <h2>Книги</h2>
                 
                 <table className="table table-striped table-hover">   
@@ -75,7 +75,7 @@ export default function Books() {
                                 </td>
                                 <td>
                                     {book.genres.map(genre=>
-                                        genre.name 
+                                        genre.name
                                     )}
                                 </td>
                                 <td>
@@ -209,7 +209,7 @@ export function BooksAdd() {
         book.shortDescription = shortDescription
         book.cost = cost
         book.author = author.value
-        book.genres = genres
+        book.genres = genres.map(genre => genre.value)
         book.downloadLink = downloadLink
         book.imageLink = imageLink
         console.log(book)
@@ -243,13 +243,11 @@ export function BooksUpdate() {
                     placeholder="Название"
                     class="form-control"
                     type="text"
-                    value={book.title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 <Select
                     options={authorsList}
                     placeholder="Автор"
-                    value={author}
                     onChange={handleSelectAuthor}
                     isSearchable={true}
                 />
@@ -257,13 +255,11 @@ export function BooksUpdate() {
                     placeholder="Описание"
                     class="form-control"
                     type="text"
-                    value={book.shortDescription}
                     onChange={(e) => setShortDescription(e.target.value)}
                 />
                 <Select
                     options={genresList}
                     placeholder="Жанры"
-                    value={genres}
                     onChange={handleSelectGenre}
                     isSearchable={true}
                     isMulti
@@ -272,21 +268,18 @@ export function BooksUpdate() {
                     placeholder="Цена"
                     class="form-control"
                     type="number"
-                    value={book.cost}
                     onChange={(e) => setCost(e.target.value)}
                 />
                 <input
                     placeholder="Ссылка загрузки"
                     class="form-control"
                     type="text"
-                    value={book.downloadLink}
                     onChange={(e) => setDownloadLink(e.target.value)}
                 />
                 <input
                     placeholder="Ссылка изображения"
                     class="form-control"
                     type="text"
-                    value={book.imageLink}
                     onChange={(e) => setImageLink(e.target.value)}
                 />
                 <button
@@ -324,7 +317,7 @@ export function BooksUpdate() {
         book.shortDescription = shortDescription
         book.cost = cost
         book.author = author.value
-        book.genres = genres
+        book.genres = genres.map(genre => genre.value)
         book.downloadLink = downloadLink
         book.imageLink = imageLink
         await updateBook(book)

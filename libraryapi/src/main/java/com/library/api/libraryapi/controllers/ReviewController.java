@@ -12,50 +12,52 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 
+@RequestMapping("/api/reviews")
 @RestController
 public class ReviewController {
 
     @Autowired
     ReviewService reviewService;
 
-    @GetMapping("/api/reviews")
+    @GetMapping("")
     public List<Review> getReviews() {
         return reviewService.getReviews();
     }
 
-    @GetMapping("/api/books/{bookId}/reviews")
+    @GetMapping("/book/{bookId}")
     public List<Review> getBookReviews(@PathVariable UUID bookId) {
         return reviewService.getBookReviews(bookId);
     }
 
-    @GetMapping("/api/users/{userId}/reviews")
+    @GetMapping("/user/{userId}")
     public List<Review> getUserReviews(@PathVariable UUID userId) {
         return reviewService.getUserReviews(userId);
     }
 
-    @GetMapping("/api/reviews/{id}")
+    @GetMapping("/{id}")
     public Review getReviewById(@PathVariable UUID id) {
         return reviewService.getReviewById(id);
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/api/reviews/add")
+    @PostMapping("/add")
     public Review addReview(@RequestBody Review review, Principal principal) {
         return reviewService.addReview(review, principal.getName());
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/api/reviews/update/{id}")
+    @PostMapping("/update/{id}")
     public Review updateReview(@PathVariable UUID id, @RequestBody Review review, Principal principal) throws AccessDeniedException {
         return reviewService.updateReview(id, review, principal.getName());
     }
 
     @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("/api/reviews/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteReview(@PathVariable UUID id, Principal principal) throws AccessDeniedException {
         reviewService.deleteReviewById(id, principal.getName());
     }

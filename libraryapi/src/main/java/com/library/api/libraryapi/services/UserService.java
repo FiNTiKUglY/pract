@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
 
 import com.library.api.libraryapi.repositories.UserRepository;
 import com.library.api.libraryapi.repositories.RoleRepository;
@@ -50,11 +51,21 @@ public class UserService {
     }
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).get();
+        User user = new User();
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
+            user = userOpt.get();
+        }
+        return user;
     }
 
     public User getUserByEmailAndPasswordHash(String email, String passwordHash) {
-        return userRepository.findByEmailAndPasswordHash(email, passwordHash).get();
+        User user = new User();
+        Optional<User> userOpt = userRepository.findByEmailAndPasswordHash(email, passwordHash);
+        if (userOpt.isPresent()) {
+            user = userOpt.get();
+        }
+        return user;
     }
 
     public void deleteUserById(UUID id) {

@@ -10,47 +10,49 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 
+@RequestMapping("/api/books")
 @RestController
 public class BookController {
 
     @Autowired
     BookService bookService;
 
-    @GetMapping("/api/authors/{authorId}/books")
+    @GetMapping("/author/{authorId}")
     public List<Book> getAuthorBooks(@PathVariable UUID authorId) {
         return bookService.getAuthorBooks(authorId);
     }
 
-    @GetMapping("/api/books")
+    @GetMapping("")
     public List<Book> getBooks() {
         return bookService.getBooks();
     }
 
-    @GetMapping("/api/books/{id}")
+    @GetMapping("/{id}")
     public Book getBookById(@PathVariable UUID id) {
         return bookService.getBookById(id);
     }
 
-    @GetMapping("/api/genres/{genreId}/books")
+    @GetMapping("/genre/{genreId}")
     public List<Book> getGenreBooks(@PathVariable UUID genreId) {
         return bookService.getGenreBooks(genreId);
     }
 
-    @PostMapping("/api/books/add")
+    @PostMapping("/add")
     public Book addBook(@RequestBody Book book) {
         return bookService.addBook(book);
     }
 
-    @PostMapping("/api/books/update/{id}")
+    @PostMapping("/update/{id}")
     public Book updateBook(@PathVariable UUID id, @RequestBody Book book) {
         return bookService.updateBook(id, book);
     }
 
-    @DeleteMapping("/api/books/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteBook(@PathVariable UUID id) {
         bookService.deleteBookById(id);
     }

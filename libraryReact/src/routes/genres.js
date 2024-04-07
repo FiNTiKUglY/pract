@@ -48,7 +48,7 @@ export default function Genres() {
                                     |
                                     <button 
                                         onClick={() => removeGenre(genre.id)} 
-                                        value={genre.id} 
+                                        value={genre.id}
                                         className="btn btn-danger">
                                             Удалить
                                     </button>
@@ -125,14 +125,12 @@ export function GenresUpdate() {
                     placeholder="Название"
                     class="form-control"
                     type="text"
-                    value={genre.name}
                     onChange={(e) => setName(e.target.value)}
                 />
                 <textarea
                     placeholder="Описание"
                     class="form-control"
                     type="text"
-                    value={genre.description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
                 <button
