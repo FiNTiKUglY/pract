@@ -23,7 +23,7 @@ export default function Books() {
             <div>
                 <h2>Книги</h2>
                 
-                <table className="table table-striped table-hover">   
+                <table classNameName="table table-striped table-hover">   
                     <thead>
                         <tr>
                             <th>
@@ -48,7 +48,7 @@ export default function Books() {
                                 Жанры
                             </th>
                             <th>
-                                <Link to="add/" className="btn btn-success">Добавить</Link>
+                                <Link to="add/" classNameName="btn btn-success">Добавить</Link>
                             </th>
                         </tr>
                     </thead>
@@ -79,12 +79,12 @@ export default function Books() {
                                     )}
                                 </td>
                                 <td>
-                                    <Link to={`update/${book.id}`} className="btn btn-info">Изменить</Link>
+                                    <Link to={`update/${book.id}`} classNameName="btn btn-info">Изменить</Link>
                                     |
                                     <button 
                                         onClick={() => removeBook(book.id)} 
                                         value={book.id} 
-                                        className="btn btn-danger">
+                                        classNameName="btn btn-danger">
                                             Удалить
                                     </button>
                                 </td>
@@ -125,11 +125,11 @@ export function BooksAdd() {
     loadGenres();
 
     return (
-        <section class="form-container">
-            <div class="form">
+        <section className="form-container">
+            <div className="form">
                 <input
                     placeholder="Название"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setTitle(e.target.value)}
                 />
@@ -142,7 +142,7 @@ export function BooksAdd() {
                 />
                 <textarea
                     placeholder="Описание"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setShortDescription(e.target.value)}
                 />
@@ -156,19 +156,19 @@ export function BooksAdd() {
                 />
                 <input
                     placeholder="Цена"
-                    class="form-control"
+                    className="form-control"
                     type="number"
                     onChange={(e) => setCost(e.target.value)}
                 />
                 <input
                     placeholder="Ссылка загрузки"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setDownloadLink(e.target.value)}
                 />
                 <input
                     placeholder="Ссылка изображения"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setImageLink(e.target.value)}
                 />
@@ -237,11 +237,11 @@ export function BooksUpdate() {
     loadGenres();
 
     return (
-        <section class="form-container">
-            <div class="form">
+        <section className="form-container">
+            <div className="form">
                 <input
                     placeholder="Название"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setTitle(e.target.value)}
                 />
@@ -253,7 +253,7 @@ export function BooksUpdate() {
                 />
                 <textarea
                     placeholder="Описание"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setShortDescription(e.target.value)}
                 />
@@ -266,19 +266,19 @@ export function BooksUpdate() {
                 />
                 <input
                     placeholder="Цена"
-                    class="form-control"
+                    className="form-control"
                     type="number"
                     onChange={(e) => setCost(e.target.value)}
                 />
                 <input
                     placeholder="Ссылка загрузки"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setDownloadLink(e.target.value)}
                 />
                 <input
                     placeholder="Ссылка изображения"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setImageLink(e.target.value)}
                 />

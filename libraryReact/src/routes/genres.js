@@ -17,10 +17,10 @@ export default function Genres() {
 
     return (
         <section >
-            <div classNameName='table-title'>
+            <div className='table-title'>
                 <h2>Жанры</h2>
                 
-                <table classNameName="table table-striped table-hover">   
+                <table className="table table-striped table-hover">   
                     <thead>
                         <tr>
                             <th>
@@ -30,7 +30,7 @@ export default function Genres() {
                                 Описание
                             </th>
                             <th>
-                                <Link to="add/" classNameName="btn btn-success">Добавить</Link>
+                                <Link to="add/" className="btn btn-success">Добавить</Link>
                             </th>
                         </tr>
                     </thead>
@@ -44,12 +44,12 @@ export default function Genres() {
                                     {genre.description}
                                 </td>
                                 <td>
-                                    <Link to={`update/${genre.id}`} classNameName="btn btn-info">Изменить</Link>
+                                    <Link to={`update/${genre.id}`} className="btn btn-info">Изменить</Link>
                                     |
                                     <button 
                                         onClick={() => removeGenre(genre.id)} 
                                         value={genre.id}
-                                        classNameName="btn btn-danger">
+                                        className="btn btn-danger">
                                             Удалить
                                     </button>
                                 </td>
