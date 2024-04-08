@@ -23,7 +23,7 @@ export default function Books() {
             <div>
                 <h2>Книги</h2>
                 
-                <table classNameName="table table-striped table-hover">   
+                <table className="table table-striped table-hover">   
                     <thead>
                         <tr>
                             <th>
@@ -48,7 +48,7 @@ export default function Books() {
                                 Жанры
                             </th>
                             <th>
-                                <Link to="add/" classNameName="btn btn-success">Добавить</Link>
+                                <Link to="add/" className="btn btn-success">Добавить</Link>
                             </th>
                         </tr>
                     </thead>
@@ -79,12 +79,12 @@ export default function Books() {
                                     )}
                                 </td>
                                 <td>
-                                    <Link to={`update/${book.id}`} classNameName="btn btn-info">Изменить</Link>
+                                    <Link to={`update/${book.id}`} className="btn btn-info">Изменить</Link>
                                     |
                                     <button 
                                         onClick={() => removeBook(book.id)} 
                                         value={book.id} 
-                                        classNameName="btn btn-danger">
+                                        className="btn btn-danger">
                                             Удалить
                                     </button>
                                 </td>
@@ -233,8 +233,8 @@ export function BooksUpdate() {
     let authorsList = [];
     let genresList = [];
 
-    loadAuthors();
-    loadGenres();
+    loadAuthorsUpdate();
+    loadGenresUpdate();
 
     return (
         <section className="form-container">
@@ -298,14 +298,14 @@ export function BooksUpdate() {
         setGenres(data);
     }
 
-    async function loadAuthors() {
+    async function loadAuthorsUpdate() {
         const authors = await getAuthors()
         authors.map(author =>
             authorsList.push({ value: author, label: `${author.surname} ${author.name}`})    
         )
     }
 
-    async function loadGenres() {
+    async function loadGenresUpdate() {
         const genres = await getGenres()
         genres.map(genre =>
             genresList.push({ value: genre, label: genre.name})    
