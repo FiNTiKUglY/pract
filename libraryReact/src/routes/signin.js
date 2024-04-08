@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie'
 export default function Signin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [cookies, setCookie, removeCookie] = useCookies(['jwt_token', 'user']);
+    const [cookies, setCookie] = useCookies(['jwt_token', 'user']);
 
     return (
         <section>
@@ -37,10 +37,5 @@ export default function Signin() {
             maxAge: 3600
         });
         console.log(data)
-    }
-
-    async function logOutClick() {
-        removeCookie('jwt_token');
-        removeCookie('user');
     }
 }

@@ -17,10 +17,10 @@ export default function Genres() {
 
     return (
         <section >
-            <div className='table-title'>
+            <div classNameName='table-title'>
                 <h2>Жанры</h2>
                 
-                <table className="table table-striped table-hover">   
+                <table classNameName="table table-striped table-hover">   
                     <thead>
                         <tr>
                             <th>
@@ -30,7 +30,7 @@ export default function Genres() {
                                 Описание
                             </th>
                             <th>
-                                <Link to="add/" className="btn btn-success">Добавить</Link>
+                                <Link to="add/" classNameName="btn btn-success">Добавить</Link>
                             </th>
                         </tr>
                     </thead>
@@ -44,12 +44,12 @@ export default function Genres() {
                                     {genre.description}
                                 </td>
                                 <td>
-                                    <Link to={`update/${genre.id}`} className="btn btn-info">Изменить</Link>
+                                    <Link to={`update/${genre.id}`} classNameName="btn btn-info">Изменить</Link>
                                     |
                                     <button 
                                         onClick={() => removeGenre(genre.id)} 
                                         value={genre.id}
-                                        className="btn btn-danger">
+                                        classNameName="btn btn-danger">
                                             Удалить
                                     </button>
                                 </td>
@@ -79,17 +79,17 @@ export function GenresAdd() {
     const [description, setDescription] = useState('');
 
     return (
-        <section class="form-container">
-            <div class="form">
+        <section className="form-container">
+            <div className="form">
                 <input
                     placeholder="Название"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setName(e.target.value)}
                 />
                 <textarea
                     placeholder="Описание"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setDescription(e.target.value)}
                 />
@@ -119,17 +119,17 @@ export function GenresUpdate() {
     const [description, setDescription] = useState('');
 
     return (
-        <section class="form-container">
-            <div class="form">
+        <section className="form-container">
+            <div className="form">
                 <input
                     placeholder="Название"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setName(e.target.value)}
                 />
                 <textarea
                     placeholder="Описание"
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     onChange={(e) => setDescription(e.target.value)}
                 />
