@@ -30,7 +30,7 @@ public class AuthorService {
 
     public Author getAuthorById(UUID id) throws NotFoundException {
         Optional<Author> authorOpt = authorRepository.findById(id);
-        if (!authorOpt.isPresent()) {
+        if (authorOpt.isEmpty()) {
             throw new NotFoundException();
         }
         return authorOpt.get();

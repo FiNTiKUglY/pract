@@ -5,11 +5,13 @@ import com.library.api.libraryapi.entities.User;
 import com.library.api.libraryapi.models.RegisterModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
+
 import java.util.Optional;
 
 import com.library.api.libraryapi.repositories.UserRepository;
@@ -31,11 +33,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User addUser(RegisterModel registerModel) {
-        Role role = new Role();
+    public User addUser(RegisterModel registerModel) throws NotFoundException {
         Optional<Role> roleOpt = roleRepository.findByName("user");
-        if (roleOpt.isPresent()) {
-            role = roleOpt.get();
+        if (roleOpt.isEmpty()) {
+            throw new NotFoundException();
         }
         User user = new User();
         user.setId(UUID.randomUUID());
@@ -44,38 +45,36 @@ public class UserService {
         user.setSurname(registerModel.getSurname());
         user.setBirthDate(registerModel.getBirthDate());
         user.setPasswordHash(registerModel.getPassword());
-        user.setRole(role);
+        user.setRole(roleOpt.get());
         return userRepository.save(user);
     }
 
-    public User getUserById(UUID id, String userName) throws AccessDeniedException {
-        User user = new User();
+    public User getUserById(UUID id, String userName) throws AccessDeniedException, NotFoundException {
         Optional<User> userOpt = userRepository.findById(id);
-        if (userOpt.isPresent()) {
-            user = userOpt.get();
+        if (userOpt.isEmpty()) {
+            throw new NotFoundException();
         }
+        User user = userOpt.get();
         if (!userName.equals(user.getId().toString())) {
             throw new AccessDeniedException("");
         }
         return user;
     }
 
-    public User getUserByEmail(String email) {
-        User user = new User();
+    public User getUserByEmail(String email) throws NotFoundException {
         Optional<User> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isPresent()) {
-            user = userOpt.get();
+        if (userOpt.isEmpty()) {
+            throw new NotFoundException();
         }
-        return user;
+        return userOpt.get();
     }
 
-    public User getUserByEmailAndPasswordHash(String email, String passwordHash) {
-        User user = new User();
+    public User getUserByEmailAndPasswordHash(String email, String passwordHash) throws NotFoundException {
         Optional<User> userOpt = userRepository.findByEmailAndPasswordHash(email, passwordHash);
-        if (userOpt.isPresent()) {
-            user = userOpt.get();
+        if (userOpt.isEmpty()) {
+            throw new NotFoundException();
         }
-        return user;
+        return userOpt.get();
     }
 
     public void deleteUserById(UUID id) {

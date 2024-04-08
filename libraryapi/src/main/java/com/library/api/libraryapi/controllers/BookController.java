@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 
@@ -33,12 +34,12 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable UUID id) {
+    public Book getBookById(@PathVariable UUID id) throws NotFoundException {
         return bookService.getBookById(id);
     }
 
     @GetMapping("/genre/{genreId}")
-    public List<Book> getGenreBooks(@PathVariable UUID genreId) {
+    public List<Book> getGenreBooks(@PathVariable UUID genreId) throws NotFoundException {
         return bookService.getGenreBooks(genreId);
     }
 
@@ -48,7 +49,7 @@ public class BookController {
     }
 
     @PostMapping("/update/{id}")
-    public Book updateBook(@PathVariable UUID id, @RequestBody Book book) {
+    public Book updateBook(@PathVariable UUID id, @RequestBody Book book) throws NotFoundException {
         return bookService.updateBook(id, book);
     }
 

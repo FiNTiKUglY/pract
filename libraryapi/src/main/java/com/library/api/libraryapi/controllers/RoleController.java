@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 
@@ -30,7 +31,7 @@ public class RoleController {
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/{id}")
-    public Role getRoleById(@PathVariable UUID id) {
+    public Role getRoleById(@PathVariable UUID id) throws NotFoundException {
         return roleService.getRoleById(id);
     }
 

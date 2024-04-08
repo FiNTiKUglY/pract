@@ -4,6 +4,7 @@ import com.library.api.libraryapi.entities.Order;
 import com.library.api.libraryapi.entities.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -37,22 +38,21 @@ public class OrderService {
         return orderRepository.findByUserId(userId);
     }
 
-    public Order addOrder(Order order, String userName) {
-        User user = new User();
+    public Order addOrder(Order order, String userName) throws NotFoundException {
         Optional<User> userOpt = userRepository.findById(UUID.fromString(userName));
-        if (userOpt.isPresent()) {
-            user = userOpt.get();
+        if (userOpt.isEmpty()) {
+            throw new NotFoundException();
         }
-        order.setUser(user);
+        order.setUser(userOpt.get());
         return orderRepository.save(order);
     }
 
-    public Order getOrderById(UUID id, String userName) throws AccessDeniedException {
-        Order order = new Order();
+    public Order getOrderById(UUID id, String userName) throws AccessDeniedException, NotFoundException {
         Optional<Order> orderOpt = orderRepository.findById(id);
-        if (orderOpt.isPresent()) {
-            order = orderOpt.get();
+        if (orderOpt.isEmpty()) {
+            throw new NotFoundException();
         }
+        Order order = orderOpt.get();
         if (!userName.equals(order.getUser().getId().toString())) {
             throw new AccessDeniedException("");
         }

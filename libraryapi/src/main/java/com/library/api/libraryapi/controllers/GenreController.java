@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 
 @RequestMapping("/api/genres")
@@ -28,7 +28,7 @@ public class GenreController {
     }
 
     @GetMapping("/{id}")
-    public Genre getGenreById(@PathVariable UUID id) {
+    public Genre getGenreById(@PathVariable UUID id) throws NotFoundException {
         return genreService.getGenreById(id);
     }
 

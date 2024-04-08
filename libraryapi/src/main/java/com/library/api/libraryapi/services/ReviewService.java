@@ -3,6 +3,7 @@ package com.library.api.libraryapi.services;
 import com.library.api.libraryapi.entities.Review;
 import com.library.api.libraryapi.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -37,26 +38,24 @@ public class ReviewService {
         return reviewRepository.findByUserId(userId);
     }
 
-    public Review addReview(Review review, String userName) {
-        User user = new User();
+    public Review addReview(Review review, String userName) throws NotFoundException {
         Optional<User> userOpt = userRepository.findById(UUID.fromString(userName));
-        if (userOpt.isPresent()) {
-            user = userOpt.get();
+        if (userOpt.isEmpty()) {
+            throw new NotFoundException();
         }
-        review.setUser(user);
+        review.setUser(userOpt.get());
         return reviewRepository.save(review);
     }
 
-    public Review getReviewById(UUID id) {
-        Review review = new Review();
+    public Review getReviewById(UUID id) throws NotFoundException {
         Optional<Review> reviewOpt = reviewRepository.findById(id);
-        if (reviewOpt.isPresent()) {
-            review = reviewOpt.get();
+        if (reviewOpt.isEmpty()) {
+            throw new NotFoundException();
         }
-        return review;
+        return reviewOpt.get();
     }
 
-    public void deleteReviewById(UUID id, String userName) throws AccessDeniedException {
+    public void deleteReviewById(UUID id, String userName) throws AccessDeniedException, NotFoundException {
         var review = getReviewById(id);
         if (!userName.equals(review.getUser().getId().toString())) {
             throw new AccessDeniedException("");

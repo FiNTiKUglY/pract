@@ -2,6 +2,7 @@ package com.library.api.libraryapi.services;
 
 import com.library.api.libraryapi.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +28,12 @@ public class RoleService {
         return roleRepository.save(role);
     }
 
-    public Role getRoleById(UUID id) {
-        Role role = new Role();
+    public Role getRoleById(UUID id) throws NotFoundException {
         Optional<Role> roleOpt = roleRepository.findById(id);
-        if (roleOpt.isPresent()) {
-            role = roleOpt.get();
+        if (roleOpt.isEmpty()) {
+            throw new NotFoundException();
         }
-        return role;
+        return roleOpt.get();
     }
 
     public void deleteRoleById(UUID id) {

@@ -3,6 +3,7 @@ package com.library.api.libraryapi.services;
 import com.library.api.libraryapi.entities.Book;
 import com.library.api.libraryapi.entities.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,13 +35,13 @@ public class BookService {
         return bookRepository.findByAuthorId(authorId);
     }
 
-    public List<Book> getGenreBooks(UUID genreId) {
+    public List<Book> getGenreBooks(UUID genreId) throws NotFoundException {
         List<Genre> genres = new ArrayList<>();
-        Genre genre = new Genre();
         Optional<Genre> genreOpt = genreRepository.findById(genreId);
-        if (genreOpt.isPresent()) {
-            genre = genreOpt.get();
+        if (genreOpt.isEmpty()) {
+            throw new NotFoundException();
         }
+        Genre genre = genreOpt.get();
         genres.add(genre);
         return bookRepository.findByGenresContains(genres);
     }
@@ -63,25 +64,24 @@ public class BookService {
         return book;
     }
 
-    public Book getBookById(UUID id) {
-        Book book = new Book();
+    public Book getBookById(UUID id) throws NotFoundException {
         Optional<Book> bookOpt = bookRepository.findById(id);
-        if (bookOpt.isPresent()) {
-            book = bookOpt.get();
+        if (bookOpt.isEmpty()) {
+            throw new NotFoundException();
         }
-        return book;
+        return bookOpt.get();
     }
 
     public void deleteBookById(UUID id) {
         bookRepository.deleteById(id);
     }
 
-    public Book updateBook(UUID id, Book book) {
-        Book oldBook = new Book();
+    public Book updateBook(UUID id, Book book) throws NotFoundException {
         Optional<Book> bookOpt = bookRepository.findById(id);
-        if (bookOpt.isPresent()) {
-            oldBook = bookOpt.get();
+        if (bookOpt.isEmpty()) {
+            throw new NotFoundException();
         }
+        Book oldBook = bookOpt.get();
         book.setId(id);
         for (Genre genre : oldBook.getGenres()) {
             var books = genre.getBooks();

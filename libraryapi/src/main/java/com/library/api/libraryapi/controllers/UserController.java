@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 
@@ -33,7 +34,7 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable UUID id, Principal principal) throws AccessDeniedException {
+    public User getUserById(@PathVariable UUID id, Principal principal) throws AccessDeniedException, NotFoundException {
         return userService.getUserById(id, principal.getName());
     }
 
