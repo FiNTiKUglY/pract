@@ -21,8 +21,9 @@ public class OrderService {
     UserRepository userRepository;
 
     @Autowired 
-    public OrderService() {
-        //Constructor for service
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository) {
+        this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Order> getOrders() {

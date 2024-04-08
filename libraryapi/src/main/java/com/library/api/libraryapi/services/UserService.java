@@ -22,8 +22,9 @@ public class UserService {
     RoleRepository roleRepository;
 
     @Autowired 
-    public UserService() {
-        //Constructor for service
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public List<User> getUsers() {

@@ -15,8 +15,8 @@ public class GenreService {
     GenreRepository genreRepository;
 
     @Autowired 
-    public GenreService() {
-        //Constructor for service
+    public GenreService(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
     }
 
     public List<Genre> getGenres() {

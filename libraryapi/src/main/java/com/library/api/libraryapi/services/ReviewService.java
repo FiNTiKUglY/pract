@@ -20,8 +20,9 @@ public class ReviewService {
     UserRepository userRepository;
 
     @Autowired 
-    public ReviewService() {
-        //Constructor for service
+    public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository) {
+        this.reviewRepository = reviewRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Review> getReviews() {

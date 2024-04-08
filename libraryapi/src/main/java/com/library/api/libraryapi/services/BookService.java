@@ -21,8 +21,9 @@ public class BookService {
     GenreRepository genreRepository;
 
     @Autowired 
-    public BookService() {
-        //Constructor for service
+    public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
+        this.bookRepository = bookRepository;
+        this.genreRepository = genreRepository;
     }
 
     public List<Book> getBooks() {
