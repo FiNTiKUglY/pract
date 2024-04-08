@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.library.api.libraryapi.repositories.OrderRepository;
@@ -17,9 +17,10 @@ import com.library.api.libraryapi.repositories.UserRepository;
 @Service
 public class OrderService {
     
-    @Autowired OrderRepository orderRepository;
-    @Autowired UserRepository userRepository;
+    OrderRepository orderRepository;
+    UserRepository userRepository;
 
+    @Autowired 
     public OrderService() {
         //Constructor for service
     }
@@ -36,13 +37,21 @@ public class OrderService {
     }
 
     public Order addOrder(Order order, String userName) {
-        User user = userRepository.findById(UUID.fromString(userName)).get();
+        User user = new User();
+        Optional<User> userOpt = userRepository.findById(UUID.fromString(userName));
+        if (userOpt.isPresent()) {
+            user = userOpt.get();
+        }
         order.setUser(user);
         return orderRepository.save(order);
     }
 
     public Order getOrderById(UUID id, String userName) throws AccessDeniedException {
-        var order = orderRepository.findById(id).get();
+        Order order = new Order();
+        Optional<Order> orderOpt = orderRepository.findById(id);
+        if (orderOpt.isPresent()) {
+            order = orderOpt.get();
+        }
         if (!userName.equals(order.getUser().getId().toString())) {
             throw new AccessDeniedException("");
         }

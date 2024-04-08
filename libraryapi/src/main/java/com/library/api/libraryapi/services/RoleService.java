@@ -4,6 +4,7 @@ import com.library.api.libraryapi.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.library.api.libraryapi.repositories.RoleRepository;
@@ -11,8 +12,9 @@ import com.library.api.libraryapi.repositories.RoleRepository;
 @Service
 public class RoleService {
     
-    @Autowired RoleRepository roleRepository;
+    RoleRepository roleRepository;
 
+    @Autowired 
     public RoleService() {
         //Constructor for service
     }
@@ -26,7 +28,12 @@ public class RoleService {
     }
 
     public Role getRoleById(UUID id) {
-        return roleRepository.findById(id).get();
+        Role role = new Role();
+        Optional<Role> roleOpt = roleRepository.findById(id);
+        if (roleOpt.isPresent()) {
+            role = roleOpt.get();
+        }
+        return role;
     }
 
     public void deleteRoleById(UUID id) {

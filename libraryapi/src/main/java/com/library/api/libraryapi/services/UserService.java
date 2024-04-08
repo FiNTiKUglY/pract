@@ -18,9 +18,10 @@ import com.library.api.libraryapi.repositories.RoleRepository;
 @Service
 public class UserService {
     
-    @Autowired UserRepository userRepository;
-    @Autowired RoleRepository roleRepository;
+    UserRepository userRepository;
+    RoleRepository roleRepository;
 
+    @Autowired 
     public UserService() {
         //Constructor for service
     }
@@ -30,7 +31,11 @@ public class UserService {
     }
 
     public User addUser(RegisterModel registerModel) {
-        Role role = roleRepository.findByName("user").get();
+        Role role = new Role();
+        Optional<Role> roleOpt = roleRepository.findByName("user");
+        if (roleOpt.isPresent()) {
+            role = roleOpt.get();
+        }
         User user = new User();
         user.setId(UUID.randomUUID());
         user.setEmail(registerModel.getEmail());
@@ -43,7 +48,11 @@ public class UserService {
     }
 
     public User getUserById(UUID id, String userName) throws AccessDeniedException {
-        var user = userRepository.findById(id).get();
+        User user = new User();
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isPresent()) {
+            user = userOpt.get();
+        }
         if (!userName.equals(user.getId().toString())) {
             throw new AccessDeniedException("");
         }

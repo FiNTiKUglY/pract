@@ -5,14 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
 
 import com.library.api.libraryapi.repositories.AuthorRepository;
 
 @Service
 public class AuthorService {
     
-    @Autowired AuthorRepository authorRepository;
+    AuthorRepository authorRepository;
 
+    @Autowired 
     public AuthorService() {
         //Constructor for service
     }
@@ -26,7 +28,12 @@ public class AuthorService {
     }
 
     public Author getAuthorById(UUID id) {
-        return authorRepository.findById(id).get();
+        Author author = new Author();
+        Optional<Author> authorOpt = authorRepository.findById(id);
+        if (authorOpt.isPresent()) {
+            author = authorOpt.get();
+        }
+        return author;
     }
 
     public void deleteAuthorById(UUID id) {

@@ -4,6 +4,7 @@ import com.library.api.libraryapi.entities.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.library.api.libraryapi.repositories.GenreRepository;
@@ -11,8 +12,9 @@ import com.library.api.libraryapi.repositories.GenreRepository;
 @Service
 public class GenreService {
     
-    @Autowired GenreRepository genreRepository;
+    GenreRepository genreRepository;
 
+    @Autowired 
     public GenreService() {
         //Constructor for service
     }
@@ -26,7 +28,12 @@ public class GenreService {
     }
 
     public Genre getGenreById(UUID id) {
-        return genreRepository.findById(id).get();
+        Genre genre = new Genre();
+        Optional<Genre> genreOpt = genreRepository.findById(id);
+        if (genreOpt.isPresent()) {
+            genre = genreOpt.get();
+        }
+        return genre;
     }
 
     public void deleteGenreById(UUID id) {

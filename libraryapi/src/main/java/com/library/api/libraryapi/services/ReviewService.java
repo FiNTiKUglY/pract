@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.library.api.libraryapi.repositories.ReviewRepository;
@@ -16,9 +16,10 @@ import com.library.api.libraryapi.repositories.UserRepository;
 @Service
 public class ReviewService {
     
-    @Autowired ReviewRepository reviewRepository;
-    @Autowired UserRepository userRepository;
+    ReviewRepository reviewRepository;
+    UserRepository userRepository;
 
+    @Autowired 
     public ReviewService() {
         //Constructor for service
     }
@@ -36,13 +37,22 @@ public class ReviewService {
     }
 
     public Review addReview(Review review, String userName) {
-        User user = userRepository.findById(UUID.fromString(userName)).get();
+        User user = new User();
+        Optional<User> userOpt = userRepository.findById(UUID.fromString(userName));
+        if (userOpt.isPresent()) {
+            user = userOpt.get();
+        }
         review.setUser(user);
         return reviewRepository.save(review);
     }
 
     public Review getReviewById(UUID id) {
-        return reviewRepository.findById(id).get();
+        Review review = new Review();
+        Optional<Review> reviewOpt = reviewRepository.findById(id);
+        if (reviewOpt.isPresent()) {
+            review = reviewOpt.get();
+        }
+        return review;
     }
 
     public void deleteReviewById(UUID id, String userName) throws AccessDeniedException {

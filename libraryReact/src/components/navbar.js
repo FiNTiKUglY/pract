@@ -10,12 +10,6 @@ export default function Navbar() {
                 <li class="nav-item">
                     <Link class="nav-link" to={`/genres`}>Жанры</Link>
                 </li>
-                <li class="nav-item">
-                    <Link class="nav-link" to={`/signin`}>Войти</Link>
-                </li>
-                <li class="nav-item">
-                    <Link class="nav-link" to={`/signup`}>Регистрация</Link>
-                </li>
             </ul>
         </nav>
     );

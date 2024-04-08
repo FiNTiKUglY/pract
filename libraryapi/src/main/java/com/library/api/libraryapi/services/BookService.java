@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.Set;
 
@@ -16,9 +17,10 @@ import com.library.api.libraryapi.repositories.GenreRepository;
 @Service
 public class BookService {
     
-    @Autowired BookRepository bookRepository;
-    @Autowired GenreRepository genreRepository;
+    BookRepository bookRepository;
+    GenreRepository genreRepository;
 
+    @Autowired 
     public BookService() {
         //Constructor for service
     }
@@ -33,7 +35,12 @@ public class BookService {
 
     public List<Book> getGenreBooks(UUID genreId) {
         List<Genre> genres = new ArrayList<>();
-        genres.add(genreRepository.findById(genreId).get());
+        Genre genre = new Genre();
+        Optional<Genre> genreOpt = genreRepository.findById(genreId);
+        if (genreOpt.isPresent()) {
+            genre = genreOpt.get();
+        }
+        genres.add(genre);
         return bookRepository.findByGenresContains(genres);
     }
 
@@ -50,15 +57,18 @@ public class BookService {
             }
             book.setGenres(genres);
             bookRepository.save(book);
-            for (Genre genre : genres) {
-                genreRepository.save(genre);
-            }
+            genreRepository.saveAll(genres);
         }
         return book;
     }
 
     public Book getBookById(UUID id) {
-        return bookRepository.findById(id).get();
+        Book book = new Book();
+        Optional<Book> bookOpt = bookRepository.findById(id);
+        if (bookOpt.isPresent()) {
+            book = bookOpt.get();
+        }
+        return book;
     }
 
     public void deleteBookById(UUID id) {
@@ -66,7 +76,18 @@ public class BookService {
     }
 
     public Book updateBook(UUID id, Book book) {
+        Book oldBook = new Book();
+        Optional<Book> bookOpt = bookRepository.findById(id);
+        if (bookOpt.isPresent()) {
+            oldBook = bookOpt.get();
+        }
         book.setId(id);
+        for (Genre genre : oldBook.getGenres()) {
+            var books = genre.getBooks();
+            books.remove(oldBook);
+            genre.setBooks(books);
+            genreRepository.save(genre);
+        }
         return addBook(book);
     }
 }
