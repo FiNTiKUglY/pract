@@ -10,7 +10,7 @@ body {
   position: fixed;
 }
 
-main #root {
+main, #root {
   width: 100%;
   height: 100%;
 }

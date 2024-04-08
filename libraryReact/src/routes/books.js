@@ -19,7 +19,7 @@ export default function Books() {
     }, [reload]);
 
     return (
-        <section >
+        <section>
             <div>
                 <h2>Книги</h2>
                 

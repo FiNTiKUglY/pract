@@ -1,10 +1,10 @@
 import { HomeComponent } from "./home.component";
-import { BookComponent }   from "./book.component";
-import { BookAddComponent }   from "./book.add.component";
-import { BookUpdateComponent }   from "./book.update.component";
-import { GenreComponent }   from "./genre.component";
-import { GenreAddComponent }   from "./genre.add.component";
-import { GenreUpdateComponent }   from "./genre.update.component";
+import { BookComponent }   from "./book/book.component";
+import { BookAddComponent }   from "./book.add/book.add.component";
+import { BookUpdateComponent }   from "./book.update/book.update.component";
+import { GenreComponent }   from "./genre/genre.component";
+import { GenreAddComponent }   from "./genre.add/genre.add.component";
+import { GenreUpdateComponent }   from "./genre.update/genre.update.component";
 
 import { Routes } from '@angular/router';
 

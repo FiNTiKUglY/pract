@@ -1,0 +1,74 @@
+<section>
+    <div>
+        <h2>Книги</h2>
+        
+        <table class="table table-striped table-hover">   
+            <thead>
+                <tr>
+                    <th>
+                        Название
+                    </th>
+                    <th>
+                        Автор
+                    </th>
+                    <th>
+                        Описание
+                    </th>
+                    <th>
+                        Цена
+                    </th>
+                    <th>
+                        Ссылка загрузки
+                    </th>
+                    <th>
+                        Ссылка загрузки
+                    </th>
+                    <th>
+                        Жанры
+                    </th>
+                    <th>
+                        <a to="add/" class="btn btn-success">Добавить</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (book of books; track book) {
+                    <tr>
+                        <td>
+                            {{book.title}}
+                        </td>
+                        <td>
+                            {{book.author.surname}} {{book.author.name}}
+                        </td>
+                        <td>
+                            {{book.shortDescription}}
+                        </td>
+                        <td>
+                            {{book.cost}}
+                        </td>
+                        <td>
+                            {{book.downloadLink}}
+                        </td>
+                        <td>
+                            {{book.imageLink}}
+                        </td>
+                        <td>
+                            @for (genre of book.genres; track genre) {
+                                {{genre.name}} 
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-info">Изменить</a>
+                            |
+                            <button 
+                                value={book.id} 
+                                class="btn btn-danger">
+                                    Удалить
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
