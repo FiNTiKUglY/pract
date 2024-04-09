@@ -57,7 +57,7 @@ public class OrderController {
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/delete/{id}")
-    public void deleteOrder(@PathVariable UUID id) {
+    public void deleteOrder(@PathVariable UUID id) throws NotFoundException {
         orderService.deleteOrderById(id);
     }
 }

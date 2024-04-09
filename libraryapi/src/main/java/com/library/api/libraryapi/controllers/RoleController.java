@@ -49,7 +49,7 @@ public class RoleController {
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/delete/{id}")
-    public void deleteRole(@PathVariable UUID id) {
+    public void deleteRole(@PathVariable UUID id) throws NotFoundException {
         roleService.deleteRoleById(id);
     }
 }

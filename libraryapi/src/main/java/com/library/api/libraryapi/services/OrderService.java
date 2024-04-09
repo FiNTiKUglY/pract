@@ -59,7 +59,10 @@ public class OrderService {
         return order;
     }
 
-    public void deleteOrderById(UUID id) {
+    public void deleteOrderById(UUID id) throws NotFoundException {
+        if (!orderRepository.existsById(id)) {
+            throw new NotFoundException();
+        }
         orderRepository.deleteById(id);
     }
 

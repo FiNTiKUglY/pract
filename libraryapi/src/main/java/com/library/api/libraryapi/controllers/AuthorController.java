@@ -47,7 +47,7 @@ public class AuthorController {
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/delete/{id}")
-    public void deleteAuthor(@PathVariable UUID id) {
+    public void deleteAuthor(@PathVariable UUID id) throws NotFoundException {
         authorService.deleteAuthorById(id);
     }
 }

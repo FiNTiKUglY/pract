@@ -2,7 +2,7 @@ import axios from "axios"
 
 export async function signIn(email, password) {
     let response = await axios.post(
-        "http://localhost:8080/api/auth/signin", 
+        process.env.REACT_APP_API_URL + `/auth/signin`, 
         {
             "email": email,
             "password": password

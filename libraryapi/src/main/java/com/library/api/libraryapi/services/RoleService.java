@@ -36,7 +36,10 @@ public class RoleService {
         return roleOpt.get();
     }
 
-    public void deleteRoleById(UUID id) {
+    public void deleteRoleById(UUID id) throws NotFoundException {
+        if (!roleRepository.existsById(id)) {
+            throw new NotFoundException();
+        }
         roleRepository.deleteById(id);
     }
 

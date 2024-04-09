@@ -77,7 +77,10 @@ public class UserService {
         return userOpt.get();
     }
 
-    public void deleteUserById(UUID id) {
+    public void deleteUserById(UUID id) throws NotFoundException {
+        if (!userRepository.existsById(id)) {
+            throw new NotFoundException();
+        }
         userRepository.deleteById(id);
     }
 

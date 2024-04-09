@@ -43,7 +43,7 @@ public class GenreController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteGenre(@PathVariable UUID id) {
+    public void deleteGenre(@PathVariable UUID id) throws NotFoundException {
         genreService.deleteGenreById(id);
     }
 }

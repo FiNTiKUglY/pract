@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './genre.update.component.css'
 })
 export class GenreUpdateComponent {
-
+  ngOnInit() { }
 }

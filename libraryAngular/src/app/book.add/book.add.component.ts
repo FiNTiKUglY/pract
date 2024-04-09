@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './book.add.component.css'
 })
 export class BookAddComponent {
-
+  ngOnInit() { }
 }

@@ -54,7 +54,7 @@ public class BookController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteBook(@PathVariable UUID id) {
+    public void deleteBook(@PathVariable UUID id) throws NotFoundException {
         bookService.deleteBookById(id);
     }
 }

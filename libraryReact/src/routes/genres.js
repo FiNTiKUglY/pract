@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getGenres, deleteGenre, getGenre, addGenre, updateGenre } from "../api/genreService"
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
-
-export async function loader({ params }) {
-    const genre = await getGenre(params.genreId);
-    return { genre };
-}
+import { getGenres, deleteGenre } from "../api/genreService"
+import { Link } from "react-router-dom";
 
 export default function Genres() {
     const [genres, setGenres] = useState([]);
@@ -30,7 +25,7 @@ export default function Genres() {
                                 Описание
                             </th>
                             <th>
-                                <Link to="add/" className="btn btn-success">Добавить</Link>
+                                <Link to="add" className="btn btn-success">Добавить</Link>
                             </th>
                         </tr>
                     </thead>
@@ -69,82 +64,5 @@ export default function Genres() {
     async function removeGenre(id) {
         await deleteGenre(id)
         setReload(!reload)
-    }
-}
-
-export function GenresAdd() {
-    const navigate = useNavigate();
-
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-
-    return (
-        <section className="form-container">
-            <div className="form">
-                <input
-                    placeholder="Название"
-                    className="form-control"
-                    type="text"
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <textarea
-                    placeholder="Описание"
-                    className="form-control"
-                    type="text"
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-                <button
-                    onClick={addGenreClick}>
-                    Добавить
-                </button>
-            </div>
-        </section>
-    );
-
-    async function addGenreClick() {
-        let genre = {}
-        genre.id = crypto.randomUUID();
-        genre.name = name
-        genre.description = description
-        await addGenre(genre)
-        navigate('/genres')
-    }
-}
-
-export function GenresUpdate() {
-    const navigate = useNavigate();
-
-    const { genre } = useLoaderData();
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-
-    return (
-        <section className="form-container">
-            <div className="form">
-                <input
-                    placeholder="Название"
-                    className="form-control"
-                    type="text"
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <textarea
-                    placeholder="Описание"
-                    className="form-control"
-                    type="text"
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-                <button
-                    onClick={updateGenreClick}>
-                    Изменить
-                </button>
-            </div>
-        </section>
-    );
-
-    async function updateGenreClick() {
-        genre.name = name
-        genre.description = description
-        await updateGenre(genre)
-        navigate('/genres')
     }
 }

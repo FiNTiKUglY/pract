@@ -7,8 +7,12 @@ import {
 import Root from './routes/root';
 import Signup from './routes/signup';
 import Signin from './routes/signin';
-import Books, { BooksAdd, BooksUpdate, loader as bookLoader } from './routes/books';
-import Genres, { GenresAdd, GenresUpdate, loader as genreLoader } from './routes/genres';
+import Books from './routes/books';
+import BooksAdd from './routes/bookAdd';
+import BooksUpdate, { loader as bookLoader } from './routes/bookUpdate';
+import Genres from './routes/genres';
+import GenresAdd from './routes/genreAdd';
+import GenresUpdate, { loader as genreLoader } from './routes/genreUpdate';
 import { useCookies } from 'react-cookie'
 import axios from "axios"
 

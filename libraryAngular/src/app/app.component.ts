@@ -9,9 +9,6 @@ import { RouterOutlet, RouterLink } from "@angular/router";
                   <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                          <a class="nav-link" routerLink="">Главная</a>
-                        </li>
-                        <li class="nav-item">
                           <a class="nav-link" routerLink="/books">Книги</a>
                         </li>
                         <li class="nav-item">

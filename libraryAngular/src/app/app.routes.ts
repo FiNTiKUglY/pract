@@ -1,4 +1,3 @@
-import { HomeComponent } from "./home.component";
 import { BookComponent }   from "./book/book.component";
 import { BookAddComponent }   from "./book.add/book.add.component";
 import { BookUpdateComponent }   from "./book.update/book.update.component";
@@ -21,5 +20,4 @@ const genreRoutes: Routes = [
 export const routes: Routes = [
     { path: "books", component: BookComponent, children: bookRoutes},
     { path: "genres", component: GenreComponent, children: genreRoutes},
-    { path: "", component: HomeComponent}
 ];

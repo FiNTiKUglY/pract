@@ -72,7 +72,10 @@ public class BookService {
         return bookOpt.get();
     }
 
-    public void deleteBookById(UUID id) {
+    public void deleteBookById(UUID id) throws NotFoundException {
+        if (!bookRepository.existsById(id)) {
+            throw new NotFoundException();
+        }
         bookRepository.deleteById(id);
     }
 

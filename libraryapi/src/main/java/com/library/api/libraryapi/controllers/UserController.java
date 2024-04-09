@@ -46,7 +46,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/delete/{id}")
-    public void deleteUser(@PathVariable UUID id) {
+    public void deleteUser(@PathVariable UUID id) throws NotFoundException {
         userService.deleteUserById(id);
     }
 }

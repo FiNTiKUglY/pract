@@ -36,7 +36,10 @@ public class AuthorService {
         return authorOpt.get();
     }
 
-    public void deleteAuthorById(UUID id) {
+    public void deleteAuthorById(UUID id) throws NotFoundException {
+        if (!authorRepository.existsById(id)) {
+            throw new NotFoundException();
+        }
         authorRepository.deleteById(id);
     }
 

@@ -36,7 +36,10 @@ public class GenreService {
         return genreOpt.get();
     }
 
-    public void deleteGenreById(UUID id) {
+    public void deleteGenreById(UUID id) throws NotFoundException {
+        if (!genreRepository.existsById(id)) {
+            throw new NotFoundException();
+        }
         genreRepository.deleteById(id);
     }
 
