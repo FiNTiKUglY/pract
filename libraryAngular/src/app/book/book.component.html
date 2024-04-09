@@ -27,7 +27,7 @@
                         Жанры
                     </th>
                     <th>
-                        <a routerLink="add/" class="btn btn-success">Добавить</a>
+                        <a routerLink="add" class="btn btn-success">Добавить</a>
                     </th>
                 </tr>
             </thead>
@@ -58,7 +58,7 @@
                             }
                         </td>
                         <td>
-                            <a class="btn btn-info">Изменить</a>
+                            <a [routerLink]="['update/', book.id]" class="btn btn-info">Изменить</a>
                             |
                             <button 
                                 (click)="removeBook(book.id)"

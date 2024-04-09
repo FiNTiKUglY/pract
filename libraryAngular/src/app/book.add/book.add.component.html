@@ -1,0 +1,48 @@
+<section class="form-container">
+    <div class="form">
+        <input
+            placeholder="Название"
+            class="form-control"
+            type="text"
+            [(ngModel)]="book.title"
+        />
+        <select [(ngModel)]="book.author" class="form-control">
+            @for (author of authorList; track author) {
+                <option [ngValue]="author">{{author.surname}} {{author.name}}</option>
+            }
+        </select>
+        <textarea
+            placeholder="Описание"
+            class="form-control"
+            type="text"
+            [(ngModel)]="book.shortDescription"
+        ></textarea>
+        <select multiple [(ngModel)]="book.genres" class="form-control">
+            @for (genre of genreList; track genre) {
+                <option [ngValue]="genre">{{genre.name}}</option>
+            }
+        </select>
+        <input
+            placeholder="Цена"
+            class="form-control"
+            type="number"
+            [(ngModel)]="book.cost"
+        />
+        <input
+            placeholder="Ссылка загрузки"
+            class="form-control"
+            type="text"
+            [(ngModel)]="book.downloadLink"
+        />
+        <input
+            placeholder="Ссылка изображения"
+            class="form-control"
+            type="text"
+            [(ngModel)]="book.imageLink"
+        />
+        <button
+            (click)="addBook()">
+            Добавить
+        </button>
+    </div>
+</section>

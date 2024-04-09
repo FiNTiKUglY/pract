@@ -1,1 +1,20 @@
-<p>genre.update works!</p>
+<section class="form-container">
+    <div class="form">
+        <input
+            placeholder="Название"
+            class="form-control"
+            type="text"
+            [(ngModel)]="genre.name"
+        />
+        <textarea
+            placeholder="Описание"
+            class="form-control"
+            type="text"
+            [(ngModel)]="genre.description"
+        ></textarea>
+        <button
+            (click)="updateGenre()">
+            Изменить
+        </button>
+    </div>
+</section>

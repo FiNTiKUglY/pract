@@ -18,7 +18,7 @@ export class GenreComponent {
   async ngOnInit(){
     this.genres = await this.genreService.getGenres();
   }
-
+  
   async removeGenre(id: string) {
     await this.genreService.deleteGenre(id)
     this.ngOnInit();

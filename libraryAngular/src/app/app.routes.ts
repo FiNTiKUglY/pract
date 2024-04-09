@@ -7,17 +7,11 @@ import { GenreUpdateComponent }   from "./genre.update/genre.update.component";
 
 import { Routes } from '@angular/router';
 
-const bookRoutes: Routes = [
-    { path: "add", component: BookAddComponent},
-    { path: "update/:id", component: BookUpdateComponent}
-];
-
-const genreRoutes: Routes = [
-    { path: "add", component: GenreAddComponent},
-    { path: "update/:id", component: GenreUpdateComponent}
-];
-
 export const routes: Routes = [
-    { path: "books", component: BookComponent, children: bookRoutes},
-    { path: "genres", component: GenreComponent, children: genreRoutes},
+    { path: "books", component: BookComponent},
+    { path: "genres", component: GenreComponent},
+    { path: "books/add", component: BookAddComponent},
+    { path: "books/update/:id", component: BookUpdateComponent},
+    { path: "genres/add", component: GenreAddComponent},
+    { path: "genres/update/:id", component: GenreUpdateComponent}
 ];

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from "axios"
+import { Author } from "../entities/author"
 
 
 @Injectable({
