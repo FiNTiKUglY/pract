@@ -13,8 +13,7 @@ import { NgFor } from '@angular/common';
   selector: 'app-book.update',
   standalone: true,
   imports: [FormsModule, NgFor],
-  templateUrl: './book.update.component.html',
-  styleUrl: './book.update.component.css'
+  templateUrl: './book.update.component.html'
 })
 export class BookUpdateComponent {
   book: Book = new Book();

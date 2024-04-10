@@ -14,8 +14,7 @@ import { NgFor } from '@angular/common';
   selector: 'app-book.add',
   standalone: true,
   imports: [FormsModule, NgFor],
-  templateUrl: './book.add.component.html',
-  styleUrl: './book.add.component.css'
+  templateUrl: './book.add.component.html'
 })
 
 export class BookAddComponent {

@@ -8,8 +8,7 @@ import { NgFor } from '@angular/common';
   selector: 'app-genre',
   standalone: true,
   imports: [RouterLink, NgFor],
-  templateUrl: './genre.component.html',
-  styleUrl: './genre.component.css'
+  templateUrl: './genre.component.html'
 })
 export class GenreComponent {
   genres: Genre[] = [];

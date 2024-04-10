@@ -8,8 +8,7 @@ import { GenreService } from '../services/genre.service';
   selector: 'app-genre.update',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './genre.update.component.html',
-  styleUrl: './genre.update.component.css'
+  templateUrl: './genre.update.component.html'
 })
 export class GenreUpdateComponent {
   genre: Genre = new Genre();

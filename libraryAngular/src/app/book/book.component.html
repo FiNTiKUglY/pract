@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let book of books; track book">
+                <tr *ngFor="let book of books">
                     <td>
                         {{book.title}}
                     </td>
@@ -52,7 +52,7 @@
                         {{book.imageLink}}
                     </td>
                     <td>
-                        <span *ngFor="let genre of book.genres; track genre">
+                        <span *ngFor="let genre of book.genres">
                             {{genre.name}} 
                         </span>
                     </td>

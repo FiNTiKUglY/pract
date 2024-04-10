@@ -9,8 +9,7 @@ import { UUID } from "angular2-uuid";
   selector: 'app-genre.add',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './genre.add.component.html',
-  styleUrl: './genre.add.component.css'
+  templateUrl: './genre.add.component.html'
 })
 export class GenreAddComponent {
   genre: Genre = new Genre();

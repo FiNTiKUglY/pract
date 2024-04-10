@@ -8,8 +8,7 @@ import { NgFor } from '@angular/common';
   selector: 'app-book',
   standalone: true,
   imports: [RouterLink, NgFor],
-  templateUrl: './book.component.html',
-  styleUrl: './book.component.css'
+  templateUrl: './book.component.html'
 })
 
 export class BookComponent {
