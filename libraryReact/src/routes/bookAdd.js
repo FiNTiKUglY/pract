@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAuthors } from "../api/authorService"
 import { getGenres } from "../api/genreService"
 import Select  from "react-select";
@@ -13,14 +13,56 @@ export default function BooksAdd() {
     const [cost, setCost] = useState('');
     const [downloadLink, setDownloadLink] = useState('');
     const [imageLink, setImageLink] = useState('');
-    const [author, setAuthor] = useState();
-    const [genres, setGenres] = useState();
+    const [author, setAuthor] = useState({value: null, label: null});
+    const [genres, setGenres] = useState([]);
+    const [book, setBook] = useState({});
+    const [errors, setErrors] = useState({});
+    const [submitting, setSubmitting] = useState(false);
 
     let authorsList = [];
     let genresList = [];
 
     loadAuthors();
     loadGenres();
+
+    useEffect(() => {
+        const addData = async (book) => {
+            await addBook(book);
+        }
+        if (Object.keys(errors).length === 0 && submitting) {
+            addData(book);
+            navigate('/books');
+        }
+      }, [errors]);
+
+    const validateValues = (book) => {
+        let errors = {};
+        if (book.title.length < 1) {
+            errors.title = "Название слишком короткое";
+            alert("Название слишком короткое")
+        }
+        if (book.title.length > 80) {
+            errors.title = "Название слишком длинное";
+            alert("Название слишком длинное")
+        }
+        if (book.shortDescription.length < 5) {
+            errors.shortDescription = "Описание слишком короткое";
+            alert("Описание слишком короткое")
+        }
+        if (book.shortDescription.length > 255) {
+            errors.shortDescription = "Описание слишком длинное";
+            alert("Описание слишком длинное")
+        }
+        if (!book.cost || book.cost.toString().split('.')[1] > 2) {
+            errors.cost = "У цены больше 2 знаков после запятой";
+            alert("У цены больше 2 знаков после запятой")
+        }
+        if (book.author == null) {
+            errors.author = "Выберите автора";
+            alert("Выберите автора")
+        }
+        return errors;
+    };
 
     return (
         <section className="form-container">
@@ -101,7 +143,6 @@ export default function BooksAdd() {
     }
 
     async function addBookClick() {
-        let book = {}
         book.id = crypto.randomUUID();
         book.title = title
         book.shortDescription = shortDescription
@@ -110,7 +151,8 @@ export default function BooksAdd() {
         book.genres = genres.map(genre => genre.value)
         book.downloadLink = downloadLink
         book.imageLink = imageLink
-        await addBook(book)
-        navigate('/books')
+        setErrors(validateValues(book))
+        setBook(book)
+        setSubmitting(true);
     }
 }

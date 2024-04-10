@@ -21,12 +21,54 @@ export default function BooksUpdate() {
     const [imageLink, setImageLink] = useState(book.imageLink);
     const [author, setAuthor] = useState({value: book.author, label: `${book.author.surname} ${book.author.name}`});
     const [genres, setGenres] = useState(book.genres.map(genre => ({value: genre, label: `${genre.name}`})));
+    const [newBook, setNewBook] = useState({});
+    const [errors, setErrors] = useState({});
+    const [submitting, setSubmitting] = useState(false);
     
     let authorsList = [];
     let genresList = [];
 
     loadAuthors();
     loadGenres();
+
+    useEffect(() => {
+        const updateData = async (book) => {
+            await updateBook(book)
+        }
+        if (Object.keys(errors).length === 0 && submitting) {
+            updateData(newBook);
+            navigate('/books');
+        }
+      }, [errors]);
+
+    const validateValues = (book) => {
+        let errors = {};
+        if (book.title.length < 1) {
+            errors.title = "Название слишком короткое";
+            alert("Название слишком короткое")
+        }
+        if (book.title.length > 80) {
+            errors.title = "Название слишком длинное";
+            alert("Название слишком длинное")
+        }
+        if (book.shortDescription.length < 5) {
+            errors.shortDescription = "Описание слишком короткое";
+            alert("Описание слишком короткое")
+        }
+        if (book.shortDescription.length > 255) {
+            errors.shortDescription = "Описание слишком длинное";
+            alert("Описание слишком длинное")
+        }
+        if (!book.cost || book.cost.toString().split('.')[1] > 2) {
+            errors.cost = "У цены больше 2 знаков после запятой";
+            alert("У цены больше 2 знаков после запятой")
+        }
+        if (book.author == null) {
+            errors.author = "Выберите автора";
+            alert("Выберите автора")
+        }
+        return errors;
+    };
 
     return (
         <section className="form-container">
@@ -119,7 +161,8 @@ export default function BooksUpdate() {
         book.genres = genres.map(genre => genre.value)
         book.downloadLink = downloadLink
         book.imageLink = imageLink
-        await updateBook(book)
-        navigate('/books')
+        setErrors(validateValues(book))
+        setNewBook(book)
+        setSubmitting(true);
     }
 }

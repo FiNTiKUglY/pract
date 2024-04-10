@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getGenre, updateGenre } from "../api/genreService"
 import { useLoaderData, useNavigate } from "react-router-dom";
 
@@ -13,6 +13,40 @@ export default function GenresUpdate() {
     const { genre } = useLoaderData();
     const [name, setName] = useState(genre.name);
     const [description, setDescription] = useState(genre.description);
+    const [newGenre, setNewGenre] = useState({});
+    const [errors, setErrors] = useState({});
+    const [submitting, setSubmitting] = useState(false);
+
+    useEffect(() => {
+        const updateData = async (genre) => {
+            await updateGenre(genre);
+        }
+        if (Object.keys(errors).length === 0 && submitting) {
+            updateData(newGenre);
+            navigate('/genres');
+        }
+      }, [errors]);
+
+      const validateValues = (genre) => {
+        let errors = {};
+        if (genre.name.length < 1) {
+            errors.name = "Название слишком короткое";
+            alert("Название слишком короткое")
+        }
+        if (genre.name.length > 255) {
+            errors.title = "Название слишком длинное";
+            alert("Название слишком длинное")
+        }
+        if (genre.description.length < 5) {
+            errors.shortDescription = "Описание слишком короткое";
+            alert("Описание слишком короткое")
+        }
+        if (genre.description.length > 255) {
+            errors.shortDescription = "Описание слишком длинное";
+            alert("Описание слишком длинное")
+        }
+        return errors;
+    };
 
     return (
         <section className="form-container">
@@ -42,7 +76,8 @@ export default function GenresUpdate() {
     async function updateGenreClick() {
         genre.name = name
         genre.description = description
-        await updateGenre(genre)
-        navigate('/genres')
+        setErrors(validateValues(genre))
+        setNewGenre(genre)
+        setSubmitting(true);
     }
 }
