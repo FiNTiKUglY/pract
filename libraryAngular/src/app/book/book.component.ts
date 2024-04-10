@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { Book } from '../entities/book';
 import { RouterLink } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-book',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NgFor],
   templateUrl: './book.component.html',
   styleUrl: './book.component.css'
 })

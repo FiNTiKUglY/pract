@@ -8,11 +8,12 @@ import { BookService } from '../services/book.service';
 import { AuthorService } from '../services/author.service';
 import { GenreService } from '../services/genre.service';
 import { UUID } from "angular2-uuid";
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-book.add',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgFor],
   templateUrl: './book.add.component.html',
   styleUrl: './book.add.component.css'
 })

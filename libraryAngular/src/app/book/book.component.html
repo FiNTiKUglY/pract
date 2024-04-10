@@ -32,42 +32,40 @@
                 </tr>
             </thead>
             <tbody>
-                @for (book of books; track book) {
-                    <tr>
-                        <td>
-                            {{book.title}}
-                        </td>
-                        <td>
-                            {{book.author.surname}} {{book.author.name}}
-                        </td>
-                        <td>
-                            {{book.shortDescription}}
-                        </td>
-                        <td>
-                            {{book.cost}}
-                        </td>
-                        <td>
-                            {{book.downloadLink}}
-                        </td>
-                        <td>
-                            {{book.imageLink}}
-                        </td>
-                        <td>
-                            @for (genre of book.genres; track genre) {
-                                {{genre.name}} 
-                            }
-                        </td>
-                        <td>
-                            <a [routerLink]="['update/', book.id]" class="btn btn-info">Изменить</a>
-                            |
-                            <button 
-                                (click)="removeBook(book.id)"
-                                class="btn btn-danger">
-                                    Удалить
-                            </button>
-                        </td>
-                    </tr>
-                }
+                <tr *ngFor="let book of books; track book">
+                    <td>
+                        {{book.title}}
+                    </td>
+                    <td>
+                        {{book.author.surname}} {{book.author.name}}
+                    </td>
+                    <td>
+                        {{book.shortDescription}}
+                    </td>
+                    <td>
+                        {{book.cost}}
+                    </td>
+                    <td>
+                        {{book.downloadLink}}
+                    </td>
+                    <td>
+                        {{book.imageLink}}
+                    </td>
+                    <td>
+                        <span *ngFor="let genre of book.genres; track genre">
+                            {{genre.name}} 
+                        </span>
+                    </td>
+                    <td>
+                        <a [routerLink]="['update/', book.id]" class="btn btn-info">Изменить</a>
+                        |
+                        <button 
+                            (click)="removeBook(book.id)"
+                            class="btn btn-danger">
+                                Удалить
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

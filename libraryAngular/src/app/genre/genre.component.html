@@ -17,25 +17,23 @@
                 </tr>
             </thead>
             <tbody>
-                @for (genre of genres; track genre) {
-                    <tr>
-                        <td>
-                            {{genre.name}}
-                        </td>
-                        <td>
-                            {{genre.description}}
-                        </td>
-                        <td>
-                            <a [routerLink]="['update/', genre.id]" class="btn btn-info">Изменить</a>
-                            |
-                            <button 
-                                (click)="removeGenre(genre.id)"
-                                class="btn btn-danger">
-                                    Удалить
-                            </button>
-                        </td>
-                    </tr>
-                }
+                <tr *ngFor="let genre of genres">
+                    <td>
+                        {{genre.name}}
+                    </td>
+                    <td>
+                        {{genre.description}}
+                    </td>
+                    <td>
+                        <a [routerLink]="['update/', genre.id]" class="btn btn-info">Изменить</a>
+                        |
+                        <button 
+                            (click)="removeGenre(genre.id)"
+                            class="btn btn-danger">
+                                Удалить
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

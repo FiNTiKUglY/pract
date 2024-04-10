@@ -110,7 +110,6 @@ export default function BooksAdd() {
         book.genres = genres.map(genre => genre.value)
         book.downloadLink = downloadLink
         book.imageLink = imageLink
-        console.log(book)
         await addBook(book)
         navigate('/books')
     }

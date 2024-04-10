@@ -22,11 +22,16 @@ export async function deleteBook(id) {
 }
 
 export async function addBook(book) {
-    let response = await axios.post(
-        process.env.REACT_APP_API_URL + `/books/add`,
-        book
-    )
-    return response.data
+    try {
+        let response = await axios.post(
+            process.env.REACT_APP_API_URL + `/books/add`,
+            book
+        )
+        return response.data
+    }
+    catch (error) {
+        alert(error)
+    }
 }
 
 export async function updateBook(book) {

@@ -4,6 +4,9 @@ export async function getGenres() {
     let response = await axios.get(
         process.env.REACT_APP_API_URL + `/genres`
     )
+    .catch(err => { 
+        alert(err.message)
+    })
     return response.data
 }
 
@@ -26,6 +29,9 @@ export async function addGenre(genre) {
         process.env.REACT_APP_API_URL + `/genres/add`,
         genre
     )
+    .catch(err => { 
+        alert(err.message)
+    })
     return response.data
 }
 

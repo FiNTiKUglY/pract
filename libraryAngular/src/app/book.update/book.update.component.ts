@@ -7,11 +7,12 @@ import { Author } from "../entities/author"
 import { BookService } from '../services/book.service';
 import { GenreService } from '../services/genre.service';
 import { AuthorService } from '../services/author.service';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-book.update',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgFor],
   templateUrl: './book.update.component.html',
   styleUrl: './book.update.component.css'
 })

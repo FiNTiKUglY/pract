@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { GenreService } from '../services/genre.service';
 import { Genre } from '../entities/genre';
 import { RouterLink } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-genre',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NgFor],
   templateUrl: './genre.component.html',
   styleUrl: './genre.component.css'
 })

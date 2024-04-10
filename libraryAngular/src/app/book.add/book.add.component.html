@@ -7,9 +7,7 @@
             [(ngModel)]="book.title"
         />
         <select [(ngModel)]="book.author" class="form-control">
-            @for (author of authorList; track author) {
-                <option [ngValue]="author">{{author.surname}} {{author.name}}</option>
-            }
+            <option *ngFor="let author of authorList" [ngValue]="author">{{author.surname}} {{author.name}}</option>
         </select>
         <textarea
             placeholder="Описание"
@@ -18,9 +16,7 @@
             [(ngModel)]="book.shortDescription"
         ></textarea>
         <select multiple [(ngModel)]="book.genres" class="form-control">
-            @for (genre of genreList; track genre) {
-                <option [ngValue]="genre">{{genre.name}}</option>
-            }
+            <option *ngFor="let genre of genreList" [ngValue]="genre">{{genre.name}}</option>
         </select>
         <input
             placeholder="Цена"
