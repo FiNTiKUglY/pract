@@ -33,7 +33,7 @@
 
 #### [Результаты работы](https://github.com/FiNTiKUglY/pract/tree/master/libraryAngular/src "Angular - Frontend")
 * Ориентировочное время выполнения: 12 часов.
-* Фактическое время выполнения: выполняется.
+* Фактическое время выполнения: 12 часов.
 
 ### Задание 5
 * React - Frontend
