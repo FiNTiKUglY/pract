@@ -67,6 +67,13 @@ export default function BooksUpdate() {
             errors.author = "Выберите автора";
             alert("Выберите автора")
         }
+        try {
+            Number(book.cost)
+        }
+        catch {
+            errors.cost = "Цена должны быть числом";
+            alert("Цена должны быть числом")
+        }
         return errors;
     };
 

@@ -53,17 +53,21 @@ export default function BooksAdd() {
             errors.shortDescription = "Описание слишком длинное";
             alert("Описание слишком длинное")
         }
-        if (!book.cost || book.cost.toString().split('.')[1] > 2) {
+        if (!book.cost || book.cost.toString().split('.')[1].length > 2) {
+            console.log(book.cost.toString().split('.')[1])
             errors.cost = "У цены больше 2 знаков после запятой";
             alert("У цены больше 2 знаков после запятой")
-        }
-        if (typeof book.cost != 'number') {
-            errors.cost = "Цена должны быть числом";
-            alert("Цена должны быть числом")
         }
         if (book.author == null) {
             errors.author = "Выберите автора";
             alert("Выберите автора")
+        }
+        try {
+            Number(book.cost)
+        }
+        catch {
+            errors.cost = "Цена должны быть числом";
+            alert("Цена должны быть числом")
         }
         return errors;
     };
