@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from "axios"
 import {Genre} from "../entities/genre"
+import { ANGULAR_APP_API_URL } from "../contastants/env"
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class GenreService {
   async getGenres() {
     let value: Genre[] = [];
     await axios.get(
-        "http://localhost:8080/api/genres"
+        ANGULAR_APP_API_URL + `/genres`
     )
     .then((response) => {
         value = response.data
@@ -26,7 +27,7 @@ export class GenreService {
   async getGenre(id: string) {
     let value = new Genre();
     await axios.get(
-        "http://localhost:8080/api/genres/" + id
+        ANGULAR_APP_API_URL + `/genres/${id}`
     )
     .then((response) => {
         value = response.data
@@ -40,7 +41,7 @@ export class GenreService {
   async deleteGenre(id: string) {
     let value = new Genre();
     await axios.delete(
-        'http://localhost:8080/api/genres/delete/' + id
+        ANGULAR_APP_API_URL + `/genres/delete/${id}`
     )
     .then((response) => {
         value = response.data
@@ -54,7 +55,7 @@ export class GenreService {
   async addGenre(genre: Genre) {
     let value = new Genre();
     await axios.post(
-        'http://localhost:8080/api/genres/add',
+        ANGULAR_APP_API_URL + `/genres/add`,
         genre
     )
     .then((response) => {
@@ -69,7 +70,7 @@ export class GenreService {
   async updateGenre(genre: Genre) {
     let value = new Genre();
     await axios.post(
-        'http://localhost:8080/api/genres/update/' + genre.id,
+        ANGULAR_APP_API_URL + `/genres/update/${genre.id}`,
         genre
     )
     .then((response) => {

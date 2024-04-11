@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from "axios"
 import {Book} from "../entities/book"
+import { ANGULAR_APP_API_URL } from "../contastants/env"
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class BookService {
   async getBooks() {
     let value: Book[] = [];
     await axios.get(
-        "http://localhost:8080/api/books"
+        ANGULAR_APP_API_URL + `/books`
     )
     .then((response) => {
         value = response.data
@@ -26,7 +27,7 @@ export class BookService {
   async getBook(id: string) {
     let value = new Book();
     await axios.get(
-        "http://localhost:8080/api/books/" + id
+        ANGULAR_APP_API_URL + `/books/${id}`
     )
     .then((response) => {
         value = response.data
@@ -40,7 +41,7 @@ export class BookService {
   async deleteBook(id: string) {
     let value = new Book();
     await axios.delete(
-        'http://localhost:8080/api/books/delete/' + id
+        ANGULAR_APP_API_URL + `/books/delete/${id}`
     )
     .then((response) => {
         value = response.data
@@ -54,7 +55,7 @@ export class BookService {
   async addBook(book: Book) {
     let value = new Book();
     await axios.post(
-        'http://localhost:8080/api/books/add',
+        ANGULAR_APP_API_URL + `/books/add`,
         book
     )
     .then((response) => {
@@ -69,7 +70,7 @@ export class BookService {
   async updateBook(book: Book) {
     let value = new Book();
     await axios.post(
-        'http://localhost:8080/api/books/update/' + book.id,
+        ANGULAR_APP_API_URL + `/books/update/${book.id}`,
         book
     )
     .then((response) => {

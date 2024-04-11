@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from "axios"
 import { Author } from "../entities/author"
+import { ANGULAR_APP_API_URL } from "../contastants/env"
 
 
 @Injectable({
@@ -13,7 +14,7 @@ export class AuthorService {
   async getAuthors() {
     let value: Author[] = [];
     await axios.get(
-        "http://localhost:8080/api/authors"
+        ANGULAR_APP_API_URL + `/authors`
     )
     .then((response) => {
         value = response.data
@@ -27,7 +28,7 @@ export class AuthorService {
   async getAuthor(id: string) {
     let value = new Author();
     await axios.get(
-        "http://localhost:8080/api/authors/" + id
+        ANGULAR_APP_API_URL + `/authors/${id}`
     )
     .then((response) => {
         value = response.data
@@ -41,7 +42,7 @@ export class AuthorService {
   async deleteAuthor(id: string) {
     let value = new Author();
     await axios.delete(
-        'http://localhost:8080/api/authors/delete/' + id
+        ANGULAR_APP_API_URL + `/authors/delete/${id}`
     )
     .then((response) => {
         value = response.data
@@ -55,7 +56,7 @@ export class AuthorService {
   async addAuthor(author: Author) {
     let value = new Author();
     await axios.post(
-        'http://localhost:8080/api/authors/add',
+        ANGULAR_APP_API_URL + `/authors/add`,
         author
     )
     .then((response) => {
@@ -70,7 +71,7 @@ export class AuthorService {
   async updateAuthor(author: Author) {
     let value = new Author();
     await axios.post(
-        'http://localhost:8080/api/authors/update/' + author.id,
+        ANGULAR_APP_API_URL + `/authors/update/${author.id}`,
         author
     )
     .then((response) => {
