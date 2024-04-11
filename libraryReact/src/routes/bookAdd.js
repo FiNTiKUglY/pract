@@ -15,7 +15,7 @@ export default function BooksAdd() {
     const [imageLink, setImageLink] = useState('');
     const [author, setAuthor] = useState({value: null, label: null});
     const [genres, setGenres] = useState([]);
-    const [book, setBook] = useState({});
+    const [newBook, setNewBook] = useState({});
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
 
@@ -30,7 +30,7 @@ export default function BooksAdd() {
             await addBook(book);
         }
         if (Object.keys(errors).length === 0 && submitting) {
-            addData(book);
+            addData(newBook);
             navigate('/books');
         }
       }, [errors]);
@@ -56,6 +56,10 @@ export default function BooksAdd() {
         if (!book.cost || book.cost.toString().split('.')[1] > 2) {
             errors.cost = "У цены больше 2 знаков после запятой";
             alert("У цены больше 2 знаков после запятой")
+        }
+        if (typeof book.cost != 'number') {
+            errors.cost = "Цена должны быть числом";
+            alert("Цена должны быть числом")
         }
         if (book.author == null) {
             errors.author = "Выберите автора";
@@ -152,7 +156,7 @@ export default function BooksAdd() {
         book.downloadLink = downloadLink
         book.imageLink = imageLink
         setErrors(validateValues(book))
-        setBook(book)
+        setNewBook(book)
         setSubmitting(true);
     }
 }

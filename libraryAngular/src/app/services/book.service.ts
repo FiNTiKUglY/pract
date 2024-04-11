@@ -10,39 +10,74 @@ export class BookService {
   constructor() { }
 
   async getBooks() {
-    let response = await axios.get(
+    let value: Book[] = [];
+    await axios.get(
         "http://localhost:8080/api/books"
     )
-    return response.data
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 
   async getBook(id: string) {
-      let response = await axios.get(
-          "http://localhost:8080/api/books/" + id
-      )
-      return response.data
+    let value = new Book();
+    await axios.get(
+        "http://localhost:8080/api/books/" + id
+    )
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 
   async deleteBook(id: string) {
-      let response = await axios.delete(
-          'http://localhost:8080/api/books/delete/' + id
-      )
-      return response.data
+    let value = new Book();
+    await axios.delete(
+        'http://localhost:8080/api/books/delete/' + id
+    )
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 
   async addBook(book: Book) {
-      let response = await axios.post(
-          'http://localhost:8080/api/books/add',
-          book
-      )
-      return response.data
+    let value = new Book();
+    await axios.post(
+        'http://localhost:8080/api/books/add',
+        book
+    )
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 
   async updateBook(book: Book) {
-      let response = await axios.post(
-          'http://localhost:8080/api/books/update/' + book.id,
-          book
-      )
-      return response.data
+    let value = new Book();
+    await axios.post(
+        'http://localhost:8080/api/books/update/' + book.id,
+        book
+    )
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 }

@@ -1,18 +1,52 @@
 <section class="form-container">
+    <div class="alert-container">
+        <div
+            *ngIf="name.invalid && (name.dirty || name.touched)"
+            class="alert"
+            >
+            <span *ngIf="name.errors?.['required']">Требуется название</span>
+            <span *ngIf="name.errors?.['minlength']">
+                Минимум 2 символа в названии
+            </span>
+            <span *ngIf="name.errors?.['maxlength']">
+                Максимум 255 символов в названии
+            </span>
+        </div>
+        <div
+            *ngIf="description.invalid && (description.dirty || description.touched)"
+            class="alert"
+            >
+            <span *ngIf="description.errors?.['required']">Требуется описание</span>
+            <span *ngIf="description.errors?.['minlength']">
+                Минимум 2 символа в описании
+            </span>
+            <span *ngIf="description.errors?.['maxlength']">
+                Максимум 255 символов в описании
+            </span>
+        </div>
+    </div>
     <div class="form">
         <input
             placeholder="Название"
             class="form-control"
             type="text"
             [(ngModel)]="genre.name"
+            required
+            maxlength="255"
+            minlength="2"
+            #name="ngModel"
         />
         <textarea
             placeholder="Описание"
             class="form-control"
             type="text"
             [(ngModel)]="genre.description"
+            required
+            maxlength="255"
+            minlength="2"
+            #description="ngModel"
         ></textarea>
-        <button
+        <button [disabled]="name.invalid || description.invalid" 
             (click)="addGenre()">
             Добавить
         </button>

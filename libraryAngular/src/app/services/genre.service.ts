@@ -10,39 +10,74 @@ export class GenreService {
   constructor() { }
 
   async getGenres() {
-    let response = await axios.get(
+    let value: Genre[] = [];
+    await axios.get(
         "http://localhost:8080/api/genres"
     )
-    return response.data
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 
   async getGenre(id: string) {
-      let response = await axios.get(
-          "http://localhost:8080/api/genres/" + id
-      )
-      return response.data
+    let value = new Genre();
+    await axios.get(
+        "http://localhost:8080/api/genres/" + id
+    )
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 
   async deleteGenre(id: string) {
-      let response = await axios.delete(
-          'http://localhost:8080/api/genres/delete/' + id
-      )
-      return response.data
+    let value = new Genre();
+    await axios.delete(
+        'http://localhost:8080/api/genres/delete/' + id
+    )
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 
   async addGenre(genre: Genre) {
-      let response = await axios.post(
-          'http://localhost:8080/api/genres/add',
-          genre
-      )
-      return response.data
+    let value = new Genre();
+    await axios.post(
+        'http://localhost:8080/api/genres/add',
+        genre
+    )
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 
   async updateGenre(genre: Genre) {
-      let response = await axios.post(
-          'http://localhost:8080/api/genres/update/' + genre.id,
-          genre
-      )
-      return response.data
+    let value = new Genre();
+    await axios.post(
+        'http://localhost:8080/api/genres/update/' + genre.id,
+        genre
+    )
+    .then((response) => {
+        value = response.data
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+    return value;
   }
 }

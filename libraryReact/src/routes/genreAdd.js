@@ -7,7 +7,7 @@ export default function GenresAdd() {
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [genre, setGenre] = useState({});
+    const [newGenre, setNewGenre] = useState({});
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
 
@@ -16,7 +16,7 @@ export default function GenresAdd() {
             await addGenre(genre);
         }
         if (Object.keys(errors).length === 0 && submitting) {
-            addData(genre);
+            addData(newGenre);
             navigate('/genres');
         }
       }, [errors]);
@@ -71,7 +71,7 @@ export default function GenresAdd() {
         genre.name = name
         genre.description = description
         setErrors(validateValues(genre))
-        setGenre(genre)
+        setNewGenre(genre)
         setSubmitting(true);
     }
 }

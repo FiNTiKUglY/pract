@@ -1,19 +1,89 @@
 <section class="form-container">
+    <div class="alert-container">
+        <div
+            *ngIf="title.invalid && (title.dirty || title.touched)"
+            class="alert"
+            >
+            <span *ngIf="title.errors?.['required']">Требуется название</span>
+            <span *ngIf="title.errors?.['minlength']">
+                Минимум 2 символа в названии
+            </span>
+            <span *ngIf="title.errors?.['maxlength']">
+                Максимум 80 символов в названии
+            </span>
+        </div>
+        <div
+            *ngIf="shortDescription.invalid && (shortDescription.dirty || shortDescription.touched)"
+            class="alert"
+            >
+            <span *ngIf="shortDescription.errors?.['required']">Требуется описание</span>
+            <span *ngIf="shortDescription.errors?.['minlength']">
+                Минимум 2 символа в описании
+            </span>
+            <span *ngIf="shortDescription.errors?.['maxlength']">
+                Максимум 255 символов в описании
+            </span>
+        </div>
+        <div
+            *ngIf="author.invalid && (author.dirty || author.touched)"
+            class="alert"
+            >
+            <span *ngIf="author.errors?.['required']">Требуется автор</span>
+        </div>
+        <div
+            *ngIf="cost.invalid && (cost.dirty || cost.touched)"
+            class="alert"
+            >
+            <span *ngIf="cost.errors?.['required']">Требуется цена</span>
+        </div>
+        <div
+            *ngIf="downloadLink.invalid && (downloadLink.dirty || downloadLink.touched)"
+            class="alert"
+            >
+            <span *ngIf="downloadLink.errors?.['required']">Требуется ссылка на загрузку</span>
+            <span *ngIf="downloadLink.errors?.['minlength']">
+                Минимум 2 символа в ссылке на загрузку
+            </span>
+            <span *ngIf="downloadLink.errors?.['maxlength']">
+                Максимум 255 символов в ссылке на загрузку
+            </span>
+        </div>
+        <div
+            *ngIf="imageLink.invalid && (imageLink.dirty || imageLink.touched)"
+            class="alert"
+            >
+            <span *ngIf="imageLink.errors?.['required']">Требуется ссылка на изображение</span>
+            <span *ngIf="imageLink.errors?.['minlength']">
+                Минимум 2 символа в ссылка на изображение
+            </span>
+            <span *ngIf="imageLink.errors?.['maxlength']">
+                Максимум 255 символов в ссылка на изображение
+            </span>
+        </div>
+    </div>
     <div class="form">
         <input
             placeholder="Название"
             class="form-control"
             type="text"
+            required
+            maxlength="80"
+            minlength="2"
             [(ngModel)]="book.title"
+            #title="ngModel"
         />
-        <select [(ngModel)]="book.author" class="form-control">
+        <select [(ngModel)]="book.author" class="form-control" #author="ngModel" required>
             <option *ngFor="let author of authorList" [ngValue]="author">{{author.surname}} {{author.name}}</option>
         </select>
         <textarea
             placeholder="Описание"
             class="form-control"
             type="text"
+            required
+            maxlength="255"
+            minlength="2"
             [(ngModel)]="book.shortDescription"
+            #shortDescription="ngModel"
         ></textarea>
         <select multiple [(ngModel)]="book.genres" class="form-control">
             <option *ngFor="let genre of genreList" [ngValue]="genre">{{genre.name}}</option>
@@ -22,21 +92,32 @@
             placeholder="Цена"
             class="form-control"
             type="number"
+            required
             [(ngModel)]="book.cost"
+            #cost="ngModel"
         />
         <input
             placeholder="Ссылка загрузки"
             class="form-control"
             type="text"
+            required
+            maxlength="255"
+            minlength="2"
             [(ngModel)]="book.downloadLink"
+            #downloadLink="ngModel"
         />
         <input
             placeholder="Ссылка изображения"
             class="form-control"
             type="text"
+            required
+            maxlength="255"
+            minlength="2"
             [(ngModel)]="book.imageLink"
+            #imageLink="ngModel"
         />
-        <button
+        <button [disabled]="title.invalid || shortDescription.invalid || author.invalid || 
+                            imageLink.invalid || downloadLink.invalid || cost.invalid" 
             (click)="addBook()">
             Добавить
         </button>
