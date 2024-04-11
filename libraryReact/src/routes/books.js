@@ -90,6 +90,7 @@ export default function Books() {
 
     async function loadBooks() {
         const books = await getBooks()
+        console.log(books)
         setBooks(books)
     }
 

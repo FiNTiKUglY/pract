@@ -147,6 +147,7 @@ export default function BooksAdd() {
     }
 
     async function addBookClick() {
+        let book = {}
         book.id = crypto.randomUUID();
         book.title = title
         book.shortDescription = shortDescription
