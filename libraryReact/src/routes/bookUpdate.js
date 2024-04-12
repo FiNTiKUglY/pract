@@ -59,7 +59,7 @@ export default function BooksUpdate() {
             errors.shortDescription = "Описание слишком длинное";
             alert("Описание слишком длинное")
         }
-        if (book.cost.toString().includes('.') && book.cost.toString().split('.')[1].length > 2) {
+        if (book.cost.toString().replace(',', '.').includes('.') && book.cost.toString().replace(',').split('.')[1].length > 2) {
             console.log(book.cost.toString().split('.')[1])
             errors.cost = "У цены больше 2 знаков после точки";
             alert("У цены больше 2 знаков после точки")
@@ -69,7 +69,11 @@ export default function BooksUpdate() {
             alert("Выберите автора")
         }
         try {
-            Number(book.cost)
+            let value = Number(book.cost)
+            if (value <= 0) {
+                errors.cost = "Число не может быть отрицательным";
+                alert("Число не может быть отрицательным")
+            }
         }
         catch {
             errors.cost = "Цена должны быть числом";

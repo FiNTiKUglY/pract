@@ -5,8 +5,6 @@ import {
     createBrowserRouter
 } from "react-router-dom";
 import Root from './routes/root';
-import Signup from './routes/signup';
-import Signin from './routes/signin';
 import Books from './routes/books';
 import BooksAdd from './routes/bookAdd';
 import BooksUpdate, { loader as bookLoader } from './routes/bookUpdate';
@@ -48,14 +46,6 @@ const router = createBrowserRouter([
         {
             path: "/genres",
             element: <Genres />
-        },
-        {
-            path: "/signin",
-            element: <Signin />
-        },
-        {
-            path: "/signup",
-            element: <Signup />
         }
       ]
     }
