@@ -94,6 +94,7 @@
             type="number"
             required
             [(ngModel)]="book.cost"
+            pattern="[0-9]+[.]?[0-9]{0,2}"
             #cost="ngModel"
         />
         <input
