@@ -35,7 +35,7 @@
             class="alert"
             >
             <span *ngIf="cost.errors?.['required']">Требуется цена</span>
-            <span *ngIf="cost.errors?.['pattern']">Требуется цена</span>
+            <span *ngIf="cost.errors?.['pattern']">Требуется формат с 2 знаками после точки</span>
         </div>
         <div
             *ngIf="downloadLink.invalid && (downloadLink.dirty || downloadLink.touched)"
@@ -73,6 +73,7 @@
             [(ngModel)]="book.title"
             #title="ngModel"
         />
+        <span>Автор: {{book.author.surname}} {{book.author.name}}. (При выборе нового автора старый удалиться)</span> 
         <select [(ngModel)]="book.author" #author="ngModel" class="form-control" required>
             <option *ngFor="let author of authorList" [ngValue]="author">{{author.surname}} {{author.name}}</option>
         </select>
@@ -86,6 +87,7 @@
             [(ngModel)]="book.shortDescription"
             #shortDescription="ngModel"
         ></textarea>
+        <span>Жанры: <span *ngFor="let genre of book.genres">{{genre.name}} </span>. При выборе жанра старый удалиться</span> 
         <select multiple [(ngModel)]="book.genres" class="form-control">
             <option *ngFor="let genre of genreList" [ngValue]="genre">{{genre.name}}</option>
         </select>
@@ -121,7 +123,7 @@
         <button [disabled]="title.invalid || shortDescription.invalid || author.invalid || 
                             imageLink.invalid || downloadLink.invalid || cost.invalid" 
             (click)="updateBook()">
-            Добавить
+            Изменить
         </button>
     </div>
 </section>
