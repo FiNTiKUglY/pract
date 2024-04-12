@@ -53,7 +53,7 @@ export default function BooksAdd() {
             errors.shortDescription = "Описание слишком длинное";
             alert("Описание слишком длинное")
         }
-        if (!book.cost || book.cost.toString().split('.')[1].length > 2) {
+        if (book.cost.toString().includes('.') && book.cost.toString().split('.')[1].length > 2) {
             console.log(book.cost.toString().split('.')[1])
             errors.cost = "У цены больше 2 знаков после запятой";
             alert("У цены больше 2 знаков после запятой")
