@@ -35,6 +35,7 @@
             class="alert"
             >
             <span *ngIf="cost.errors?.['required']">Требуется цена</span>
+            <span *ngIf="cost.errors?.['pattern']">Требуется формат с 2 знаками после точки</span>
         </div>
         <div
             *ngIf="downloadLink.invalid && (downloadLink.dirty || downloadLink.touched)"
